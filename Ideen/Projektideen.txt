@@ -1,0 +1,4 @@
+* Codingkurs
+* Team management software
+* Emulator (basic)
+* Basic Spiele wie z. B. Pokemon
