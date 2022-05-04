@@ -1,0 +1,34 @@
+.lesson{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.innerLesson{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1000px;
+}
+.lesson textarea{
+    resize: none;
+    border-radius: 5px;
+    padding: 5px;
+    outline: none;
+}
+#input{
+    background-color: rgb(231, 231, 231);
+    border: 1px solid gray;
+}
+#output{
+    background-color: rgb(231, 231, 231);
+    border: 1px solid gray;
+}
+.lesson button{
+    width: fit-content;
+    margin-top: 10px;
+}
+#navButtons{
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,21 @@
+.lessonadmin{
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.lessonadmin button{
+    margin: 5px;
+}
+#editLesson{
+    background-color: orange;
+}
+#cancelEditLesson{
+    background-color: red;
+}
+#saveLesson{
+    background-color: green;
+}
+#deleteLesson{
+    background-color: darkred;
+}

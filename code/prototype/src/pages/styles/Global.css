@@ -1,0 +1,21 @@
+button{
+    background-color: #37c871;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+}
+button:hover{
+    cursor: pointer;
+    background-color: #3ed47a;
+}
+div{
+    font-family: Arial, Helvetica, sans-serif;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+.hidden{
+    display: none;
+}

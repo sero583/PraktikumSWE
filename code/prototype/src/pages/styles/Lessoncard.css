@@ -1,0 +1,16 @@
+.lessoncard{
+    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+}
+.lessoncard:hover{
+    box-shadow: 0px 0px 10px 5px rgb(161, 161, 161);
+}
+.lessoncard h1{
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+.lessoncard p{
+    margin: 0px;
+}

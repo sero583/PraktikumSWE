@@ -1,0 +1,16 @@
+.courses{
+    display: grid;
+    grid-template-columns: 32% 32% 32%;
+    grid-column-gap: 2%;
+    margin-bottom: 50px;
+}
+@media screen and (max-width: 1000px){
+    .courses{
+        grid-template-columns: 49% 49%;
+    }
+}
+@media screen and (max-width: 600px){
+    .courses{
+        grid-template-columns: auto;
+    }
+}
