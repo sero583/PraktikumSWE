@@ -1,15 +1,35 @@
 import '../../css/components/CourseList.css';
 import CourseCard from './CourseCard';
+import { useEffect, useState } from 'react';
 
 export default function CourseList({coursetype}){
-    let courses = [];
+    const [isLoading, setLoading] = useState(true);
+    const [courses, setCourses] = useState();
     if(coursetype === "recent"){
-        //get recent courses from server
-        courses = [{id: 1, img: "example.jpg", title: "Java Beginner course"}];
+        let uri = 'api/course/recent';
+        useEffect(() => {
+            axios.get(uri).then((response) => {
+                setCourses(response.data);
+                setLoading(false);
+            });
+        }, []);
     }
     else{
-        //fetch all courses from server
-        courses = [{id: 1, img: "example.jpg", title: "Java Beginner course"}, {id: 2, img: "example.jpg", title: "Python Beginner course"}];
+        let uri = 'api/course';
+        useEffect(() => {
+            axios.get(uri).then((response) => {
+                setCourses(response.data);
+                setLoading(false);
+            });
+        }, []);
+    }
+
+    if(isLoading){
+        return (
+            <div className='courses'>
+                Loading...
+            </div>
+        )
     }
 
     return (

@@ -10,6 +10,8 @@ export default function CourseAdminButtons(){
         document.getElementById("saveCourse").classList.remove("hidden");
         document.getElementById("addLesson").classList.remove("hidden");
         document.getElementById("deleteCourse").classList.remove("hidden");
+        document.getElementById("deleteLessons").classList.remove("hidden");
+        document.getElementById("copyLessons").classList.remove("hidden");
         document.getElementById("editCourse").classList.add("hidden");
         
         headline = document.getElementById("courseHeadline").textContent;
@@ -24,6 +26,8 @@ export default function CourseAdminButtons(){
         document.getElementById("saveCourse").classList.add("hidden");
         document.getElementById("addLesson").classList.add("hidden");
         document.getElementById("deleteCourse").classList.add("hidden");
+        document.getElementById("deleteLessons").classList.add("hidden");
+        document.getElementById("copyLessons").classList.add("hidden");
         document.getElementById("editCourse").classList.remove("hidden");
 
         document.getElementById("courseHeadline").textContent = headline;
@@ -38,6 +42,8 @@ export default function CourseAdminButtons(){
         document.getElementById("saveCourse").classList.add("hidden");
         document.getElementById("addLesson").classList.add("hidden");
         document.getElementById("deleteCourse").classList.add("hidden");
+        document.getElementById("deleteLessons").classList.add("hidden");
+        document.getElementById("copyLessons").classList.add("hidden");
         document.getElementById("editCourse").classList.remove("hidden");
 
         document.getElementById("courseHeadline").contentEditable = "false";
@@ -45,6 +51,14 @@ export default function CourseAdminButtons(){
     }
 
     function addLesson(){
+
+    }
+
+    function deleteLessons(){
+
+    }
+
+    function copyLessons(){
 
     }
 
@@ -61,6 +75,8 @@ export default function CourseAdminButtons(){
             <button id="saveCourse" className='hidden' onClick={saveCourse}>Save Changes</button>
             <button id="addLesson" className='hidden' onClick={addLesson}>Add Lesson</button>
             <button id="deleteCourse" className='hidden' onClick={deleteCourse}>Delete Course</button>
+            <button id="deleteLessons" className='hidden' onClick={deleteLessons}>Delete Lessons</button>
+            <button id="copyLessons" className='hidden' onClick={copyLessons}>Copy Lessons</button>
         </div>
     );
 }

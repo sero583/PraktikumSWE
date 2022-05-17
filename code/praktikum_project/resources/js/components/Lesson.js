@@ -1,22 +1,36 @@
 import '../../css/components/Lesson.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import LessonAdminButtons from './LessonAdminButtons';
+import { useEffect, useState } from 'react';
 
 export default function Lesson(){
     const course_id = useParams().course_id;
     const id = useParams().lesson_id;
-    //to be replaced with data from the server
-    const headline = "Name of the lesson"
-    const text = "Instructions what has to be implemented";
+
+    //fetching data from server
+    const [isLoading, setLoading] = useState(true);
+    const [lesson, setLesson] = useState();
+    let uri = '/api/course/' + course_id + '/lesson/' + id;
+    useEffect(() => {
+        axios.get(uri).then((response) => {
+            setLesson(response.data);
+            setLoading(false);
+        });
+    }, []);
 
     //for navigation buttons
     const navigate = useNavigate();
     const backToCourse = () => {
-        navigate("/course/" + course_id);
+        navigate("/course/" + lesson.course_id);
     }
     const nextLesson = () => {
-        //doesn't actually go to next lesson
-        navigate("/course/" + course_id + "/lesson/" + id);
+        if(lesson.next_lesson){
+            navigate("/course/" + lesson.course_id + "/lesson/" + lesson.next_lesson);
+            window.location.reload();
+        }
+        else{
+            navigate("/course/" + lesson.course_id);
+        }
     }
 
     //when run-button clicked
@@ -29,12 +43,20 @@ export default function Lesson(){
         document.getElementById("output").textContent = output;
     }
 
+    if(isLoading){
+        return(
+            <div className='lesson'>
+                Loading...
+            </div>
+        )
+    }
+
     return (
         <div className='lesson'>
             <div className='innerLesson'>
-                <LessonAdminButtons course_id={course_id}/>
-                <h1 id="lessonHeadline">{headline}</h1>
-                <p id="lessonText">{text}</p>
+                <LessonAdminButtons lesson={lesson}/>
+                <h1 id="lessonHeadline">{lesson.title}</h1>
+                <p id="lessonText">{lesson.description}</p>
                 <textarea id="input" rows="50"></textarea>
                 <button onClick={handleRun}>Run &gt;&gt;&gt;</button>
                 <h2>Output of the Code:</h2>

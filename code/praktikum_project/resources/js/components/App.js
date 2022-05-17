@@ -10,6 +10,7 @@ import Login from './Login';
 import Register from './Register';
 import NoPage from './NoPage';
 import UserPage from './UserPage';
+import CreateLesson from './CreateLesson';
 import '../../css/components/Global.css';
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           <Route index element={<LandingPage />} />
           <Route path="home" element={shouldRedirect ? (<Navigate replace to="/" />) : (<Home />)} />
           <Route path="course/:course_id" element={shouldRedirect ? (<Navigate replace to="/" />) : (<Course />)} />
+          <Route path="course/:course_id/lesson" element={shouldRedirect ? (<Navigate replace to="/" />) : (<CreateLesson />)}/>
           <Route path="course/:course_id/lesson/:lesson_id" element={shouldRedirect ? (<Navigate replace to="/" />) : (<Lesson />)}/>
           <Route path="user" element={shouldRedirect ? (<Navigate replace to="/" />) : (<UserPage />)}/>
           <Route path="login" element={<Login setToken={setToken}/>} />

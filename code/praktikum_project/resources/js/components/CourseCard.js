@@ -6,7 +6,7 @@ export default function CourseCard({course}){
         <div className="card">
             <Link to={"/course/" + course.id}>
                 <div>
-                    <img src={course.img} alt="course_picture"></img>
+                    <img src={course.thumbnail_path} alt="course_picture"></img>
                     <h1>{course.title}</h1>
                 </div>
             </Link>

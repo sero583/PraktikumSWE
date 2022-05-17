@@ -1,7 +1,7 @@
 import '../../css/components/LessonAdminButtons.css';
 import { useNavigate } from 'react-router-dom';
 
-export default function LessonAdminButtons({course_id}){
+export default function LessonAdminButtons({lesson}){
     let headline;
     let text;
     
@@ -14,10 +14,8 @@ export default function LessonAdminButtons({course_id}){
         headline = document.getElementById("lessonHeadline").textContent;
         text = document.getElementById("lessonText").textContent;
         
-        const code = "public class..."; //fetch from server
-        const output = "Hello World"; //fetch from server
-        document.getElementById("input").value = code;
-        document.getElementById("output").value = output;
+        document.getElementById("input").value = lesson.predefined_code;
+        document.getElementById("output").value = lesson.expected_output;
         document.getElementById("output").readOnly = false;
         document.getElementById("lessonHeadline").contentEditable = "true";
         document.getElementById("lessonText").contentEditable = "true";
@@ -57,7 +55,7 @@ export default function LessonAdminButtons({course_id}){
     const navigate = useNavigate();
     function deleteLesson(){
         //TODO send delete request to server
-        navigate("/course/" + course_id);
+        navigate("/course/" + lesson.course_id);
     }
     
     return (
