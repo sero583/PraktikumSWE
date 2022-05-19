@@ -12,6 +12,8 @@ import NoPage from './NoPage';
 import UserPage from './UserPage';
 import CreateLesson from './CreateLesson';
 import '../../css/components/Global.css';
+import ForgotPassword from './ForgotPassword';
+import ForgotPasswordSubmit from './ForgotPasswordSubmit';
 
 export default function App() {
   const [token, setToken] = useState();
@@ -31,6 +33,8 @@ export default function App() {
           <Route path="user" element={shouldRedirect ? (<Navigate replace to="/" />) : (<UserPage />)}/>
           <Route path="login" element={<Login setToken={setToken}/>} />
           <Route path="register" element={<Register />} />
+          <Route path="forgotpassword" element={<ForgotPassword />} />
+          <Route path="forgotpasswordsubmit" element={<ForgotPasswordSubmit />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>

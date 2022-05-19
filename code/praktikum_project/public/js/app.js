@@ -5429,8 +5429,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Layout */ "./resources/js/components/Layout.js");
 /* harmony import */ var _LandingPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LandingPage */ "./resources/js/components/LandingPage.js");
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Home */ "./resources/js/components/Home.js");
@@ -5442,7 +5442,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UserPage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./UserPage */ "./resources/js/components/UserPage.js");
 /* harmony import */ var _CreateLesson__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./CreateLesson */ "./resources/js/components/CreateLesson.js");
 /* harmony import */ var _css_components_Global_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../css/components/Global.css */ "./resources/css/components/Global.css");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _ForgotPassword__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ForgotPassword */ "./resources/js/components/ForgotPassword.js");
+/* harmony import */ var _ForgotPasswordSubmit__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ForgotPasswordSubmit */ "./resources/js/components/ForgotPasswordSubmit.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5454,6 +5456,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -5483,55 +5487,61 @@ function App() {
     shouldRedirect = true;
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.BrowserRouter, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Routes, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.BrowserRouter, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Routes, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
         path: "/",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_Layout__WEBPACK_IMPORTED_MODULE_2__["default"], {}),
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Layout__WEBPACK_IMPORTED_MODULE_2__["default"], {}),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           index: true,
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_LandingPage__WEBPACK_IMPORTED_MODULE_3__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_LandingPage__WEBPACK_IMPORTED_MODULE_3__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "home",
-          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Navigate, {
+          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
             replace: true,
             to: "/"
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_Home__WEBPACK_IMPORTED_MODULE_4__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Home__WEBPACK_IMPORTED_MODULE_4__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "course/:course_id",
-          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Navigate, {
+          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
             replace: true,
             to: "/"
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_Course__WEBPACK_IMPORTED_MODULE_5__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Course__WEBPACK_IMPORTED_MODULE_5__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "course/:course_id/lesson",
-          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Navigate, {
+          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
             replace: true,
             to: "/"
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_CreateLesson__WEBPACK_IMPORTED_MODULE_11__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_CreateLesson__WEBPACK_IMPORTED_MODULE_11__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "course/:course_id/lesson/:lesson_id",
-          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Navigate, {
+          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
             replace: true,
             to: "/"
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_Lesson__WEBPACK_IMPORTED_MODULE_6__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Lesson__WEBPACK_IMPORTED_MODULE_6__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "user",
-          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Navigate, {
+          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
             replace: true,
             to: "/"
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_UserPage__WEBPACK_IMPORTED_MODULE_10__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_UserPage__WEBPACK_IMPORTED_MODULE_10__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "login",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_Login__WEBPACK_IMPORTED_MODULE_7__["default"], {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Login__WEBPACK_IMPORTED_MODULE_7__["default"], {
             setToken: setToken
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "register",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_Register__WEBPACK_IMPORTED_MODULE_8__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Register__WEBPACK_IMPORTED_MODULE_8__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+          path: "forgotpassword",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_ForgotPassword__WEBPACK_IMPORTED_MODULE_13__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+          path: "forgotpasswordsubmit",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_ForgotPasswordSubmit__WEBPACK_IMPORTED_MODULE_14__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "*",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_NoPage__WEBPACK_IMPORTED_MODULE_9__["default"], {})
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_NoPage__WEBPACK_IMPORTED_MODULE_9__["default"], {})
         })]
       })
     })
@@ -5539,7 +5549,7 @@ function App() {
 }
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(App, {}), document.getElementById('app'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(App, {}), document.getElementById('app'));
 }
 
 /***/ }),
@@ -6019,6 +6029,89 @@ function Footer() {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
       children: "Trademark Engineer-Trio bla bla..."
     })
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/ForgotPassword.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/ForgotPassword.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ForgotPassword)
+/* harmony export */ });
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var _css_components_Account_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css/components/Account.css */ "./resources/css/components/Account.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+function ForgotPassword() {
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
+
+  function resetPassword() {
+    var email = document.getElementById("emailOrUsername"); // send request to server for reset
+
+    console.log("Email or username: " + email != null ? "null" : email.textContent); //if(email!=null) {
+
+    navigate("/forgotpasswordsubmit"); //}
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    className: "account",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
+      children: "Forgot your password?"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: "innerAccount",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+        children: "Email or Username:"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+        id: "emailOrusername"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+        type: "submit",
+        onClick: resetPassword,
+        children: "Reset password"
+      })]
+    })]
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/ForgotPasswordSubmit.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/ForgotPasswordSubmit.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ForgotPasswordSubmit)
+/* harmony export */ });
+/* harmony import */ var _css_components_ForgotPasswordSubmit_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css/components/ForgotPasswordSubmit.css */ "./resources/css/components/ForgotPasswordSubmit.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+function ForgotPasswordSubmit() {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    className: "forgotPasswordSubmitContent",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
+      children: "Email has been sent!"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
+      children: "Check your inbox for further instructions on how to reset your password."
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
+        children: "Note that when entering a wrong email address or username, no email will be sent."
+      })
+    })]
   });
 }
 
@@ -6507,39 +6600,38 @@ function Login() {
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
 
   function handleLogIn() {
+    // get fields
     var username_input = document.getElementById("username");
-    var password_input = document.getElementById("password");
+    var password_input = document.getElementById("password"); // check them client-side
 
     if (username_input.value === "") {
       username_input.classList.add("required");
       return;
-    }
+    } else username_input.classList.remove("required");
 
     if (password_input.value === "") {
       password_input.classList.add("required");
       return;
-    }
+    } else password_input.classList.remove("required"); // now check them server-side/try to authenticate
+
 
     navigate("/home");
   }
-
-  function handleUserBlur() {
-    var username_input = document.getElementById("username");
-    username_input.classList.remove("required");
-
-    if (username_input.value === "") {
-      username_input.classList.add("required");
-    }
+  /*function handleUserBlur(){
+      const username_input = document.getElementById("username");
+      username_input.classList.remove("required");
+      if(username_input.value === ""){
+          username_input.classList.add("required");
+      }
   }
+    function handlePassBlur(){
+      const password_input = document.getElementById("password");
+      password_input.classList.remove("required");
+      if(password_input.value === ""){
+          password_input.classList.add("required");
+      }
+  }*/
 
-  function handlePassBlur() {
-    var password_input = document.getElementById("password");
-    password_input.classList.remove("required");
-
-    if (password_input.value === "") {
-      password_input.classList.add("required");
-    }
-  }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: "account",
@@ -6552,20 +6644,27 @@ function Login() {
         children: "Username:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
         id: "username",
-        type: "text",
-        onBlur: handleUserBlur
+        type: "text"
+        /*onBlur={handleUserBlur}*/
+
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
         htmlFor: "password",
         children: "Password:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
         id: "password",
-        type: "password",
-        onBlur: handlePassBlur
+        type: "password"
+        /*onBlur={handlePassBlur}*/
+
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
         type: "submit",
         onClick: handleLogIn,
         children: "Sign in"
       })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+        to: "/forgotpassword",
+        children: "Forgot your password?"
+      })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
       children: ["Not signed up yet? ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
         to: "/register",
@@ -6588,14 +6687,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ NoPage)
 /* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _css_components_NoPage_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css/components/NoPage.css */ "./resources/css/components/NoPage.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 function NoPage() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    className: "notFoundContent",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
       children: "Error 404"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
       children: "Page not found"
     })]
   });
@@ -6626,57 +6728,51 @@ function Register() {
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
 
   function handleRegister() {
+    // get fields
     var username_input = document.getElementById("username");
-    username_input.classList.remove("required");
     var email_input = document.getElementById("email");
-    email_input.classList.remove("required");
-    var password_input = document.getElementById("password");
-    password_input.classList.remove("required");
+    var password_input = document.getElementById("password"); // check if theyre empty
 
     if (username_input.value === "") {
       username_input.classList.add("required");
       return;
-    }
+    } else username_input.classList.remove("required");
 
     if (email_input.value === "") {
       email_input.classList.add("required");
       return;
-    }
+    } else email_input.classList.remove("required");
 
     if (password_input.value === "") {
       password_input.classList.add("required");
       return;
-    }
+    } else email_input.classList.remove("required"); // TODO: get username, pwd and check stuff
+
 
     navigate("/home");
   }
-
-  function handleUserBlur() {
-    var username_input = document.getElementById("username");
-    username_input.classList.remove("required");
-
-    if (username_input.value === "") {
-      username_input.classList.add("required");
-    }
+  /*function handleUserBlur(){
+      const username_input = document.getElementById("username");
+      username_input.classList.remove("required");
+      if(username_input.value === ""){
+          username_input.classList.add("required");
+      }
   }
-
-  function handleEmailBlur() {
-    var email_input = document.getElementById("email");
-    email_input.classList.remove("required");
-
-    if (email_input.value === "") {
-      email_input.classList.add("required");
-    }
+    function handleEmailBlur(){
+      const email_input = document.getElementById("email");
+      email_input.classList.remove("required");
+      if(email_input.value === ""){
+          email_input.classList.add("required");
+      }
   }
+    function handlePassBlur(){
+      const password_input = document.getElementById("password");
+      password_input.classList.remove("required");
+      if(password_input.value === ""){
+          password_input.classList.add("required");
+      }
+  }*/
 
-  function handlePassBlur() {
-    var password_input = document.getElementById("password");
-    password_input.classList.remove("required");
-
-    if (password_input.value === "") {
-      password_input.classList.add("required");
-    }
-  }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: "account",
@@ -6689,22 +6785,25 @@ function Register() {
         children: "Username:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
         id: "username",
-        type: "text",
-        onBlur: handleUserBlur
+        type: "text"
+        /*onBlur={handleUserBlur}*/
+
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
         htmlFor: "email",
         children: "Email:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
         id: "email",
-        type: "email",
-        onBlur: handleEmailBlur
+        type: "email"
+        /*onBlur={handleEmailBlur}*/
+
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
         htmlFor: "password",
         children: "Password:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
         id: "password",
-        type: "password",
-        onBlur: handlePassBlur
+        type: "password"
+        /*onBlur={handlePassBlur}*/
+
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
         onClick: handleRegister,
         children: "Register"
@@ -11809,7 +11908,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".account{\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.innerAccount{\n    display: flex;\n    flex-direction: column;\n    max-width: 500px;\n    min-width: 500px;\n}\n.account input{\n    padding: 5px;\n}\n.account input:focus{\n    outline: 2px solid #37c871;\n}\n.account button{\n    margin: 20px 0px;\n}\n.account label{\n    margin: 5px 0px;\n}\n.account a{\n    color: blue;\n}\n.required{\n    border: 2px solid red;\n}\n@media screen and (max-width: 530px){\n    .innerAccount{\n        max-width: 95%;\n        min-width: 95%;\n    }\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".account{\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerAccount{\r\n    display: flex;\r\n    flex-direction: column;\r\n    max-width: 500px;\r\n    min-width: 500px;\r\n}\r\n.account input{\r\n    padding: 5px;\r\n}\r\n.account input:focus{\r\n    outline: 2px solid #37c871;\r\n}\r\n.account button{\r\n    margin: 20px 0px;\r\n}\r\n.account label{\r\n    margin: 5px 0px;\r\n}\r\n.account a{\r\n    color: blue;\r\n}\r\n.required{\r\n    border: 2px solid red;\r\n}\r\n@media screen and (max-width: 530px){\r\n    .innerAccount{\r\n        max-width: 95%;\r\n        min-width: 95%;\r\n    }\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11833,7 +11932,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".course{\n    padding: 10px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.innerCourse{\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    max-width: 1000px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".course{\r\n    padding: 10px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerCourse{\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    max-width: 1000px;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11857,7 +11956,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".courseadmin{\n    border: 1px solid gray;\n    border-radius: 5px;\n    margin-top: 20px;\n    margin-bottom: 20px;\n}\n.courseadmin button{\n    margin: 5px;\n}\n#editCourse{\n    background-color: orange;\n}\n#addLesson{\n    background-color: lightblue;\n}\n#cancelEditCourse{\n    background-color: red;\n}\n#saveCourse{\n    background-color: green;\n}\n#deleteCourse{\n    background-color: darkred;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".courseadmin{\r\n    border: 1px solid gray;\r\n    border-radius: 5px;\r\n    margin-top: 20px;\r\n    margin-bottom: 20px;\r\n}\r\n.courseadmin button{\r\n    margin: 5px;\r\n}\r\n#editCourse{\r\n    background-color: orange;\r\n}\r\n#addLesson{\r\n    background-color: lightblue;\r\n}\r\n#cancelEditCourse{\r\n    background-color: red;\r\n}\r\n#saveCourse{\r\n    background-color: green;\r\n}\r\n#deleteCourse{\r\n    background-color: darkred;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11881,7 +11980,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".card{\n    /*margin: 10px;*/\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\n    padding: 5px;\n    border-radius: 5px;\n}\n.card:hover{\n    box-shadow: 0px 0px 10px 5px rgb(161, 161, 161);\n}\n.card img{\n    max-width: 100%;\n}\n@media screen and (max-width: 600px){\n    .card{\n        width: calc(100% - 30px);\n    }\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".card{\r\n    /*margin: 10px;*/\r\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\r\n    padding: 5px;\r\n    border-radius: 5px;\r\n}\r\n.card:hover{\r\n    box-shadow: 0px 0px 10px 5px rgb(161, 161, 161);\r\n}\r\n.card img{\r\n    max-width: 100%;\r\n}\r\n@media screen and (max-width: 600px){\r\n    .card{\r\n        width: calc(100% - 30px);\r\n    }\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11905,7 +12004,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".courses{\n    display: grid;\n    grid-template-columns: 32% 32% 32%;\n    grid-column-gap: 2%;\n    margin-bottom: 50px;\n}\n@media screen and (max-width: 1000px){\n    .courses{\n        grid-template-columns: 49% 49%;\n    }\n}\n@media screen and (max-width: 600px){\n    .courses{\n        grid-template-columns: auto;\n    }\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".courses{\r\n    display: grid;\r\n    grid-template-columns: 32% 32% 32%;\r\n    grid-column-gap: 2%;\r\n    margin-bottom: 50px;\r\n}\r\n@media screen and (max-width: 1000px){\r\n    .courses{\r\n        grid-template-columns: 49% 49%;\r\n    }\r\n}\r\n@media screen and (max-width: 600px){\r\n    .courses{\r\n        grid-template-columns: auto;\r\n    }\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11929,7 +12028,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".courselistadmin{\n    border: 1px solid gray;\n    border-radius: 5px;\n    margin-bottom: 20px;\n}\n.courselistadmin button{\n    margin: 5px;\n}\n#addCourses{\n    background-color: lightblue;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".courselistadmin{\r\n    border: 1px solid gray;\r\n    border-radius: 5px;\r\n    margin-bottom: 20px;\r\n}\r\n.courselistadmin button{\r\n    margin: 5px;\r\n}\r\n#addCourses{\r\n    background-color: lightblue;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11953,7 +12052,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".footer{\n    background-color: rgb(201, 201, 201);\n    padding: 50px;\n    margin-top: 50px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".footer{\r\n    background-color: rgb(201, 201, 201);\r\n    padding: 50px;\r\n    margin-top: 50px;\r\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/css/components/ForgotPasswordSubmit.css":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/css/components/ForgotPasswordSubmit.css ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".forgotPasswordSubmitContent {\r\n    text-align: center;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11977,7 +12100,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "button{\n    background-color: #37c871;\n    padding: 10px;\n    border: none;\n    border-radius: 5px;\n    font-size: 20px;\n}\nbutton:hover{\n    cursor: pointer;\n    background-color: #3ed47a;\n}\ndiv{\n    font-family: Arial, Helvetica, sans-serif;\n}\na{\n    color: black;\n    text-decoration: none;\n}\n.hidden{\n    display: none;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "button{\r\n    background-color: #37c871;\r\n    padding: 10px;\r\n    border: none;\r\n    border-radius: 5px;\r\n    font-size: 20px;\r\n}\r\nbutton:hover{\r\n    cursor: pointer;\r\n    background-color: #3ed47a;\r\n}\r\ndiv{\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\na{\r\n    color: black;\r\n    text-decoration: none;\r\n}\r\n.hidden{\r\n    display: none;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12001,7 +12124,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".header{\n    background-color: #37c871;\n    padding: 10px;\n    display: flex;\n    justify-content: space-between;\n}\n.login{\n    height: 100%;\n    padding-right: 10px;\n    display: flex;\n    align-items: center;\n}\n.login p{\n    margin: 0px;\n    font-size: larger;\n    font-weight: bold;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".header{\r\n    background-color: #37c871;\r\n    padding: 10px;\r\n    display: flex;\r\n    justify-content: space-between;\r\n}\r\n.login{\r\n    height: 100%;\r\n    padding-right: 10px;\r\n    display: flex;\r\n    align-items: center;\r\n}\r\n.login p{\r\n    margin: 0px;\r\n    font-size: larger;\r\n    font-weight: bold;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12025,7 +12148,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".home{\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.innerHome{\n    padding-left: 20px;\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    max-width: 1000px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".home{\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerHome{\r\n    padding-left: 20px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    max-width: 1000px;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12049,7 +12172,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".layout{\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    min-height: 100%;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".layout{\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n    min-height: 100%;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12073,7 +12196,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".lesson{\n    padding: 10px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.innerLesson{\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    max-width: 1000px;\n}\n.lesson textarea{\n    resize: none;\n    border-radius: 5px;\n    padding: 5px;\n    outline: none;\n}\n#input{\n    background-color: rgb(231, 231, 231);\n    border: 1px solid gray;\n}\n#output{\n    background-color: rgb(231, 231, 231);\n    border: 1px solid gray;\n}\n.lesson button{\n    width: -webkit-fit-content;\n    width: -moz-fit-content;\n    width: fit-content;\n    margin-top: 10px;\n}\n#navButtons{\n    display: flex;\n    justify-content: space-between;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".lesson{\r\n    padding: 10px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerLesson{\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    max-width: 1000px;\r\n}\r\n.lesson textarea{\r\n    resize: none;\r\n    border-radius: 5px;\r\n    padding: 5px;\r\n    outline: none;\r\n}\r\n#input{\r\n    background-color: rgb(231, 231, 231);\r\n    border: 1px solid gray;\r\n}\r\n#output{\r\n    background-color: rgb(231, 231, 231);\r\n    border: 1px solid gray;\r\n}\r\n.lesson button{\r\n    width: -webkit-fit-content;\r\n    width: -moz-fit-content;\r\n    width: fit-content;\r\n    margin-top: 10px;\r\n}\r\n#navButtons{\r\n    display: flex;\r\n    justify-content: space-between;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12097,7 +12220,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".lessonadmin{\n    border: 1px solid gray;\n    border-radius: 5px;\n    margin-top: 20px;\n    margin-bottom: 20px;\n}\n.lessonadmin button{\n    margin: 5px;\n}\n#editLesson{\n    background-color: orange;\n}\n#cancelEditLesson{\n    background-color: red;\n}\n#saveLesson{\n    background-color: green;\n}\n#deleteLesson{\n    background-color: darkred;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".lessonadmin{\r\n    border: 1px solid gray;\r\n    border-radius: 5px;\r\n    margin-top: 20px;\r\n    margin-bottom: 20px;\r\n}\r\n.lessonadmin button{\r\n    margin: 5px;\r\n}\r\n#editLesson{\r\n    background-color: orange;\r\n}\r\n#cancelEditLesson{\r\n    background-color: red;\r\n}\r\n#saveLesson{\r\n    background-color: green;\r\n}\r\n#deleteLesson{\r\n    background-color: darkred;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12121,7 +12244,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".lessoncard{\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\n    border-radius: 5px;\n    padding: 10px;\n    margin: 5px;\n    display: flex;\n    flex-direction: row;\n}\n.lessoncard:hover{\n    box-shadow: 0px 0px 10px 5px rgb(161, 161, 161);\n}\n.lessoncard h1{\n    margin-top: 0px;\n    margin-bottom: 5px;\n}\n.lessoncard p{\n    margin: 0px;\n}\n.lessoncard input{\n    margin-right: 10px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".lessoncard{\r\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\r\n    border-radius: 5px;\r\n    padding: 10px;\r\n    margin: 5px;\r\n    display: flex;\r\n    flex-direction: row;\r\n}\r\n.lessoncard:hover{\r\n    box-shadow: 0px 0px 10px 5px rgb(161, 161, 161);\r\n}\r\n.lessoncard h1{\r\n    margin-top: 0px;\r\n    margin-bottom: 5px;\r\n}\r\n.lessoncard p{\r\n    margin: 0px;\r\n}\r\n.lessoncard input{\r\n    margin-right: 10px;\r\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/css/components/NoPage.css":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/css/components/NoPage.css ***!
+  \*******************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".notFoundContent {\r\n    text-align: center;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -63127,6 +63274,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./resources/css/components/ForgotPasswordSubmit.css":
+/*!***********************************************************!*\
+  !*** ./resources/css/components/ForgotPasswordSubmit.css ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_ForgotPasswordSubmit_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./ForgotPasswordSubmit.css */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/css/components/ForgotPasswordSubmit.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_ForgotPasswordSubmit_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_ForgotPasswordSubmit_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./resources/css/components/Global.css":
 /*!*********************************************!*\
   !*** ./resources/css/components/Global.css ***!
@@ -63334,6 +63511,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_Lessoncard_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./resources/css/components/NoPage.css":
+/*!*********************************************!*\
+  !*** ./resources/css/components/NoPage.css ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_NoPage_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./NoPage.css */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/css/components/NoPage.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_NoPage_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_NoPage_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
