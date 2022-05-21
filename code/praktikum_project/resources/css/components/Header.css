@@ -3,6 +3,7 @@
     padding: 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .login{
     height: 100%;
