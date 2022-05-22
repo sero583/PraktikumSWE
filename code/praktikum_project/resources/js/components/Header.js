@@ -18,9 +18,7 @@ export default function Header(){
                     <img width="60" height="60" src="images/logo512.png" alt="-LOGO-"></img>
                 </Link>
                 <XpBar></XpBar>
-                <Link to="/user">
-                    <UserIcon></UserIcon>
-                </Link>
+                <UserIcon></UserIcon>
             </div>
         );
     }
