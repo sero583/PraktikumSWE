@@ -8,28 +8,42 @@ export default function Course(){
     const id = useParams().course_id;
     
     //fetching data from server
-    const [isLoading, setLoading] = useState(true);
+    const [isCourseLoading, setCourseLoading] = useState(true);
     const [course, setCourse] = useState();
-    let uri = '/api/course/' + id;
+    const [isLessonsLoading, setLessonsLoading] = useState(true);
+    const [lessons, setLessons] = useState();
     useEffect(() => {
-        axios.get(uri).then((response) => {
+        axios.get('/api/course/' + id).then((response) => {
             setCourse(response.data);
-            setLoading(false);
+            setCourseLoading(false);
+        });
+    }, []);
+    useEffect(() => {
+        axios.get('/api/course/' + id + '/lessons').then((response) => {
+            setLessons(response.data);
+            setLessonsLoading(false);
         });
     }, []);
 
-    let lessons;
-    if(id == 1){
-        lessons = [{"id": 1, "course_id": 1, "title": "Name of the first Java Lesson", "description": "Instructions what has to be implemented", "predefined_code": "public class First...", "expected_output":"Hello World", "xp": 20, "next_lesson": 2}, {"id": 2, "course_id": 1, "title": "Name of the second Java Lesson", "description": "Instructions what has to be implemented", "predefined_code": "public class Second...", "expected_output":"Hello World", "xp": 20, "next_lesson": null}];
-    }
-    if(id == 2){
-        lessons = [{"id": 3, "course_id": 2, "title": "Name of the first Python Lesson", "description": "Instructions what has to be implemented", "predefined_code": "print(\"python\")", "expected_output":"python", "xp": 10, "next_lesson": null}]
-    }
-
-    if(isLoading){
+    if(isCourseLoading){
         return(
             <div className='course'>
                 Loading...
+            </div>
+        )
+    }
+
+    if(isLessonsLoading){
+        return(
+            <div className='course'>
+                <div className='innerCourse'>
+                    <CourseAdminButtons />
+                    <h1 id="courseHeadline">{course.title}</h1>
+                    <p id="courseText">{course.description}</p>
+                    <div>
+                        Loading...
+                    </div>
+                </div>
             </div>
         )
     }

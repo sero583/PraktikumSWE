@@ -3,19 +3,48 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Lesson;
 
 class LessonController extends Controller
 {
     public function show($course_id, $lesson_id){
-        if($lesson_id == 1){
-            $lesson = '{"id": 1, "course_id": 1, "title": "Name of the first Java Lesson", "description": "Instructions what has to be implemented", "predefined_code": "public class First...", "expected_output":"Hello World", "xp": 20, "next_lesson": 2}';
-        }
-        if($lesson_id == 2){
-            $lesson = '{"id": 2, "course_id": 1, "title": "Name of the second Java Lesson", "description": "Instructions what has to be implemented", "predefined_code": "public class Second...", "expected_output":"Hello World", "xp": 20, "next_lesson": null}';
-        }
-        if($lesson_id == 3){
-            $lesson = '{"id": 3, "course_id": 2, "title": "Name of the first Python Lesson", "description": "Instructions what has to be implemented", "predefined_code": "print(\"python\")", "expected_output":"python", "xp": 10, "next_lesson": null}';
-        }
+        $lesson = DB::table('lessons')->find($lesson_id);
         return $lesson;
+    }
+
+    public function store(Request $request){
+        //untested
+        $lesson = new Lesson;
+        $lesson->course_id = $request->course_id;
+        $lesson->title = $request->title;
+        $lesson->description = $request->description;
+        $lesson->predefined_code = $request->predefined_code;
+        $lesson->expected_output = $request->expected_output;
+        $lesson->xp = $request->xp;
+        $lesson->next_lesson = $request->next_lesson;
+        $lesson->language = $request->language;
+        $lesson->save();
+    }
+
+    public function update(Request $request, $id){
+        //untested
+        $lesson = Lesson::find($id);
+        $lesson->course_id = $request->course_id;
+        $lesson->title = $request->title;
+        $lesson->description = $request->description;
+        $lesson->predefined_code = $request->predefined_code;
+        $lesson->expected_output = $request->expected_output;
+        $lesson->xp = $request->xp;
+        $lesson->next_lesson = $request->next_lesson;
+        $lesson->language = $request->language;
+        $lesson->save();
+    }
+
+    public function delete($id){
+        //untested
+        $lesson = Lesson::find($id);
+        $lesson->delete();
+        Lesson::truncate();
     }
 }
