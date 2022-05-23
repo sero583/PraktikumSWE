@@ -1,18 +1,11 @@
 .xpdiv{
-    min-height:100px;
     min-width: 600px;
     text-align: center;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-   
 }
 
 .xpdiv > progress{
     width:70%;
     height:50%;
-    
-    
 }
 
 .xpdiv > label{

@@ -5,7 +5,7 @@ export default function UserIcon() {
     return (
         <div className="usericon">
             <Link to="/user">
-                <img src="/images/userIcon.png" width="100px" height="100px" id="userIcon" ></img>  
+                <img src="/images/userIcon.png" width="48px" height="48px" id="userIcon" ></img>  
             </Link>
             <Link to ="/">
             <button id="logoutButton">Logout</button>

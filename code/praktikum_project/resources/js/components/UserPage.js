@@ -18,13 +18,13 @@ export default function UserPage() {
             <div className="outerDiv">
                 <div className="accountInfo">
                     <h2>Account information</h2>
-                    <label for="username">Username</label><br></br>
+                    <label htmlFor="username">Username</label><br></br>
                     <input type="text" id="username" value="test" readOnly="readonly"></input><br></br>
                     
-                    <label for="email">Email</label><br></br>
+                    <label htmlFor="email">Email</label><br></br>
                     <input type="text" id="email" value="test@gmail.com" readOnly="readonly"></input><br></br>
 
-                    <label for="password">Password</label><br></br>         
+                    <label htmlFor="password">Password</label><br></br>         
                     <input type="password" id="password" value="password123"></input><br></br>
                     <strong>Show password</strong>
                     <input type="checkbox" id="checkBox" onClick={showPassword}></input>
@@ -33,7 +33,7 @@ export default function UserPage() {
                 <div className="courseProgress">
                     <h2>Course Progress</h2>
 
-                    <label for="completedCourses">Completed courses</label>
+                    <label htmlFor="completedCourses">Completed courses</label>
                     <div className="wrapperCompleted">
                         <div className="completedItem">Course-1</div>
                         <div className="completedItem">Course-2</div>
@@ -49,7 +49,7 @@ export default function UserPage() {
                     <br></br>
                     <br></br>
                     <br></br>
-                    <label for="startedCourses">Started courses</label>
+                    <label htmlFor="startedCourses">Started courses</label>
                     <div className="wrapperStarted">
                         <div className="startedItem">Course-1</div>
                         <div className="startedItem">Course-2</div>
