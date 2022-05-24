@@ -1,60 +1,119 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Redirect,Response,File;
+use App\Models\User;
+use Auth;
+use Validator;
 use Illuminate\Support\Facades\Hash;
- 
+
 class UserController extends Controller {
-    /**
-     * Catches the registration try. At this point, no real registration is done and the account is not accessible, until registration has been finished.
-     * To finish the registration, the registering user must follow the verification link sent by mail.
-     */
-    public function catchRegistriationTry(Request $req) {
-        $username = $req->input("username");
-        $email = $req->input("email");
-        $hashedPassword = Hash::make($req->input("password"));
+    protected $user;
+
+    public function __construct() {
+        $this->middleware("auth:api", ["except" => ["login", "register","forgotpassword"]]);
+        $this->user = new User;
     }
 
-    /**
-     * This get's executed, when the user clicks on the 'verify my account' link in the welcome mail.
-     */
-    public function finalizeRegistration(Request $req) {
+    public function register(Request $request) {
+        $validator = Validator::make($request->all(),[
+            "name" => "required|string",
+            "email" => "required|string|unique:users",
+            "password" => "required|min:6|confirmed",
+        ]);
+        
+        if($validator->fails()) {
+            return response()->json([
+                "success" => false,
+                "message" => $validator->messages()->toArray()
+            ], 500);
+        }
 
+        $data = [
+            "name" => $request->name,
+            "email" => $request->email,
+            "password" => Hash::make($request->password)
+        ];
+
+        $this->user->create($data);
+        $responseMessage = "Registration successful";
+        return response()->json([
+            "success" => true,
+            "message" => $responseMessage
+        ], 200);
     }
 
-    public function login(Request $req) {
-        $email =  $req->input("email");
-        $password = $req->input("password");
- 
-        $user = DB::table("users")->where("email", $email)->first();
+    public function login(Request $request) {
+        $validator = Validator::make($request->all(),[
+            "email" => "required|string",
+            "password" => "required|min:6",
+        ]);
 
-        if(!Hash::check($password, $user->password)) {
-            // authenticated -> generate access token
+        if($validator->fails()) {
+            return response()->json([
+                "success" => false,
+                "message" => $validator->messages()->toArray()
+            ], 500);
+        }
 
-            echo "Not Matched";
-        } else {
-            // not authenticated -> send to frontend specific response
-
-            //$user = DB::table('users')->where('email',$email)->first();
-           echo $user->email;
+        $credentials = $request->only(["email","password"]);
+        $user = User::where("email", $credentials["email"])->first();
+        
+        if($user) {
+            if(!auth()->attempt($credentials)) {
+                $responseMessage = "Invalid username or password";
+                return response()->json([
+                    "success" => false,
+                    "message" => $responseMessage,
+                    "error" => $responseMessage
+                ], 422);
+            }
+            $accessToken = auth()->user()->createToken("authToken")->accessToken;
+            $responseMessage = "Login Successful";
+            return $this->respondWithToken($accessToken,$responseMessage,auth()->user());
+        } else{
+            $responseMessage = "User does not exist";
+            return response()->json([
+                "success" => false,
+                "message" => $responseMessage,
+                "error" => $responseMessage
+            ], 422);
         }
     }
-    
-    public function register(Request $req) {
-        $name = $req->input('name');
 
-        if(DB::table('users'))
-
-        $email = $req->input('email');
-        $password = Hash::make($req->input('password'));
+    public function forgotpassword(Request $request) {
+        $credentials = $request->only(["email"]);
+        $user = User::where("email", $credentials["email"])->first();
         
-        DB::table('users')->insert([
-            'name' =>   $name,
-            'email' =>  $email ,
-            'password'=> $password
-          ]);
+        // for privacy, server won't reveal if user has been found or not
+        if($user) {
+            $user->sendPasswordResetMail();
+        }
+        
+        return response()->json([
+            "success" => true,
+            "message" => "Reset instruction mail has been sent, if entered mail was an existing one.",
+        ], 200);
+    }
+
+    public function viewProfile() {
+        $responseMessage = "User Profile";
+        $data = Auth::guard("api")->user();
+        return response()->json([
+            "success" => true,
+            "message" => $responseMessage,
+            "data" => $data
+        ], 200);
+    }
+
+    public function logout() {
+        $user = Auth::guard("api")->user()->token();
+        $user->revoke();
+        $responseMessage = "Successfully logged out";
+        return response()->json([
+            "success" => true,
+            "message" => $responseMessage
+        ], 200);
     }
 }

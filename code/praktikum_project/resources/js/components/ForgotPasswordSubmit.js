@@ -6,7 +6,7 @@ export default function ForgotPasswordSubmit() {
             <h1>Email has been sent!</h1>
             <p>Check your inbox for further instructions on how to reset your password.</p>
             <br/>
-            <p><strong>Note that when entering a wrong email address or username, no email will be sent.</strong></p>
+            <p><strong>Note that when entering a wrong email address, no email will be sent.</strong></p>
         </div>
     ); 
 }

@@ -6,10 +6,10 @@ export default function ForgotPassword() {
     const navigate = useNavigate();
 
     function resetPassword() {
-        const email = document.getElementById("emailOrUsername");
+        const email = document.getElementById("email");
 
         // send request to server for reset
-        console.log("Email or username: " + email != null ? "null" : email.textContent);
+        console.log("Email: " + email != null ? "null" : email.textContent);
 
         //if(email!=null) {
             navigate("/forgotpasswordsubmit");
@@ -21,8 +21,8 @@ export default function ForgotPassword() {
             <h1>Forgot your password?</h1>
 
             <div className="innerAccount">
-                <label>Email or Username:</label>
-                <input id="emailOrusername"/>
+                <label>Email:</label>
+                <input id="email"/>
                 <button type="submit" onClick={resetPassword}>Reset password</button>
             </div>
         </div>

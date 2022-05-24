@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,19 +18,20 @@ use App\Http\Controllers\CourseController;
 |
 */
 
-// authentication routes
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
+// auth API routes
  
-Route::post('/register',[UserController::class,'catchRegistriationTry']); 
-Route::post('/login',[UserController::class,'login']);
+/*Route::post('/register',[AuthController::class,'catchRegistriationTry']); 
+Route::post('/login',[AuthController::class,'login']);*/
+
+Route::group(['prefix' => 'users', 'middleware' => 'CORS'], function ($router) {
+    Route::post('/register', [UserController::class, 'register'])->name('register.user');
+    Route::post('/login', [UserController::class, 'login'])->name('login.user');
+    Route::post('/forgotpassword', [UserController::class, 'forgotpassword'])->name('forgotpassword.user');
+    Route::get('/view-profile', [UserController::class, 'viewProfile'])->name('profile.user');
+    Route::get('/logout', [UserController::class, 'logout'])->name('logout.user');
+});
 
 // course routes
 Route::get('course/recent', [CourseController::class, 'recent']);
 Route::apiResource('course', CourseController::class);
 Route::apiResource('course.lesson', LessonController::class);
- 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
