@@ -33,3 +33,13 @@
         min-width: 95%;
     }
 }
+
+.serverError {
+    background-color: red ;
+    padding: 10px ;
+    border: 1px solid darkred ;
+}
+
+.dynamicNewLine {
+    white-space: pre-line;
+  }

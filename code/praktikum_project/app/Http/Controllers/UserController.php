@@ -7,12 +7,13 @@ use App\Models\User;
 use Auth;
 use Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller {
     protected $user;
 
     public function __construct() {
-        $this->middleware("auth:api", ["except" => ["login", "register","forgotpassword"]]);
+        $this->middleware("auth:api", ["except" => ["login", "register","forgotpassword", "test"]]);
         $this->user = new User;
     }
 
@@ -27,7 +28,7 @@ class UserController extends Controller {
             return response()->json([
                 "success" => false,
                 "message" => $validator->messages()->toArray()
-            ], 500);
+            ], 400);
         }
 
         $data = [
@@ -36,12 +37,16 @@ class UserController extends Controller {
             "password" => Hash::make($request->password)
         ];
 
+        if(filter_var($data["email"], FILTER_VALIDATE_EMAIL)===false) {
+            return response()->json([
+                "success" => false,
+                "message" => "Invalid E-Mail address format."
+            ], 400);
+        }
+
         $this->user->create($data);
-        $responseMessage = "Registration successful";
-        return response()->json([
-            "success" => true,
-            "message" => $responseMessage
-        ], 200);
+
+        return $this->respondWithToken($this->user->createToken("authToken")->accessToken, "Registration successful", $this->user);
     }
 
     public function login(Request $request) {
@@ -54,7 +59,7 @@ class UserController extends Controller {
             return response()->json([
                 "success" => false,
                 "message" => $validator->messages()->toArray()
-            ], 500);
+            ], 400);
         }
 
         $credentials = $request->only(["email","password"]);
@@ -69,9 +74,9 @@ class UserController extends Controller {
                     "error" => $responseMessage
                 ], 422);
             }
-            $accessToken = auth()->user()->createToken("authToken")->accessToken;
-            $responseMessage = "Login Successful";
-            return $this->respondWithToken($accessToken,$responseMessage,auth()->user());
+            // $accessToken = auth()->user()->createToken("authToken")->accessToken;
+            // $responseMessage = "Login Successful";
+            return $this->respondWithToken(auth()->user()->createToken("authToken")->accessToken, "Login successful", auth()->user());
         } else{
             $responseMessage = "User does not exist";
             return response()->json([
@@ -84,17 +89,24 @@ class UserController extends Controller {
 
     public function forgotpassword(Request $request) {
         $credentials = $request->only(["email"]);
-        $user = User::where("email", $credentials["email"])->first();
-        
-        // for privacy, server won't reveal if user has been found or not
-        if($user) {
-            $user->sendPasswordResetMail();
+
+        if(array_key_exists("email", $credentials)===true) { 
+            $user = User::where("email", $credentials["email"])->first();
+            
+            // for privacy, server won't reveal if user has been found or not
+            if($user) {
+                $user->sendPasswordResetMail();
+            }
+            
+            return response()->json([
+                "success" => true,
+                "message" => "Reset instruction mail has been sent, if entered mail was an existing one.",
+            ], 200);
         }
-        
         return response()->json([
-            "success" => true,
-            "message" => "Reset instruction mail has been sent, if entered mail was an existing one.",
-        ], 200);
+            "success" => false,
+            "message" => "No email specified.",
+        ], 400);
     }
 
     public function viewProfile() {
@@ -109,11 +121,27 @@ class UserController extends Controller {
 
     public function logout() {
         $user = Auth::guard("api")->user()->token();
-        $user->revoke();
-        $responseMessage = "Successfully logged out";
+        // if($user) {
+            $user->revoke();
+            return response()->json([
+                "success" => true,
+                "message" => "Successfully logged out"
+            ], 200);
+        /*} might be not needed cause middleware already checks
         return response()->json([
-            "success" => true,
-            "message" => $responseMessage
+            "success" => false,
+            "message" => "You are not logged in"
+        ], 422)*/
+    }
+
+    /**
+     * This hook is used for testing stuff
+     */
+    public function test() {
+        Log::info(print_r(get_class(auth()->user()), true));
+
+        return response()->json([
+            "success" => true
         ], 200);
     }
 }

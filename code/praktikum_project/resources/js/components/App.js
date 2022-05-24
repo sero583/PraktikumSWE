@@ -18,9 +18,12 @@ import ForgotPasswordSubmit from './ForgotPasswordSubmit';
 export default function App() {
   const [token, setToken] = useState();
   let shouldRedirect = false;
+  
   if(!token) {
-    shouldRedirect = true;
+    let tokenInCache = window.localStorage.getItem("token");
+    shouldRedirect = tokenInCache !== null;
   }
+
   return (
     <BrowserRouter>
       <Routes>

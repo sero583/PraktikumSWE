@@ -5484,7 +5484,8 @@ function App() {
   var shouldRedirect = false;
 
   if (!token) {
-    shouldRedirect = true;
+    var tokenInCache = window.localStorage.getItem("token");
+    shouldRedirect = tokenInCache !== null;
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.BrowserRouter, {
@@ -6583,10 +6584,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Login)
 /* harmony export */ });
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var _css_components_Account_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css/components/Account.css */ "./resources/css/components/Account.css");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _css_components_Account_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../css/components/Account.css */ "./resources/css/components/Account.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
@@ -6594,17 +6597,17 @@ __webpack_require__.r(__webpack_exports__);
 function Login() {
   //ressource for login
   //https://www.digitalocean.com/community/tutorials/how-to-add-login-authentication-to-react-applications
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
 
   function handleLogIn() {
     // get fields
-    var username_input = document.getElementById("username");
+    var email_input = document.getElementById("email");
     var password_input = document.getElementById("password"); // check them client-side
 
-    if (username_input.value === "") {
-      username_input.classList.add("required");
+    if (email_input.value === "") {
+      email_input.classList.add("required");
       return;
-    } else username_input.classList.remove("required");
+    } else email_input.classList.remove("required");
 
     if (password_input.value === "") {
       password_input.classList.add("required");
@@ -6612,58 +6615,60 @@ function Login() {
     } else password_input.classList.remove("required"); // now check them server-side/try to authenticate
 
 
-    navigate("/home");
-  }
-  /*function handleUserBlur(){
-      const username_input = document.getElementById("username");
-      username_input.classList.remove("required");
-      if(username_input.value === ""){
-          username_input.classList.add("required");
-      }
-  }
-    function handlePassBlur(){
-      const password_input = document.getElementById("password");
-      password_input.classList.remove("required");
-      if(password_input.value === ""){
-          password_input.classList.add("required");
-      }
-  }*/
+    var body = {
+      "email": email_input.value,
+      "password": password_input.value
+    };
+    axios.post('/api/users/login', body).then(function (response) {
+      console.log(response);
 
+      if (response) {
+        if (response.data.success === true) {
+          // save token in browser now and use it for requests, which will be made later
+          window.localStorage.setItem("token", response.data.token);
+          navigate("/home");
+        } else alert("Invalid credentinals");
+      }
+    })["catch"](function (error) {
+      // TODO: make this cleaner
+      alert("Invalid credentinals");
+    });
+  }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     className: "account",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
       children: "Sign in to your account"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "innerAccount",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
-        htmlFor: "username",
-        children: "Username:"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
-        id: "username",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+        htmlFor: "email",
+        children: "Email:"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+        id: "email",
         type: "text"
         /*onBlur={handleUserBlur}*/
 
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
         htmlFor: "password",
         children: "Password:"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
         id: "password",
         type: "password"
         /*onBlur={handlePassBlur}*/
 
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
         type: "submit",
         onClick: handleLogIn,
         children: "Sign in"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
         to: "/forgotpassword",
         children: "Forgot your password?"
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
-      children: ["Not signed up yet? ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+      children: ["Not signed up yet? ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
         to: "/register",
         children: "Create an account"
       })]
@@ -6713,22 +6718,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Register)
 /* harmony export */ });
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var _css_components_Account_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css/components/Account.css */ "./resources/css/components/Account.css");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var _css_components_Account_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../css/components/Account.css */ "./resources/css/components/Account.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
 
 function Register() {
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
+      _useState2 = _slicedToArray(_useState, 2),
+      isRegisterLoading = _useState2[0],
+      setRegisterLoading = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
+      _useState4 = _slicedToArray(_useState3, 2),
+      errorMessage = _useState4[0],
+      setErrorMessage = _useState4[1];
 
   function handleRegister() {
     // get fields
     var username_input = document.getElementById("username");
     var email_input = document.getElementById("email");
-    var password_input = document.getElementById("password"); // check if theyre empty
+    var password_input = document.getElementById("password");
+    var password_repeat_input = document.getElementById("password_repeat"); // check if theyre empty
 
     if (username_input.value === "") {
       username_input.classList.add("required");
@@ -6743,70 +6773,86 @@ function Register() {
     if (password_input.value === "") {
       password_input.classList.add("required");
       return;
-    } else email_input.classList.remove("required"); // TODO: get username, pwd and check stuff
+    } else password_input.classList.remove("required");
+
+    if (password_repeat_input.value === "") {
+      password_repeat_input.classList.add("required");
+      return;
+    } else password_repeat_input.classList.remove("required");
+
+    var body = {
+      "email": email_input.value,
+      "password": password_input.value,
+      "password_confirmation": password_repeat_input.value,
+      "name": username_input.value
+    };
+    axios.post('/api/users/register', body).then(function (response) {
+      if (response) {
+        if (response.data.success === true) {
+          // save token in browser now and use it for requests, which will be made later
+          window.localStorage.setItem("token", response.data.token);
+          navigate("/home");
+        } else setErrorMessage(response.data.message);
+      } else setErrorMessage("Server is offline. Contact admin for fix.");
+    })["catch"](function (error) {
+      var messages = error.response.data.message;
+
+      if (messages) {
+        var serverMessages = "";
+        var lineberakChar = "\n";
+
+        for (var key in messages) {
+          serverMessages += key + ": " + messages[key] + lineberakChar;
+        } // cut off last linebreak with substring
 
 
-    navigate("/home");
+        setErrorMessage(serverMessages.substring(0, serverMessages.length - lineberakChar.length));
+      } else setErrorMessage("Server did not send a message");
+    });
   }
-  /*function handleUserBlur(){
-      const username_input = document.getElementById("username");
-      username_input.classList.remove("required");
-      if(username_input.value === ""){
-          username_input.classList.add("required");
-      }
-  }
-    function handleEmailBlur(){
-      const email_input = document.getElementById("email");
-      email_input.classList.remove("required");
-      if(email_input.value === ""){
-          email_input.classList.add("required");
-      }
-  }
-    function handlePassBlur(){
-      const password_input = document.getElementById("password");
-      password_input.classList.remove("required");
-      if(password_input.value === ""){
-          password_input.classList.add("required");
-      }
-  }*/
 
-
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     className: "account",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
       children: "Create your Account"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "innerAccount",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
         htmlFor: "username",
         children: "Username:"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
         id: "username",
         type: "text"
-        /*onBlur={handleUserBlur}*/
-
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
         htmlFor: "email",
         children: "Email:"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
         id: "email",
         type: "email"
-        /*onBlur={handleEmailBlur}*/
-
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
         htmlFor: "password",
         children: "Password:"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
         id: "password",
         type: "password"
-        /*onBlur={handlePassBlur}*/
-
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+        htmlFor: "password",
+        children: "Repeat password:"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+        id: "password_repeat",
+        type: "password"
+      }), errorMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), errorMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "serverError",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+          className: "dynamicNewLine",
+          children: errorMessage
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
         onClick: handleRegister,
         children: "Register"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
-      children: ["Already have an account? ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+      children: ["Already have an account? ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
         to: "/login",
         children: "Sign in"
       })]
@@ -12133,7 +12179,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".account{\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerAccount{\r\n    display: flex;\r\n    flex-direction: column;\r\n    max-width: 500px;\r\n    min-width: 500px;\r\n}\r\n.account input{\r\n    padding: 5px;\r\n}\r\n.account input:focus{\r\n    outline: 2px solid #37c871;\r\n}\r\n.account button{\r\n    margin: 20px 0px;\r\n}\r\n.account label{\r\n    margin: 5px 0px;\r\n}\r\n.account a{\r\n    color: blue;\r\n}\r\n.required{\r\n    border: 2px solid red;\r\n}\r\n@media screen and (max-width: 530px){\r\n    .innerAccount{\r\n        max-width: 95%;\r\n        min-width: 95%;\r\n    }\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".account{\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerAccount{\r\n    display: flex;\r\n    flex-direction: column;\r\n    max-width: 500px;\r\n    min-width: 500px;\r\n}\r\n.account input{\r\n    padding: 5px;\r\n}\r\n.account input:focus{\r\n    outline: 2px solid #37c871;\r\n}\r\n.account button{\r\n    margin: 20px 0px;\r\n}\r\n.account label{\r\n    margin: 5px 0px;\r\n}\r\n.account a{\r\n    color: blue;\r\n}\r\n.required{\r\n    border: 2px solid red;\r\n}\r\n@media screen and (max-width: 530px){\r\n    .innerAccount{\r\n        max-width: 95%;\r\n        min-width: 95%;\r\n    }\r\n}\r\n\r\n.serverError {\r\n    background-color: red ;\r\n    padding: 10px ;\r\n    border: 1px solid darkred ;\r\n}\r\n\r\n.dynamicNewLine {\r\n    white-space: pre-line;\r\n  }", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
