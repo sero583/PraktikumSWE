@@ -16,9 +16,19 @@ use App\Http\Controllers\CourseController;
 |
 */
 
+// authentication routes
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});*/
+ 
+Route::post('/register',[UserController::class,'catchRegistriationTry']); 
+Route::post('/login',[UserController::class,'login']);
+
+// course routes
 Route::get('course/recent', [CourseController::class, 'recent']);
 Route::apiResource('course', CourseController::class);
 Route::apiResource('course.lesson', LessonController::class);
+ 
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
