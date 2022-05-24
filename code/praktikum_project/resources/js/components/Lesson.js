@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import LessonAdminButtons from './LessonAdminButtons';
 import { useEffect, useState } from 'react';
 
+
+
 export default function Lesson(){
     const course_id = useParams().course_id;
     const id = useParams().lesson_id;
@@ -23,12 +25,16 @@ export default function Lesson(){
     const backToCourse = () => {
         navigate("/course/" + lesson.course_id);
     }
+
+
     const nextLesson = () => {
         if(lesson.next_lesson){
             navigate("/course/" + lesson.course_id + "/lesson/" + lesson.next_lesson);
             window.location.reload();
         }
         else{
+            
+            // Link to Pop-Up window
             navigate("/course/" + lesson.course_id);
         }
     }
@@ -67,5 +73,6 @@ export default function Lesson(){
                 </div>
             </div>
         </div>
+
     );
 }
