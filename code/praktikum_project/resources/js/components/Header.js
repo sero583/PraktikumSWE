@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../css/components/Header.css';
 import UserIcon from './UserIcon';
+import XpBar from './XpBar';
 
 export default function Header(){
     const [token, setToken] = useState();
@@ -16,9 +17,8 @@ export default function Header(){
                 <Link to="/home">
                     <img width="60" height="60" src="images/logo512.png" alt="-LOGO-"></img>
                 </Link>
-                <Link to="/user">
-                    <UserIcon />
-                </Link>
+                <XpBar></XpBar>
+                <UserIcon></UserIcon>
             </div>
         );
     }
