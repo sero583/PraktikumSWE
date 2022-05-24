@@ -24,6 +24,7 @@ export default function Login(){
         } else password_input.classList.remove("required");
 
         // now check them server-side/try to authenticate
+        
 
         navigate("/home");
     }
@@ -47,7 +48,7 @@ export default function Login(){
 
     return (
         <div className="account">
-            <h1>Log into your account</h1>
+            <h1>Sign in to your account</h1>
 
             <div className="innerAccount">
                 <label htmlFor='username'>Username:</label>

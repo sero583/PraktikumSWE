@@ -9,6 +9,11 @@ button:hover{
     cursor: pointer;
     background-color: #3ed47a;
 }
+
+body {
+    border-radius: 15px;
+}
+
 div{
     font-family: Arial, Helvetica, sans-serif;
 }

@@ -6027,7 +6027,7 @@ function Footer() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
     className: "footer",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
-      children: "Trademark Engineer-Trio bla bla..."
+      children: "\xA9 2022 Engineers-Trio. All Rights Reserved."
     })
   });
 }
@@ -6267,6 +6267,7 @@ function Home() {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
       className: "innerHome",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
+        className: "titleLandingPage",
         children: "Code Academy"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
         children: "Code Academy wants to offer an easy way to learn the most commonly used programming languages. Our lessons are easy to follow and thanks to our built-in compiler and runtime you don't have to waste any time setting up an environment. Have fun coding!"
@@ -6636,7 +6637,7 @@ function Login() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: "account",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
-      children: "Log into your account"
+      children: "Sign in to your account"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
       className: "innerAccount",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
@@ -6809,9 +6810,9 @@ function Register() {
         children: "Register"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
-      children: ["Already have an Account? ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+      children: ["Already have an account? ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
         to: "/login",
-        children: "Log in"
+        children: "Sign in"
       })]
     })]
   });
@@ -12100,7 +12101,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "button{\r\n    background-color: #37c871;\r\n    padding: 10px;\r\n    border: none;\r\n    border-radius: 5px;\r\n    font-size: 20px;\r\n}\r\nbutton:hover{\r\n    cursor: pointer;\r\n    background-color: #3ed47a;\r\n}\r\ndiv{\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\na{\r\n    color: black;\r\n    text-decoration: none;\r\n}\r\n.hidden{\r\n    display: none;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "button{\r\n    background-color: #37c871;\r\n    padding: 10px;\r\n    border: none;\r\n    border-radius: 5px;\r\n    font-size: 20px;\r\n}\r\nbutton:hover{\r\n    cursor: pointer;\r\n    background-color: #3ed47a;\r\n}\r\n\r\nbody {\r\n    border-radius: 15px;\r\n}\r\n\r\ndiv{\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\na{\r\n    color: black;\r\n    text-decoration: none;\r\n}\r\n.hidden{\r\n    display: none;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12148,7 +12149,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".home{\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerHome{\r\n    padding-left: 20px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    max-width: 1000px;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".home{\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerHome{\r\n    padding-left: 20px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    max-width: 1000px;\r\n}\r\n\r\n.titleLandingPage{\r\n    text-align: center;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

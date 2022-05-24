@@ -67,7 +67,7 @@ export default function Register(){
                 <input id="password" type="password" /*onBlur={handlePassBlur}*/></input>
                 <button onClick={handleRegister}>Register</button>
             </div>
-            <p>Already have an Account? <Link to="/login">Log in</Link></p>
+            <p>Already have an account? <Link to="/login">Sign in</Link></p>
         </div>
     );
 }
