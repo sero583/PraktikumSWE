@@ -67,18 +67,37 @@ export default function Register(){
         });
     }
 
+    // listeners
+    function registerKeydownListener() {
+        const username_input = document.getElementById("username");
+        const email_input = document.getElementById("email");
+        const password_input = document.getElementById("password");
+        const password_repeat_input = document.getElementById("password_repeat");
+
+        username_input.addEventListener("keydown", checkEnterPress);
+        email_input.addEventListener("keydown", checkEnterPress);
+        password_input.addEventListener("keydown", checkEnterPress);
+        password_repeat_input.addEventListener("keydown", checkEnterPress);
+    }
+
+    function checkEnterPress(event) {
+        if(event.key==="Enter") {
+            handleRegister();
+        }
+    }
+
     return (
         <div className="account">
             <h1>Create your Account</h1>
             <div className='innerAccount'>
                 <label htmlFor="username">Username:</label>
-                <input id="username" type="text" />
+                <input onClick={registerKeydownListener} id="username" type="text" />
                 <label htmlFor="email">Email:</label>
-                <input id="email" type="email" />
+                <input onClick={registerKeydownListener} id="email" type="email" />
                 <label htmlFor="password">Password:</label>
-                <input id="password" type="password" />
+                <input onClick={registerKeydownListener} id="password" type="password" />
                 <label htmlFor="password">Repeat password:</label>
-                <input id="password_repeat" type="password" />
+                <input onClick={registerKeydownListener} id="password_repeat" type="password" />
 
                 { errorMessage && <br/>}
                 { errorMessage && <div className="serverError"><p className="dynamicNewLine">{errorMessage}</p></div> }

@@ -110,13 +110,20 @@ class UserController extends Controller {
     }
 
     public function viewProfile() {
-        $responseMessage = "User Profile";
         $data = Auth::guard("api")->user();
         return response()->json([
             "success" => true,
-            "message" => $responseMessage,
+            "message" => "User Profile",
             "data" => $data
         ], 200);
+    }
+
+    public function validateToken() {
+        $res = Auth::guard("api")->check();
+        return response()->json([
+            "success" => $res,
+            "message" => ($res ? "Token valid" : "Token invalid")
+        ], $res ? 200 : 500);
     }
 
     public function logout() {

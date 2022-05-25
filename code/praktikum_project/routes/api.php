@@ -19,20 +19,21 @@ use App\Http\Controllers\UserController;
 */
 
 
-Route::get('test', [UserController::class, 'test'])->name('test.user');
+Route::get("test", [UserController::class, "test"])->name("test.user");
 
 // course routes
-Route::get('course/recent', [CourseController::class, 'recent']);
-Route::apiResource('course', CourseController::class);
-Route::apiResource('course.lesson', LessonController::class);
+Route::get("course/recent", [CourseController::class, "recent"]);
+Route::apiResource("course", CourseController::class);
+Route::apiResource("course.lesson", LessonController::class);
 
 // auth API routes
-Route::group(['prefix' => 'users', 'middleware' => 'CORS'], function ($router) {
+Route::group(["prefix" => "users", "middleware" => "CORS"], function($router) {
     // POST
-    Route::post('/register', [UserController::class, 'register'])->name('register.user');
-    Route::post('/login', [UserController::class, 'login'])->name('login.user');
-    Route::post('/forgotpassword', [UserController::class, 'forgotpassword'])->name('forgotpassword.user');
+    Route::post("/register", [UserController::class, "register"])->name("register.user");
+    Route::post("/login", [UserController::class, "login"])->name("login.user");
+    Route::post("/forgotpassword", [UserController::class, "forgotpassword"])->name("forgotpassword.user");
     // GET
-    Route::get('/view-profile', [UserController::class, 'viewProfile'])->name('profile.user');
-    Route::get('/logout', [UserController::class, 'logout'])->name('logout.user');
+    Route::get("/view-profile", [UserController::class, "viewProfile"])->name("profile.user");
+    Route::get("/validate-token", [UserController::class, "validateToken"])->name("validatetoken.user");
+    Route::get("/logout", [UserController::class, "logout"])->name("logout.user");
 });
