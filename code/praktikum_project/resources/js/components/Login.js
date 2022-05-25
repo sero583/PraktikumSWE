@@ -37,8 +37,8 @@ export default function Login() {
                 if(response.data.success===true) {
                     // save token in browser now and use it for requests, which will be made later
                     window.localStorage.setItem("token", response.data.token);
-
-                    navigate("/home");
+                    navigate("/");
+                    window.location.reload()
                 } else alert("Invalid credentinals");
             }
         }).catch(function(error) {

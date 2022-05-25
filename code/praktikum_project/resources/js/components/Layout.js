@@ -3,11 +3,11 @@ import Header from './Header';
 import Footer from './Footer';
 import '../../css/components/Layout.css'
 
-export default function Layout(){
+export default function Layout(token) {
     return (
         <div className="layout">
             <div>
-                <Header />
+                <Header receiveValue={token} />
                 <Outlet />
             </div>
             <Footer />

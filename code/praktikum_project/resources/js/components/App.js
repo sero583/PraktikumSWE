@@ -50,7 +50,7 @@ export default function App() {
   return ( isTokenValidated!=null ?
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Layout receiveValue={token} />}>
           <Route index element={shouldRedirect() ? <LandingPage /> : (<Home />)} />
           <Route path="home" element={shouldRedirect() ? (<Navigate replace to="/" />) : (<Home />)} />
           <Route path="course/:course_id" element={shouldRedirect() ? (<Navigate replace to="/" />) : (<Course />)} />
