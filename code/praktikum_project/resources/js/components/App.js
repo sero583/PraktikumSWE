@@ -27,13 +27,7 @@ export default function App() {
         headers: { "Authorization": "Bearer " + cachedToken }
       }).then(function(response) {
         if(response) {
-          console.log("Data: ");
-          console.log(response.data);
-          console.log("Status: " + response.data.status);
-
           if(response.data.success===true) {
-            console.log("Success!");
-  
             setToken(cachedToken);
             setTokenValidated(true);
           } else {
@@ -41,13 +35,12 @@ export default function App() {
             window.localStorage.removeItem("token");
             setTokenValidated(false);
             setToken(null);
-            console.log("Invalid!!!");
           }
           console.log(response);
         } else alert("Couldn't verify token.");
       }).catch(function(error) {
           // invalid token -> delete and return false
-          console.log("Error!!!");
+          console.log("Error during token validation:");
           console.log(error);
           window.localStorage.removeItem("token");
           setTokenValidated(false);

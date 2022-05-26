@@ -22,6 +22,15 @@ export default function UserIcon(token) {
         if(!modal) {
             toggleModal();
         }
+        // sending axios request to invalidate/"destroy" current token
+        axios.get("/api/users/logout", {
+        headers: { "Authorization": "Bearer " + window.localStorage.getItem("token") }
+        }).then(function(response) {
+            // ignore response
+        }).catch(function (error) {
+          console.log("Error during logout:");
+          console.log(error);
+        });
         // remove token from storage
         window.localStorage.removeItem("token");
         token = null;

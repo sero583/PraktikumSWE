@@ -5497,12 +5497,7 @@ function App() {
         }
       }).then(function (response) {
         if (response) {
-          console.log("Data: ");
-          console.log(response.data);
-          console.log("Status: " + response.data.status);
-
           if (response.data.success === true) {
-            console.log("Success!");
             setToken(cachedToken);
             setTokenValidated(true);
           } else {
@@ -5510,14 +5505,13 @@ function App() {
             window.localStorage.removeItem("token");
             setTokenValidated(false);
             setToken(null);
-            console.log("Invalid!!!");
           }
 
           console.log(response);
         } else alert("Couldn't verify token.");
       })["catch"](function (error) {
         // invalid token -> delete and return false
-        console.log("Error!!!");
+        console.log("Error during token validation:");
         console.log(error);
         window.localStorage.removeItem("token");
         setTokenValidated(false);
@@ -6991,8 +6985,18 @@ function UserIcon(token) {
   function logOut() {
     if (!modal) {
       toggleModal();
-    } // remove token from storage
+    } // sending axios request to invalidate/"destroy" current token
 
+
+    axios.get("/api/users/logout", {
+      headers: {
+        "Authorization": "Bearer " + window.localStorage.getItem("token")
+      }
+    }).then(function (response) {// ignore response
+    })["catch"](function (error) {
+      console.log("Error during logout:");
+      console.log(error);
+    }); // remove token from storage
 
     window.localStorage.removeItem("token");
     token = null;
