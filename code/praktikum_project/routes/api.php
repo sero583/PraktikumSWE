@@ -26,14 +26,15 @@ Route::get("course/recent", [CourseController::class, "recent"]);
 Route::apiResource("course", CourseController::class);
 Route::apiResource("course.lesson", LessonController::class);
 
+    // important notice! Others can use dash, however if you use it here, it will only give you headache. Avoid dash (-) character at API routes.
 // auth API routes
 Route::group(["prefix" => "users", "middleware" => "CORS"], function($router) {
+    // GET
+    Route::get("/view-profile", [UserController::class, "viewprofile"])->name("profile.user");
+    Route::get("/validate-token", [UserController::class, "validatetoken"])->name("validatetoken.user");
+    Route::get("/logout", [UserController::class, "logout"])->name("logout.user");
     // POST
     Route::post("/register", [UserController::class, "register"])->name("register.user");
-    Route::post("/login", [UserController::class, "login"])->name("login.user");
     Route::post("/forgotpassword", [UserController::class, "forgotpassword"])->name("forgotpassword.user");
-    // GET
-    Route::get("/view-profile", [UserController::class, "viewProfile"])->name("profile.user");
-    Route::get("/validate-token", [UserController::class, "validateToken"])->name("validatetoken.user");
-    Route::get("/logout", [UserController::class, "logout"])->name("logout.user");
+    Route::post("/login", [UserController::class, "login"])->name("login.user");
 });

@@ -5481,48 +5481,92 @@ function App() {
       token = _useState2[0],
       setToken = _useState2[1];
 
-  var shouldRedirect = false;
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isTokenValidated = _useState4[0],
+      setTokenValidated = _useState4[1]; // set to true, when valid - set to false when expired/invalid
 
-  if (!token) {
-    var tokenInCache = window.localStorage.getItem("token");
-    shouldRedirect = tokenInCache !== null;
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var cachedToken = window.localStorage.getItem("token");
+
+    if (cachedToken) {
+      axios.get("/api/users/verify-token", {
+        headers: {
+          "Authorization": "Bearer " + cachedToken
+        }
+      }).then(function (response) {
+        if (response) {
+          console.log("Data: ");
+          console.log(response.data);
+          console.log("Status: " + response.data.status);
+
+          if (response.data.status === 200) {
+            console.log("Success!");
+            setToken(cachedToken);
+            setTokenValidated(true);
+          } else {
+            // token invalid
+            window.localStorage.removeItem("token");
+            setTokenValidated(false);
+            setToken(null);
+            console.log("Invalid!!!");
+          }
+
+          console.log(response);
+        } else alert("Couldn't verify token.");
+      })["catch"](function (error) {
+        // invalid token -> delete and return false
+        console.log("Error!!!");
+        console.log(error);
+        window.localStorage.removeItem("token");
+        setTokenValidated(false);
+      });
+    } else setTokenValidated(false); // not logged in
+
+  }, []);
+
+  function shouldRedirect() {
+    return !isTokenValidated;
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.BrowserRouter, {
+  return isTokenValidated != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.BrowserRouter, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Routes, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
         path: "/",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Layout__WEBPACK_IMPORTED_MODULE_2__["default"], {}),
+        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Layout__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          receiveValue: token
+        }),
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           index: true,
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_LandingPage__WEBPACK_IMPORTED_MODULE_3__["default"], {})
+          element: shouldRedirect() ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_LandingPage__WEBPACK_IMPORTED_MODULE_3__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Home__WEBPACK_IMPORTED_MODULE_4__["default"], {})
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "home",
-          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
+          element: shouldRedirect() ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
             replace: true,
             to: "/"
           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Home__WEBPACK_IMPORTED_MODULE_4__["default"], {})
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "course/:course_id",
-          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
+          element: shouldRedirect() ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
             replace: true,
             to: "/"
           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Course__WEBPACK_IMPORTED_MODULE_5__["default"], {})
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "course/:course_id/lesson",
-          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
+          element: shouldRedirect() ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
             replace: true,
             to: "/"
           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_CreateLesson__WEBPACK_IMPORTED_MODULE_11__["default"], {})
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "course/:course_id/lesson/:lesson_id",
-          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
+          element: shouldRedirect() ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
             replace: true,
             to: "/"
           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Lesson__WEBPACK_IMPORTED_MODULE_6__["default"], {})
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
           path: "user",
-          element: shouldRedirect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
+          element: shouldRedirect() ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
             replace: true,
             to: "/"
           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_UserPage__WEBPACK_IMPORTED_MODULE_10__["default"], {})
@@ -5546,7 +5590,8 @@ function App() {
         })]
       })
     })
-  });
+  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {}) // Just return div for white screen, so until the token hasn't been verified (aka loading), nothing will be shown. Afterwards the application will launch.
+  ;
 }
 
 if (document.getElementById('app')) {
@@ -6132,17 +6177,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UserIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UserIcon */ "./resources/js/components/UserIcon.js");
 /* harmony import */ var _XpBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./XpBar */ "./resources/js/components/XpBar.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -6150,20 +6184,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-function Header() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
-      _useState2 = _slicedToArray(_useState, 2),
-      token = _useState2[0],
-      setToken = _useState2[1];
-
-  var loggedIn = true;
-
-  if (token) {
-    loggedIn = true;
-  }
-
-  if (loggedIn) {
+function Header(token) {
+  if (token !== null) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       className: "header",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
@@ -6174,7 +6196,9 @@ function Header() {
           src: "images/logo512.png",
           alt: "-LOGO-"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_XpBar__WEBPACK_IMPORTED_MODULE_3__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_UserIcon__WEBPACK_IMPORTED_MODULE_2__["default"], {})]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_XpBar__WEBPACK_IMPORTED_MODULE_3__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_UserIcon__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        receiveValue: token.receiveValue
+      })]
     });
   } else {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
@@ -6297,11 +6321,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function Layout() {
+function Layout(token) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
     className: "layout",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Header__WEBPACK_IMPORTED_MODULE_0__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Outlet, {})]
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Header__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        receiveValue: token.receiveValue
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Outlet, {})]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Footer__WEBPACK_IMPORTED_MODULE_1__["default"], {})]
   });
 }
@@ -6620,20 +6646,35 @@ function Login() {
       "email": email_input.value,
       "password": password_input.value
     };
-    axios.post('/api/users/login', body).then(function (response) {
+    axios.post("/api/users/login", body).then(function (response) {
       console.log(response);
 
       if (response) {
         if (response.data.success === true) {
           // save token in browser now and use it for requests, which will be made later
           window.localStorage.setItem("token", response.data.token);
-          navigate("/home");
-        } else alert("Invalid credentinals");
-      }
+          navigate("/");
+          window.location.reload();
+        } else alert("Invalid credentinals!");
+      } else alert("Invalid response received!");
     })["catch"](function (error) {
       // TODO: make this cleaner
       alert("Invalid credentinals");
     });
+  } // listeners
+
+
+  function registerKeydownListener() {
+    var email_input = document.getElementById("email");
+    var password_input = document.getElementById("password");
+    email_input.addEventListener("keydown", checkEnterPress);
+    password_input.addEventListener("keydown", checkEnterPress);
+  }
+
+  function checkEnterPress(event) {
+    if (event.key === "Enter") {
+      handleLogIn();
+    }
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -6646,6 +6687,7 @@ function Login() {
         htmlFor: "email",
         children: "Email:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+        onClick: registerKeydownListener,
         id: "email",
         type: "text"
         /*onBlur={handleUserBlur}*/
@@ -6654,6 +6696,7 @@ function Login() {
         htmlFor: "password",
         children: "Password:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+        onClick: registerKeydownListener,
         id: "password",
         type: "password"
         /*onBlur={handlePassBlur}*/
@@ -6787,14 +6830,23 @@ function Register() {
       "password_confirmation": password_repeat_input.value,
       "name": username_input.value
     };
-    axios.post('/api/users/register', body).then(function (response) {
+    axios.post("/api/users/register", body).then(function (response) {
       if (response) {
+        //console.log("Response received!");
+        //console.log(response);
         if (response.data.success === true) {
           // save token in browser now and use it for requests, which will be made later
+          //console.log("Success!");
+          //console.log("Token: " + response.data.token);
           window.localStorage.setItem("token", response.data.token);
-          navigate("/home");
-        } else setErrorMessage(response.data.message);
-      } else setErrorMessage("Server is offline. Contact admin for fix.");
+          location.href = "/home";
+        } else {
+          //console.log("Something went wrong 1");
+          setErrorMessage(response.data.message);
+        }
+      } else {
+        setErrorMessage("Server is offline. Contact admin for fix."); //console.log("Something went wrong 2");
+      }
     })["catch"](function (error) {
       var messages = error.response.data.message;
 
@@ -6810,6 +6862,24 @@ function Register() {
         setErrorMessage(serverMessages.substring(0, serverMessages.length - lineberakChar.length));
       } else setErrorMessage("Server did not send a message");
     });
+  } // listeners
+
+
+  function registerKeydownListener() {
+    var username_input = document.getElementById("username");
+    var email_input = document.getElementById("email");
+    var password_input = document.getElementById("password");
+    var password_repeat_input = document.getElementById("password_repeat");
+    username_input.addEventListener("keydown", checkEnterPress);
+    email_input.addEventListener("keydown", checkEnterPress);
+    password_input.addEventListener("keydown", checkEnterPress);
+    password_repeat_input.addEventListener("keydown", checkEnterPress);
+  }
+
+  function checkEnterPress(event) {
+    if (event.key === "Enter") {
+      handleRegister();
+    }
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -6822,24 +6892,28 @@ function Register() {
         htmlFor: "username",
         children: "Username:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+        onClick: registerKeydownListener,
         id: "username",
         type: "text"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
         htmlFor: "email",
         children: "Email:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+        onClick: registerKeydownListener,
         id: "email",
         type: "email"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
         htmlFor: "password",
         children: "Password:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+        onClick: registerKeydownListener,
         id: "password",
         type: "password"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
         htmlFor: "password",
         children: "Repeat password:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+        onClick: registerKeydownListener,
         id: "password_repeat",
         type: "password"
       }), errorMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), errorMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
@@ -6875,7 +6949,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ UserIcon)
 /* harmony export */ });
 /* harmony import */ var _css_components_UserIcon_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css/components/UserIcon.css */ "./resources/css/components/UserIcon.css");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _css_components_Modal_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../css/components/Modal.css */ "./resources/css/components/Modal.css");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
@@ -6897,28 +6972,71 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function UserIcon() {
-  //Testbeispiel für Pop-Up Fenster
-  //state fängt false an weil sonst direkt popUp fenster zu sehen wäre bei Neuladen der Seite
+function UserIcon(token) {
+  // unwrap token
+  token = token.receiveValue; //Testbeispiel für Pop-Up Fenster
+  // state fängt bei false an, weil sonst das popUp fenster direkt beim Starten der Seite sichtbar wäre
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
       modal = _useState2[0],
-      setModal = _useState2[1]; //mit use-state wird das popUp component gezeigt/versteckt
+      setModal = _useState2[1];
 
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)(); //mit use-state wird das popUp component gezeigt/versteckt
 
   var toggleModal = function toggleModal() {
     setModal(!modal);
   };
 
-  if (modal) {
-    document.body.classList.add('active-modal');
-  } else {
-    document.body.classList.remove('active-modal');
+  function logOut() {
+    if (!modal) {
+      toggleModal();
+    } // remove token from storage
+
+
+    window.localStorage.removeItem("token");
+    token = null;
   }
+
+  function log() {
+    if (token === undefined) {
+      // logged out -> user wants to login
+      logIn();
+    } else {
+      // logged in -> user wants to log out
+      logOut();
+    }
+  }
+
+  function logIn() {
+    navigate("/login");
+  }
+
+  function backToLandingPage() {
+    // navigate("/");
+    toggleModal(); // window.location.reload()
+
+    document.location.href = "/";
+  }
+  /* redundant? if(modal) {
+      document.body.classList.add('active-modal')
+  } else {
+      document.body.classList.remove('active-modal')
+  }*/
+
+
+  console.log("Show me token: " + token);
+  console.log(token);
+  /*
+      Old code
+          { token===undefined ?
+              <button id="loginButton" onClick={log}>Login</button> :
+              <button id="logoutButton" onClick={logOut}>Logout</button> }
+              */
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
     className: "usericon",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
       to: "/user",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
         src: "/images/userIcon.png",
@@ -6927,25 +7045,21 @@ function UserIcon() {
         id: "userIcon"
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-      id: "logoutButton",
-      onClick: toggleModal,
-      children: "Logout"
+      id: "logButton",
+      onClick: log,
+      children: token === undefined ? "Login" : "Logout"
     }), modal && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
       className: "modal",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        onClick: toggleModal,
         className: "overlay"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "modal-content",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
-          children: "You have successfully logged out."
+          children: "You have been successfully logged out."
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
           className: "close-modal",
-          onClick: toggleModal,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
-            to: "/",
-            children: "Back to the landing page"
-          })
+          onClick: backToLandingPage,
+          children: "Back to the landing page"
         })]
       })]
     })]

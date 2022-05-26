@@ -13,7 +13,7 @@ class UserController extends Controller {
     protected $user;
 
     public function __construct() {
-        $this->middleware("auth:api", ["except" => ["login", "register","forgotpassword", "test"]]);
+        $this->middleware("auth:api", ["except" => ["login", "register","forgotpassword", "validatetoken", "test"]]);
         $this->user = new User;
     }
 
@@ -21,7 +21,7 @@ class UserController extends Controller {
         $validator = Validator::make($request->all(),[
             "name" => "required|string",
             "email" => "required|string|unique:users",
-            "password" => "required|min:6|confirmed",
+            "password" => "required|min:6|confirmed"
         ]);
         
         if($validator->fails()) {
@@ -45,8 +45,10 @@ class UserController extends Controller {
         }
 
         $this->user->create($data);
-
-        return $this->respondWithToken($this->user->createToken("authToken")->accessToken, "Registration successful", $this->user);
+        // get user instance
+        $user = User::where("email", $data["email"])->first();
+        // create token
+        return $this->respondWithToken($user->createToken("authToken")->accessToken, "Registration successful", $this->user);
     }
 
     public function login(Request $request) {
@@ -109,7 +111,7 @@ class UserController extends Controller {
         ], 400);
     }
 
-    public function viewProfile() {
+    public function viewprofile() {
         $data = Auth::guard("api")->user();
         return response()->json([
             "success" => true,
@@ -118,12 +120,14 @@ class UserController extends Controller {
         ], 200);
     }
 
-    public function validateToken() {
+    // Prevent middleware from checking by exluding it from it. This is made, so the client gets a unique response, cause the middleware response doesn't contains success for e. g.
+    public function validatetoken(Request $request) {
         $res = Auth::guard("api")->check();
+
         return response()->json([
             "success" => $res,
             "message" => ($res ? "Token valid" : "Token invalid")
-        ], $res ? 200 : 500);
+        ], $res ? 200 : 401);
     }
 
     public function logout() {
