@@ -1,7 +1,7 @@
 import '../../css/components/Lesson.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import LessonAdminButtons from './LessonAdminButtons';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 
 
@@ -40,13 +40,20 @@ export default function Lesson(){
     }
 
     //when run-button clicked
+    const [status, setStatus] = useState();
+    const out = useRef();
     function handleRun(){
-        const code = document.getElementById("input").value;
-
-        //send code to server and get output
-        const output = "Run finished with code:\n" + code;
-
-        document.getElementById("output").textContent = output;
+        document.getElementById("runButton").classList.add('running');
+        axios.post('/api/run/', {
+            lesson_id: id,
+            code: document.getElementById("input").value,
+            language: lesson.language
+        })
+        .then((response) => {
+            setStatus(response.data.status);
+            out.current.value = response.data.text;
+        });
+        document.getElementById("runButton").classList.remove('running');
     }
 
     if(isLoading){
@@ -64,9 +71,9 @@ export default function Lesson(){
                 <h1 id="lessonHeadline">{lesson.title}</h1>
                 <p id="lessonText">{lesson.description}</p>
                 <textarea id="input" rows="50"></textarea>
-                <button onClick={handleRun}>Run &gt;&gt;&gt;</button>
+                <button id="runButton" onClick={handleRun}>Run &gt;&gt;&gt;</button>
                 <h2>Output of the Code:</h2>
-                <textarea id="output" rows="5" placeholder="The output of your Code will appear here" readOnly></textarea>
+                <textarea ref={out} id="output" rows="5" placeholder="The output of your Code will appear here" readOnly></textarea>
                 <div id='navButtons'>
                     <button onClick={backToCourse}>Back to course</button>
                     <button onClick={nextLesson}>Next lesson</button>

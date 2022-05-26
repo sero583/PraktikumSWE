@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CodeController;
 
 
 /*
@@ -18,8 +19,10 @@ use App\Http\Controllers\UserController;
 |
 */
 
-
 Route::get("test", [UserController::class, "test"])->name("test.user");
+
+//code execution routes
+Route::post('run', [CodeController::class, 'run']);
 
 // course routes
 Route::get("course/recent", [CourseController::class, "recent"]);

@@ -28,6 +28,9 @@
     width: fit-content;
     margin-top: 10px;
 }
+.lesson .running{
+    background-color: gray;
+}
 #navButtons{
     display: flex;
     justify-content: space-between;

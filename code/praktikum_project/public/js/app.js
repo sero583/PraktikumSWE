@@ -6413,11 +6413,24 @@ function Lesson() {
   }; //when run-button clicked
 
 
-  function handleRun() {
-    var code = document.getElementById("input").value; //send code to server and get output
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(),
+      _useState6 = _slicedToArray(_useState5, 2),
+      status = _useState6[0],
+      setStatus = _useState6[1];
 
-    var output = "Run finished with code:\n" + code;
-    document.getElementById("output").textContent = output;
+  var out = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
+
+  function handleRun() {
+    document.getElementById("runButton").classList.add('running');
+    axios.post('/api/run/', {
+      lesson_id: id,
+      code: document.getElementById("input").value,
+      language: lesson.language
+    }).then(function (response) {
+      setStatus(response.data.status);
+      out.current.value = response.data.text;
+    });
+    document.getElementById("runButton").classList.remove('running');
   }
 
   if (isLoading) {
@@ -6443,11 +6456,13 @@ function Lesson() {
         id: "input",
         rows: "50"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+        id: "runButton",
         onClick: handleRun,
         children: "Run >>>"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
         children: "Output of the Code:"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("textarea", {
+        ref: out,
         id: "output",
         rows: "5",
         placeholder: "The output of your Code will appear here",
@@ -12344,7 +12359,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".account{\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerAccount{\r\n    display: flex;\r\n    flex-direction: column;\r\n    max-width: 500px;\r\n    min-width: 500px;\r\n}\r\n.account input{\r\n    padding: 5px;\r\n}\r\n.account input:focus{\r\n    outline: 2px solid #37c871;\r\n}\r\n.account button{\r\n    margin: 20px 0px;\r\n}\r\n.account label{\r\n    margin: 5px 0px;\r\n}\r\n.account a{\r\n    color: blue;\r\n}\r\n.required{\r\n    border: 2px solid red;\r\n}\r\n@media screen and (max-width: 530px){\r\n    .innerAccount{\r\n        max-width: 95%;\r\n        min-width: 95%;\r\n    }\r\n}\r\n\r\n.serverError {\r\n    background-color: red ;\r\n    padding: 10px ;\r\n    border: 1px solid darkred ;\r\n}\r\n\r\n.dynamicNewLine {\r\n    white-space: pre-line;\r\n  }", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".account{\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.innerAccount{\n    display: flex;\n    flex-direction: column;\n    max-width: 500px;\n    min-width: 500px;\n}\n.account input{\n    padding: 5px;\n}\n.account input:focus{\n    outline: 2px solid #37c871;\n}\n.account button{\n    margin: 20px 0px;\n}\n.account label{\n    margin: 5px 0px;\n}\n.account a{\n    color: blue;\n}\n.required{\n    border: 2px solid red;\n}\n@media screen and (max-width: 530px){\n    .innerAccount{\n        max-width: 95%;\n        min-width: 95%;\n    }\n}\n\n.serverError {\n    background-color: red ;\n    padding: 10px ;\n    border: 1px solid darkred ;\n}\n\n.dynamicNewLine {\n    white-space: pre-line;\n  }", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12368,7 +12383,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".course{\r\n    padding: 10px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerCourse{\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    max-width: 1000px;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".course{\n    padding: 10px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.innerCourse{\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    max-width: 1000px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12392,7 +12407,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".courseadmin{\r\n    border: 1px solid gray;\r\n    border-radius: 5px;\r\n    margin-top: 20px;\r\n    margin-bottom: 20px;\r\n}\r\n.courseadmin button{\r\n    margin: 5px;\r\n}\r\n#editCourse{\r\n    background-color: orange;\r\n}\r\n#addLesson{\r\n    background-color: lightblue;\r\n}\r\n#cancelEditCourse{\r\n    background-color: red;\r\n}\r\n#saveCourse{\r\n    background-color: green;\r\n}\r\n#deleteCourse{\r\n    background-color: \t#DC143C;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".courseadmin{\n    border: 1px solid gray;\n    border-radius: 5px;\n    margin-top: 20px;\n    margin-bottom: 20px;\n}\n.courseadmin button{\n    margin: 5px;\n}\n#editCourse{\n    background-color: orange;\n}\n#addLesson{\n    background-color: lightblue;\n}\n#cancelEditCourse{\n    background-color: red;\n}\n#saveCourse{\n    background-color: green;\n}\n#deleteCourse{\n    background-color: \t#DC143C;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12416,7 +12431,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".card{\r\n    /*margin: 10px;*/\r\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\r\n    padding: 5px;\r\n    border-radius: 5px;\r\n}\r\n.card:hover{\r\n    box-shadow: 0px 0px 10px 5px rgb(161, 161, 161);\r\n}\r\n.card img{\r\n    max-width: 100%;\r\n}\r\n@media screen and (max-width: 600px){\r\n    .card{\r\n        width: calc(100% - 30px);\r\n    }\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".card{\n    /*margin: 10px;*/\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\n    padding: 5px;\n    border-radius: 5px;\n}\n.card:hover{\n    box-shadow: 0px 0px 10px 5px rgb(161, 161, 161);\n}\n.card img{\n    max-width: 100%;\n}\n@media screen and (max-width: 600px){\n    .card{\n        width: calc(100% - 30px);\n    }\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12440,7 +12455,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".courses{\r\n    display: grid;\r\n    grid-template-columns: 32% 32% 32%;\r\n    grid-column-gap: 2%;\r\n    margin-bottom: 50px;\r\n}\r\n@media screen and (max-width: 1000px){\r\n    .courses{\r\n        grid-template-columns: 49% 49%;\r\n    }\r\n}\r\n@media screen and (max-width: 600px){\r\n    .courses{\r\n        grid-template-columns: auto;\r\n    }\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".courses{\n    display: grid;\n    grid-template-columns: 32% 32% 32%;\n    grid-column-gap: 2%;\n    margin-bottom: 50px;\n}\n@media screen and (max-width: 1000px){\n    .courses{\n        grid-template-columns: 49% 49%;\n    }\n}\n@media screen and (max-width: 600px){\n    .courses{\n        grid-template-columns: auto;\n    }\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12464,7 +12479,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".courselistadmin{\r\n    border: 1px solid gray;\r\n    border-radius: 5px;\r\n    margin-bottom: 20px;\r\n}\r\n.courselistadmin button{\r\n    margin: 5px;\r\n}\r\n#addCourses{\r\n    background-color: lightblue;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".courselistadmin{\n    border: 1px solid gray;\n    border-radius: 5px;\n    margin-bottom: 20px;\n}\n.courselistadmin button{\n    margin: 5px;\n}\n#addCourses{\n    background-color: lightblue;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12488,7 +12503,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".footer{\r\n    background-color: rgb(201, 201, 201);\r\n    padding: 50px;\r\n    margin-top: 50px;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".footer{\n    background-color: rgb(201, 201, 201);\n    padding: 50px;\n    margin-top: 50px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12512,7 +12527,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".forgotPasswordSubmitContent {\r\n    text-align: center;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".forgotPasswordSubmitContent {\n    text-align: center;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12536,7 +12551,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "button{\r\n    background-color: #37c871;\r\n    padding: 10px;\r\n    border: none;\r\n    border-radius: 5px;\r\n    font-size: 20px;\r\n}\r\nbutton:hover{\r\n    cursor: pointer;\r\n    background-color: #3ed47a;\r\n}\r\n\r\nbody {\r\n    border-radius: 15px;\r\n}\r\n\r\ndiv{\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\na{\r\n    color: black;\r\n    text-decoration: none;\r\n}\r\n.hidden{\r\n    display: none;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "button{\n    background-color: #37c871;\n    padding: 10px;\n    border: none;\n    border-radius: 5px;\n    font-size: 20px;\n}\nbutton:hover{\n    cursor: pointer;\n    background-color: #3ed47a;\n}\n\nbody {\n    border-radius: 15px;\n}\n\ndiv{\n    font-family: Arial, Helvetica, sans-serif;\n}\na{\n    color: black;\n    text-decoration: none;\n}\n.hidden{\n    display: none;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12560,7 +12575,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".header{\r\n    background-color: #37c871;\r\n    padding: 10px;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n}\r\n.login{\r\n    height: 100%;\r\n    padding-right: 10px;\r\n    display: flex;\r\n    align-items: center;\r\n}\r\n.login p{\r\n    margin: 0px;\r\n    font-size: larger;\r\n    font-weight: bold;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".header{\n    background-color: #37c871;\n    padding: 10px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n.login{\n    height: 100%;\n    padding-right: 10px;\n    display: flex;\n    align-items: center;\n}\n.login p{\n    margin: 0px;\n    font-size: larger;\n    font-weight: bold;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12584,7 +12599,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".home{\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerHome{\r\n    padding-left: 20px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    max-width: 1000px;\r\n}\r\n\r\n.titleLandingPage{\r\n    text-align: center;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".home{\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.innerHome{\n    padding-left: 20px;\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    max-width: 1000px;\n}\n\n.titleLandingPage{\n    text-align: center;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12608,7 +12623,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".layout{\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n    min-height: 100%;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".layout{\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    min-height: 100%;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12632,7 +12647,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".lesson{\r\n    padding: 10px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n.innerLesson{\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    max-width: 1000px;\r\n}\r\n.lesson textarea{\r\n    resize: none;\r\n    border-radius: 5px;\r\n    padding: 5px;\r\n    outline: none;\r\n}\r\n#input{\r\n    background-color: rgb(231, 231, 231);\r\n    border: 1px solid gray;\r\n}\r\n#output{\r\n    background-color: rgb(231, 231, 231);\r\n    border: 1px solid gray;\r\n}\r\n.lesson button{\r\n    width: -webkit-fit-content;\r\n    width: -moz-fit-content;\r\n    width: fit-content;\r\n    margin-top: 10px;\r\n}\r\n#navButtons{\r\n    display: flex;\r\n    justify-content: space-between;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".lesson{\n    padding: 10px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.innerLesson{\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    max-width: 1000px;\n}\n.lesson textarea{\n    resize: none;\n    border-radius: 5px;\n    padding: 5px;\n    outline: none;\n}\n#input{\n    background-color: rgb(231, 231, 231);\n    border: 1px solid gray;\n}\n#output{\n    background-color: rgb(231, 231, 231);\n    border: 1px solid gray;\n}\n.lesson button{\n    width: -webkit-fit-content;\n    width: -moz-fit-content;\n    width: fit-content;\n    margin-top: 10px;\n}\n.lesson .running{\n    background-color: gray;\n}\n#navButtons{\n    display: flex;\n    justify-content: space-between;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12656,7 +12671,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".lessonadmin{\r\n    border: 1px solid gray;\r\n    border-radius: 5px;\r\n    margin-top: 20px;\r\n    margin-bottom: 20px;\r\n}\r\n.lessonadmin button{\r\n    margin: 5px;\r\n}\r\n#editLesson{\r\n    background-color: orange;\r\n}\r\n#cancelEditLesson{\r\n    background-color: red;\r\n}\r\n#saveLesson{\r\n    background-color: green;\r\n}\r\n#deleteLesson{\r\n    background-color: darkred;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".lessonadmin{\n    border: 1px solid gray;\n    border-radius: 5px;\n    margin-top: 20px;\n    margin-bottom: 20px;\n}\n.lessonadmin button{\n    margin: 5px;\n}\n#editLesson{\n    background-color: orange;\n}\n#cancelEditLesson{\n    background-color: red;\n}\n#saveLesson{\n    background-color: green;\n}\n#deleteLesson{\n    background-color: darkred;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12680,7 +12695,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".lessoncard{\r\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\r\n    border-radius: 5px;\r\n    padding: 10px;\r\n    margin: 5px;\r\n    display: flex;\r\n    flex-direction: row;\r\n}\r\n.lessoncard:hover{\r\n    box-shadow: 0px 0px 10px 5px rgb(161, 161, 161);\r\n}\r\n.lessoncard h1{\r\n    margin-top: 0px;\r\n    margin-bottom: 5px;\r\n}\r\n.lessoncard p{\r\n    margin: 0px;\r\n}\r\n.lessoncard input{\r\n    margin-right: 10px;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".lessoncard{\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\n    border-radius: 5px;\n    padding: 10px;\n    margin: 5px;\n    display: flex;\n    flex-direction: row;\n}\n.lessoncard:hover{\n    box-shadow: 0px 0px 10px 5px rgb(161, 161, 161);\n}\n.lessoncard h1{\n    margin-top: 0px;\n    margin-bottom: 5px;\n}\n.lessoncard p{\n    margin: 0px;\n}\n.lessoncard input{\n    margin-right: 10px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12704,7 +12719,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body.active-modal {\r\n    overflow-y: hidden;\r\n}\r\n\r\n.btn-modal {\r\n    padding: 10px 20px;\r\n    display: block;\r\n    margin: 100px auto 0;\r\n    font-size: 18px;\r\n}\r\n\r\n.modal, .overlay {\r\n    width: 100vw;\r\n    height: 100vh;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    position: fixed;\r\n}\r\n\r\n.overlay {\r\n    background: rgba(49,49,49,0.8);\r\n}\r\n.modal-content {\r\n    position: absolute;\r\n    top: 40%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n    line-height: 1.4;\r\n    background: #f1f1f1;\r\n    padding: 14px 28px;\r\n    border-radius: 3px;\r\n    max-width: 600px;\r\n    min-width: 500px;\r\n    min-height: 150px;\r\n    \r\n}\r\n\r\n.close-modal {\r\n    position: absolute;\r\n    bottom: 10px;\r\n    right: 10px;\r\n    padding: 5px 7px;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "body.active-modal {\n    overflow-y: hidden;\n}\n\n.btn-modal {\n    padding: 10px 20px;\n    display: block;\n    margin: 100px auto 0;\n    font-size: 18px;\n}\n\n.modal, .overlay {\n    width: 100vw;\n    height: 100vh;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    position: fixed;\n}\n\n.overlay {\n    background: rgba(49,49,49,0.8);\n}\n.modal-content {\n    position: absolute;\n    top: 40%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    line-height: 1.4;\n    background: #f1f1f1;\n    padding: 14px 28px;\n    border-radius: 3px;\n    max-width: 600px;\n    min-width: 500px;\n    min-height: 150px;\n    \n}\n\n.close-modal {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    padding: 5px 7px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12728,7 +12743,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".notFoundContent {\r\n    text-align: center;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".notFoundContent {\n    text-align: center;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12752,7 +12767,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".usericon{\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    height: 100%;\r\n}\r\n.usericon button{\r\n    padding: 5px;\r\n    font-size: 18px;\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".usericon{\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    height: 100%;\n}\n.usericon button{\n    padding: 5px;\n    font-size: 18px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12776,7 +12791,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n\r\n.userpage h1{\r\n    text-align: center;\r\n    font-weight: bold;\r\n \r\n}\r\n\r\n.userpage .outerDiv{\r\n    display:flex;\r\n}\r\n\r\n.userpage .accountInfo{\r\n    margin-left:20px;\r\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\r\n    height: 500px;\r\n    flex-basis: 25%;\r\n    max-width: 25%;\r\n\r\n}\r\n\r\n.userpage h2{\r\n    text-align:center;\r\n}\r\n\r\n.userpage input{\r\n   margin-top:5px;\r\n   margin-bottom: 30px;\r\n   margin-left:15px;\r\n   height:25px;\r\n   width:70%\r\n}\r\n\r\n.userpage label{\r\n    font-size: large;\r\n    margin-left:15px;\r\n}\r\n\r\n.userpage strong{\r\n    margin-left:15px;\r\n}\r\n\r\n#checkBox{\r\n     width: 40px;\r\n}\r\n\r\n.courseProgress{\r\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\r\n    height: 500px;\r\n    flex-basis: 40%;\r\n    margin-left:100px;\r\n    max-width: 40%;\r\n\r\n}\r\n\r\n.courseProgress label{\r\n    font-size:larger;\r\n}\r\n\r\n.wrapperCompleted{\r\n    max-height: 120px;\r\n    border: 1px solid #ddd;\r\n    display: flex;\r\n    overflow-x:auto;\r\n    margin-left: 10px;\r\n    margin-right: 10px;\r\n}\r\n\r\n.wrapperCompleted .completedItem{\r\n    min-width: 110px;\r\n    height: 100px;\r\n    line-height: 100px;\r\n    text-align:center;\r\n    background-color: #ddd;\r\n    margin-right: 2px;\r\n    \r\n}\r\n\r\n\r\n.wrapperStarted{\r\n    max-height: 120px;\r\n    border: 1px solid #ddd;\r\n    display: flex;\r\n    overflow-x:auto;\r\n    margin-left: 10px;\r\n    margin-right: 10px;\r\n}\r\n\r\n.wrapperStarted .startedItem{\r\n    min-width: 110px;\r\n    height: 100px;\r\n    line-height: 100px;\r\n    text-align:center;\r\n    background-color: #ddd;\r\n    margin-right: 2px;\r\n    \r\n}\r\n\r\n.achievements{\r\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\r\n    height: 500px;\r\n    flex-basis: 25%;\r\n    margin-left:100px;\r\n    margin-right:20px;\r\n    max-width: 25%;\r\n}\r\n\r\n.wrapperAchievement{\r\n    max-height: 75%;\r\n    border: 1px solid #ddd;\r\n    display: grid;\r\n    overflow: scroll;\r\n    margin-left: 10px;\r\n    margin-right: 10px;\r\n}\r\n\r\n.wrapperAchievement .achievementItem{\r\n    min-width: 130px;\r\n    height: 100px;\r\n    line-height: 100px;\r\n    align-items: center;\r\n    background-color: #ddd;\r\n    margin-bottom: 2px;\r\n}\r\n\r\n\r\n.achievementItem input{\r\n    width: 30px;\r\n    float: right;\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n.userpage h1{\n    text-align: center;\n    font-weight: bold;\n \n}\n\n.userpage .outerDiv{\n    display:flex;\n}\n\n.userpage .accountInfo{\n    margin-left:20px;\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\n    height: 500px;\n    flex-basis: 25%;\n    max-width: 25%;\n\n}\n\n.userpage h2{\n    text-align:center;\n}\n\n.userpage input{\n   margin-top:5px;\n   margin-bottom: 30px;\n   margin-left:15px;\n   height:25px;\n   width:70%\n}\n\n.userpage label{\n    font-size: large;\n    margin-left:15px;\n}\n\n.userpage strong{\n    margin-left:15px;\n}\n\n#checkBox{\n     width: 40px;\n}\n\n.courseProgress{\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\n    height: 500px;\n    flex-basis: 40%;\n    margin-left:100px;\n    max-width: 40%;\n\n}\n\n.courseProgress label{\n    font-size:larger;\n}\n\n.wrapperCompleted{\n    max-height: 120px;\n    border: 1px solid #ddd;\n    display: flex;\n    overflow-x:auto;\n    margin-left: 10px;\n    margin-right: 10px;\n}\n\n.wrapperCompleted .completedItem{\n    min-width: 110px;\n    height: 100px;\n    line-height: 100px;\n    text-align:center;\n    background-color: #ddd;\n    margin-right: 2px;\n    \n}\n\n\n.wrapperStarted{\n    max-height: 120px;\n    border: 1px solid #ddd;\n    display: flex;\n    overflow-x:auto;\n    margin-left: 10px;\n    margin-right: 10px;\n}\n\n.wrapperStarted .startedItem{\n    min-width: 110px;\n    height: 100px;\n    line-height: 100px;\n    text-align:center;\n    background-color: #ddd;\n    margin-right: 2px;\n    \n}\n\n.achievements{\n    box-shadow: 0px 0px 10px 5px rgb(211, 211, 211);\n    height: 500px;\n    flex-basis: 25%;\n    margin-left:100px;\n    margin-right:20px;\n    max-width: 25%;\n}\n\n.wrapperAchievement{\n    max-height: 75%;\n    border: 1px solid #ddd;\n    display: grid;\n    overflow: scroll;\n    margin-left: 10px;\n    margin-right: 10px;\n}\n\n.wrapperAchievement .achievementItem{\n    min-width: 130px;\n    height: 100px;\n    line-height: 100px;\n    align-items: center;\n    background-color: #ddd;\n    margin-bottom: 2px;\n}\n\n\n.achievementItem input{\n    width: 30px;\n    float: right;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12800,7 +12815,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".xpdiv{\r\n    min-width: 600px;\r\n    text-align: center;\r\n}\r\n\r\n.xpdiv > progress{\r\n    width:70%;\r\n    height:50%;\r\n}\r\n\r\n.xpdiv > label{\r\n    font-size: larger;\r\n    font-weight: bold;\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".xpdiv{\n    min-width: 600px;\n    text-align: center;\n}\n\n.xpdiv > progress{\n    width:70%;\n    height:50%;\n}\n\n.xpdiv > label{\n    font-size: larger;\n    font-weight: bold;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -79,5 +79,14 @@ php artisan db:seed
 ```
 
 ### Docker
-
+Der eigene Nutzer muss sich in der docker-Gruppe befinden. Für den Java Container:
+```
+cd code/docker_containers/java_docker
+docker build -t java_run .
+```
+Für den Python Container:<br>
+Coming soon™
+<br>
+<br>
+Für den Javascript Container:<br>
 Coming soon™

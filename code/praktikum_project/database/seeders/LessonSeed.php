@@ -21,7 +21,7 @@ class LessonSeed extends Seeder
             'course_id'=>1,
             'title'=>'First Java Lesson',
             'description'=>'Do this and that',
-            'predefined_code'=>'public class...',
+            'predefined_code'=>'public class Main{public static void main(String[] args){System.out.println(\"<usercode>\");}}',
             'expected_output'=>'Hello World 1',
             'xp'=>20,
             'next_lesson'=>2,
@@ -51,3 +51,4 @@ class LessonSeed extends Seeder
         ]);
     }
 }
+?>
