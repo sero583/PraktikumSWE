@@ -35,6 +35,13 @@ Alle weiteren Dependencies installieren:
 composer install && npm install
 ```
 
+### Authentifizierung durch Laravel-dependeny Passport
+Um einen private- sowie public Key zu generieren, welcher für die Authentifizierung unerlässlich ist, muss vor dem Start
+```
+php artisan passport:install
+```
+ausgeführt werden. Falls das nicht ausgeführt wird die Authentifizierung nicht funktionieren.
+
 ### Datenbank
 Bei mysql mit dem root-Nutzer anmelden (hat standardmäßig kein Passwort):
 ```
