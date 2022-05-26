@@ -24,12 +24,6 @@ class CourseController extends Controller
         return $course;
     }
 
-    public function lessons($id){
-        $lessons = DB::table('lessons')->where('course_id', $id)->get();
-        //TODO order lessons by next_lesson
-        return $lessons;
-    }
-
     public function store(Request $request){
         //untested
         $course = new Course;

@@ -19,7 +19,7 @@ export default function Course(){
         });
     }, []);
     useEffect(() => {
-        axios.get('/api/course/' + id + '/lessons').then((response) => {
+        axios.get('/api/course/' + id + '/lesson').then((response) => {
             setLessons(response.data);
             setLessonsLoading(false);
         });

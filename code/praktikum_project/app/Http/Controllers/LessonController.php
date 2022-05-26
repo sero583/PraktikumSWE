@@ -8,6 +8,12 @@ use App\Models\Lesson;
 
 class LessonController extends Controller
 {
+    public function index($course_id){
+        $lessons = DB::table('lessons')->where('course_id', $course_id)->get();
+        //TODO order lessons by next_lesson
+        return $lessons;
+    }
+
     public function show($course_id, $lesson_id){
         $lesson = DB::table('lessons')->find($lesson_id);
         return $lesson;
