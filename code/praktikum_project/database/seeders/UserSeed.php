@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
-class UserSeed extends Seeder
-{
+class UserSeed extends Seeder {
     /**
      * Run the database seeds.
      *
@@ -17,10 +17,10 @@ class UserSeed extends Seeder
     {
         User::truncate();
         User::create([
-            'id'=>1,
-            'name'=>'Admin',
-            'email'=>'admin@codeacademy.de',
-            'password'=>'password',
+            // let it auto-increment: "id" => 1,
+            "name" => "Admin",
+            "email"=>"admin@codeacademy.de",
+            "password"=> Hash::make("password") // without hashing login wont work
         ]);
     }
 }
