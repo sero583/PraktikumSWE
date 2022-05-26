@@ -46,16 +46,7 @@ class User extends Authenticatable /*implements MustVerifyEmail*/
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * Overriding create function, so it also sends the welcome mail for new users.
-     */
-    public function create($data) {
-        parent::create($data);
-
-        $this->sendWelcomeMail($data["email"]);
-    }
-
+    
     public function recent_courses(){
         return $this->hasMany(RecentCourse::class);
     }

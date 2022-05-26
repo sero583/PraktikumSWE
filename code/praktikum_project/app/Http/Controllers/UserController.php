@@ -47,6 +47,7 @@ class UserController extends Controller {
         $this->user->create($data);
         // get user instance
         $user = User::where("email", $data["email"])->first();
+        $user->sendWelcomeMail();
         // create token
         return $this->respondWithToken($user->createToken("authToken")->accessToken, "Registration successful", $this->user);
     }
