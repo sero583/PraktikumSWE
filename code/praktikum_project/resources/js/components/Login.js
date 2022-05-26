@@ -30,17 +30,17 @@ export default function Login() {
 	        "password": password_input.value
         };
 
-        axios.post('/api/users/login', body).then((response) => {
+        axios.post("/api/users/login", body).then((response) => {
             console.log(response);
 
             if(response) {
                 if(response.data.success===true) {
                     // save token in browser now and use it for requests, which will be made later
                     window.localStorage.setItem("token", response.data.token);
-                    navigate("/");
-                    window.location.reload()
-                } else alert("Invalid credentinals");
-            }
+                    // redirects to homepage, where react logic gets restarted
+                    document.location.href = "/";
+                } else alert("Invalid credentinals!");
+            } else alert("Invalid response received!");
         }).catch(function(error) {
             // TODO: make this cleaner
             alert("Invalid credentinals");

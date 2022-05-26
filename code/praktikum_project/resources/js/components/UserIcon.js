@@ -5,7 +5,7 @@ import "../../css/components/Modal.css";
 
 export default function UserIcon(token) {
     // unwrap token
-    token = token.receiveValue.receiveValue.receiveValue; // TODO: Find a better solution than this crap
+    token = token.receiveValue;
 
     //Testbeispiel für Pop-Up Fenster
 
@@ -47,22 +47,6 @@ export default function UserIcon(token) {
         // window.location.reload()
         document.location.href = "/";
     }
-
-
-    /* redundant? if(modal) {
-        document.body.classList.add('active-modal')
-    } else {
-        document.body.classList.remove('active-modal')
-    }*/
-    console.log("Show me token: " + token);
-    console.log(token);
-
-    /*
-        Old code
-            { token===undefined ?
-                <button id="loginButton" onClick={log}>Login</button> :
-                <button id="logoutButton" onClick={logOut}>Logout</button> }
-                */
 
     return (
         <div className="usericon">

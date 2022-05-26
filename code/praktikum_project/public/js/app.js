@@ -5491,7 +5491,7 @@ function App() {
     var cachedToken = window.localStorage.getItem("token");
 
     if (cachedToken) {
-      axios.get("/api/users/verify-token", {
+      axios.get("/api/users/validate-token", {
         headers: {
           "Authorization": "Bearer " + cachedToken
         }
@@ -5501,7 +5501,7 @@ function App() {
           console.log(response.data);
           console.log("Status: " + response.data.status);
 
-          if (response.data.status === 200) {
+          if (response.data.success === true) {
             console.log("Success!");
             setToken(cachedToken);
             setTokenValidated(true);
@@ -6652,9 +6652,9 @@ function Login() {
       if (response) {
         if (response.data.success === true) {
           // save token in browser now and use it for requests, which will be made later
-          window.localStorage.setItem("token", response.data.token);
-          navigate("/");
-          window.location.reload();
+          window.localStorage.setItem("token", response.data.token); // redirects to homepage, where react logic gets restarted
+
+          document.location.href = "/";
         } else alert("Invalid credentinals!");
       } else alert("Invalid response received!");
     })["catch"](function (error) {
@@ -7018,21 +7018,6 @@ function UserIcon(token) {
 
     document.location.href = "/";
   }
-  /* redundant? if(modal) {
-      document.body.classList.add('active-modal')
-  } else {
-      document.body.classList.remove('active-modal')
-  }*/
-
-
-  console.log("Show me token: " + token);
-  console.log(token);
-  /*
-      Old code
-          { token===undefined ?
-              <button id="loginButton" onClick={log}>Login</button> :
-              <button id="logoutButton" onClick={logOut}>Logout</button> }
-              */
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
     className: "usericon",

@@ -25,18 +25,30 @@ export default function App() {
     if(cachedToken) {
       axios.get("/api/users/validate-token", {
         headers: { "Authorization": "Bearer " + cachedToken }
-      }).then(function (response) {
-        if(response.data.success===true) {
-          setToken(cachedToken);
-          setTokenValidated(true);
-        } else {
-          // token invalid
-          window.localStorage.removeItem("token");
-          setTokenValidated(false);
-          setToken(null);
-        }
+      }).then(function(response) {
+        if(response) {
+          console.log("Data: ");
+          console.log(response.data);
+          console.log("Status: " + response.data.status);
+
+          if(response.data.success===true) {
+            console.log("Success!");
+  
+            setToken(cachedToken);
+            setTokenValidated(true);
+          } else {
+            // token invalid
+            window.localStorage.removeItem("token");
+            setTokenValidated(false);
+            setToken(null);
+            console.log("Invalid!!!");
+          }
+          console.log(response);
+        } else alert("Couldn't verify token.");
       }).catch(function(error) {
           // invalid token -> delete and return false
+          console.log("Error!!!");
+          console.log(error);
           window.localStorage.removeItem("token");
           setTokenValidated(false);
       });
@@ -65,7 +77,7 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-    : <div></div>
+    : <div/> // Just return div for white screen, so until the token hasn't been verified (aka loading), nothing will be shown. Afterwards the application will launch.
   );
 }
 

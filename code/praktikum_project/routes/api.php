@@ -26,7 +26,6 @@ Route::get("course/recent", [CourseController::class, "recent"]);
 Route::apiResource("course", CourseController::class);
 Route::apiResource("course.lesson", LessonController::class);
 
-    // important notice! Others can use dash, however if you use it here, it will only give you headache. Avoid dash (-) character at API routes.
 // auth API routes
 Route::group(["prefix" => "users", "middleware" => "CORS"], function($router) {
     // GET

@@ -7,7 +7,7 @@ export default function Layout(token) {
     return (
         <div className="layout">
             <div>
-                <Header receiveValue={token} />
+                <Header receiveValue={token.receiveValue} />
                 <Outlet />
             </div>
             <Footer />

@@ -12,7 +12,7 @@ export default function Header(token) {
                     <img width="60" height="60" src="images/logo512.png" alt="-LOGO-"/>
                 </Link>
                 <XpBar/>
-                <UserIcon receiveValue={token}/>
+                <UserIcon receiveValue={token.receiveValue}/>
             </div>
         );
     }

@@ -42,15 +42,26 @@ export default function Register(){
 	        "name": username_input.value
         };
 
-        axios.post('/api/users/register', body).then((response) => {
+        axios.post("/api/users/register", body).then((response) => {
             if(response) {
+                //console.log("Response received!");
+                //console.log(response);
+
                 if(response.data.success===true) {
                     // save token in browser now and use it for requests, which will be made later
-                    window.localStorage.setItem("token", response.data.token);
+                    //console.log("Success!");
+                    //console.log("Token: " + response.data.token);
 
-                    navigate("/home");
-                } else setErrorMessage(response.data.message);
-            } else setErrorMessage("Server is offline. Contact admin for fix.");
+                    window.localStorage.setItem("token", response.data.token);
+                    location.href = "/home";
+                } else {
+                    //console.log("Something went wrong 1");
+                    setErrorMessage(response.data.message);
+                }
+            } else {
+                setErrorMessage("Server is offline. Contact admin for fix.");
+                //console.log("Something went wrong 2");
+            }
         }).catch(function(error) {
             let messages = error.response.data.message;
             
