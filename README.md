@@ -85,8 +85,9 @@ cd code/docker_containers/java_docker
 docker build -t java_run .
 ```
 Für den Python Container:<br>
-Coming soon™
-<br>
-<br>
+```
+cd ../python_docker
+docker build -t python_run .
+```
 Für den Javascript Container:<br>
 Coming soon™
