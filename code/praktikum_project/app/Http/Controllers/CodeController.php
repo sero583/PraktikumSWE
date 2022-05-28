@@ -30,6 +30,9 @@ class CodeController extends Controller
         else if($request->language == 'python'){
             $returnValue = $this->python_run($code_complete, $expected_output);
         }
+        else if($request->language == 'javascript'){
+            $returnValue = $this->javascript_run($code_complete, $expected_output);
+        }
         else{
             $returnValue = '{"text":"no supported language","status":1}';
         }
@@ -107,7 +110,41 @@ class CodeController extends Controller
         }
         //file could not be created
         else{
-            $status = $createFileProcess->self::ERROR;
+            $status = self::ERROR;
+            $text = $createFileProcess->getErrorOutput();
+        }
+        //replace newline charcters
+        $text = str_replace( ["\r\n", "\n", "\r"], "\\n", $text);
+        return '{"text":"'.$text.'","status":'.$status.'}';
+    }
+
+    private function javascript_run($code, $expected_output){
+        $container = DockerContainer::create('javascript_run')->start();
+        
+        //create a file with the code in it
+        $createFileProcess = $container->execute("echo '$code' > /usr/src/myapp/Main.js");
+        if($createFileProcess->isSuccessful()){
+            //run the program
+            $runProcess = $container->execute('cd /usr/src/myapp && node Main.js');
+            if($runProcess->isSuccessful()){
+                $text = $runProcess->getOutput();
+                if($text == $expected_output){
+                    $status = self::RUN_SUCCESSFUL;
+                }
+                else{
+                    //incorrrect output
+                    $status = self::OUTPUT_INCORRECT;
+                }
+            }
+            else{
+                //runtime error
+                $status = self::ERROR;
+                $text = $runProcess->getErrorOutput();
+            }
+        }
+        //file could not be created
+        else{
+            $status = self::ERROR;
             $text = $createFileProcess->getErrorOutput();
         }
         //replace newline charcters

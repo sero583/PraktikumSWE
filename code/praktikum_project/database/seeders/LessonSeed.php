@@ -17,7 +17,6 @@ class LessonSeed extends Seeder
     {
         Lesson::truncate();
         Lesson::create([
-            'id'=>1,
             'course_id'=>1,
             'title'=>'First Java Lesson',
             'description'=>'Do this and that',
@@ -28,7 +27,6 @@ class LessonSeed extends Seeder
             'language'=>'java',
         ]);
         Lesson::create([
-            'id'=>2,
             'course_id'=>1,
             'title'=>'Second Java Lesson',
             'description'=>'Do this and that again',
@@ -39,7 +37,6 @@ class LessonSeed extends Seeder
             'language'=>'java',
         ]);
         Lesson::create([
-            'id'=>3,
             'course_id'=>2,
             'title'=>'First Python Lesson',
             'description'=>'Do this and that in Python',
@@ -48,6 +45,16 @@ class LessonSeed extends Seeder
             'xp'=>15,
             'next_lesson'=>null,
             'language'=>'python',
+        ]);
+        Lesson::create([
+            'course_id'=>3,
+            'title'=>'First Javascript Lesson',
+            'description'=>'Do this and that in Javascript',
+            'predefined_code'=>'process.stdout.write(\"<usercode>\")',
+            'expected_output'=>'Hello World',
+            'xp'=>15,
+            'next_lesson'=>null,
+            'language'=>'javascript',
         ]);
     }
 }

@@ -90,4 +90,7 @@ cd ../python_docker
 docker build -t python_run .
 ```
 Für den Javascript Container:<br>
-Coming soon™
+```
+cd ../javascript_docker
+docker build -t javascript_run .
+```
