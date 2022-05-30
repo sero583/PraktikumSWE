@@ -7,12 +7,11 @@ export default function UserIcon(token) {
     // unwrap token
     token = token.receiveValue;
 
-    //Testbeispiel für Pop-Up Fenster
 
-    // state fängt bei false an, weil sonst das popUp fenster direkt beim Starten der Seite sichtbar wäre
+    // state starts at false, so that the popUp window doesnt appear from the beginning
     const [modal, setModal] = useState(false);
     const navigate = useNavigate();
-    //mit use-state wird das popUp component gezeigt/versteckt
+    // using use-state to show/hide the popUp window
     const toggleModal = () => {
         setModal(!modal);
     };

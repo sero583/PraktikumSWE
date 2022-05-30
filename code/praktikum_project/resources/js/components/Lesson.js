@@ -2,6 +2,7 @@ import '../../css/components/Lesson.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import LessonAdminButtons from './LessonAdminButtons';
 import { useEffect, useState, useRef } from 'react';
+import "../../css/components/Modal.css";
 
 
 
@@ -26,6 +27,13 @@ export default function Lesson(){
         navigate("/course/" + lesson.course_id);
     }
 
+    //state starts at false, so that the popUp window doesnt appear from the beginning
+    const [modal, setModal] = useState(false);
+    //using use-state to show/hide the popUp window
+    const toggleModal = () => {
+        setModal(!modal);
+    };
+
 
     const nextLesson = () => {
         if(lesson.next_lesson){
@@ -33,10 +41,16 @@ export default function Lesson(){
             window.location.reload();
         }
         else{
+            //congratulation popUp after finishing the last lesson of a course
+            toggleModal();
             
-            // Link to Pop-Up window
-            navigate("/course/" + lesson.course_id);
         }
+    }
+
+    function backToCoursePage() {
+        //closes popUp window and navigates back to all courses
+        toggleModal();
+        navigate("/home");
     }
 
     //when run-button clicked
@@ -79,6 +93,17 @@ export default function Lesson(){
                     <button onClick={nextLesson}>Next lesson</button>
                 </div>
             </div>
+
+            {modal &&
+            (<div className="modal">
+                <div className="overlay"/>
+                    <div className="modal-content">
+                        <h2>Congratulations</h2>
+                        <h3>You have successfully finished the course</h3>
+                        <button className="close-modal" onClick={backToCoursePage}>Return to all courses</button>
+                </div>
+            </div>
+            )}
         </div>
 
     );
