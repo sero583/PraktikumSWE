@@ -7,8 +7,8 @@ use App\Models\Course;
 use App\Models\Lesson;
 
 class LessonController extends Controller {
-    public function index($course_id){
-        return Lesson::orderBy("position")->get();
+    public function index($course_id) {
+        return Lesson::where("course_id", $course_id)->orderBy("position")->get();
     }
 
     public function show($course_id, $lesson_position) {
