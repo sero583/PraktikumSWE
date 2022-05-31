@@ -9,7 +9,7 @@ export default function Header(token) {
         return (
             <div className="header">
                 <Link to="/home">
-                    <img width="60" height="60" src="images/logo512.png" alt="-LOGO-"/>
+                    <img width="60" height="60" src="/images/logo512.png" alt="-LOGO-"/>
                 </Link>
                 <XpBar/>
                 <UserIcon receiveValue={token.receiveValue}/>
@@ -20,7 +20,7 @@ export default function Header(token) {
         return (
             <div className="header">
                 <Link to="/home">
-                    <img width="60" height="60" src="images/logo512.png" alt="-LOGO-"/>
+                    <img width="60" height="60" src="/images/logo512.png" alt="-LOGO-"/>
                 </Link>
                 <Link to="/login">
                     <div className='login'>
