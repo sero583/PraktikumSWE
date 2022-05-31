@@ -8,27 +8,26 @@ export default function Lesson(){
     const course_id = useParams().course_id;
     const id = useParams().lesson_id;
 
-    //fetching data from server
-    const [isLoading, setLoading] = useState(true);
-    const [lesson, setLesson] = useState();
-
-    let uri = '/api/course/' + course_id + '/lesson/' + id;
-    let cachedToken = window.localStorage.getItem("token");
-
-    useEffect(() => {
-        axios.get(uri, {
-            headers: { "Authorization": "Bearer " + cachedToken}
-        }).then((response) => {
-            setLesson(response.data);
-            setLoading(false);
-        });
-    }, []);
+    const [lesson, setLesson] = useState(null);
 
     //for navigation buttons
     const navigate = useNavigate();
     const backToCourse = () => {
         navigate("/course/" + lesson.course_id);
     }
+
+    let uri = '/api/course/' + course_id + '/lesson/' + id;
+
+    useEffect(() => {
+        let cachedToken = window.localStorage.getItem("token");
+        axios.get(uri, {
+            headers: { "Authorization": "Bearer " + cachedToken}
+        }).then((response) => {
+            setLesson(response.data);
+        }).catch((error) => {
+            window.location.href = '../';
+        });
+    }, []);
 
     //state starts at false, so that the popUp window doesnt appear from the beginning
     const [modal, setModal] = useState(false);
@@ -39,18 +38,7 @@ export default function Lesson(){
 
 
     const nextLesson = () => {
-        /*if(lesson.next_lesson){
-            navigate("/course/" + lesson.course_id + "/lesson/" + lesson.next_lesson);
-            window.location.reload();
-        }
-        else{
-            // Link to Pop-Up window
-            navigate("/course/" + lesson.course_id);
-        }*/
-        let nextPos = lesson.position++;
-
-        navigate("/course/" + lesson.course_id + "/lesson/" + lesson.nextPos);
-        window.location.reload(); // TODO: why?
+        window.location.href = "/course/" + lesson.course_id + "/lesson/" + ++lesson.position;
     }
 
     function backToCoursePage() {
@@ -77,7 +65,7 @@ export default function Lesson(){
         document.getElementById("runButton").classList.remove('running');
     }
 
-    if(isLoading){
+    if(lesson===null) {
         return(
             <div className='lesson'>
                 Loading...
@@ -105,13 +93,12 @@ export default function Lesson(){
             (<div className="modal">
                 <div className="overlay"/>
                     <div className="modal-content">
-                        <h2>Congratulations</h2>
-                        <h3>You have successfully finished the course</h3>
+                        <h2>Congratulations!</h2>
+                        <h3>You have successfully finished the course.</h3>
                         <button className="close-modal" onClick={backToCoursePage}>Return to all courses</button>
                 </div>
             </div>
             )}
         </div>
-
     );
 }

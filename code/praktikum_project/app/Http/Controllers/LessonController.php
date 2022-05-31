@@ -12,7 +12,14 @@ class LessonController extends Controller {
     }
 
     public function show($course_id, $lesson_position) {
-        return Lesson::where([["course_id", "=", $course_id], ["position", "=", $lesson_position]])->first();
+        $lesson = Lesson::where([["course_id", "=", $course_id], ["position", "=", $lesson_position]]);
+        if($lesson->exists()) {
+            return $lesson->first();
+        }
+        return response()->json([
+            "success" => false,
+            "message" => "Lesson does not exists."
+        ], 404);
     }
 
     public function store(Request $request) {
