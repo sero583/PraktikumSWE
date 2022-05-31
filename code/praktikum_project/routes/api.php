@@ -19,15 +19,6 @@ use App\Http\Controllers\CodeController;
 |
 */
 
-Route::get("test", [UserController::class, "test"])->name("test.user");
-
-//code execution routes
-Route::post('run', [CodeController::class, 'run']);
-
-// course routes
-Route::get("course/recent", [CourseController::class, "recent"]);
-Route::apiResource("course", CourseController::class);
-Route::apiResource("course.lesson", LessonController::class);
 
 // auth API routes
 Route::group(["prefix" => "users", "middleware" => "CORS"], function($router) {
@@ -39,4 +30,14 @@ Route::group(["prefix" => "users", "middleware" => "CORS"], function($router) {
     Route::post("/register", [UserController::class, "register"])->name("register.user");
     Route::post("/forgotpassword", [UserController::class, "forgotpassword"])->name("forgotpassword.user");
     Route::post("/login", [UserController::class, "login"])->name("login.user");
+});
+
+Route::group(["middleware" => "auth:api"], function() {
+    //code execution routes
+    Route::post("run", [CodeController::class, "run"]);
+
+    // course routes
+    Route::get("course/recent", [CourseController::class, "recent"]);
+    Route::apiResource("course", CourseController::class);
+    Route::apiResource("course.lesson", LessonController::class);
 });

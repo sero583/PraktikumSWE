@@ -20,6 +20,7 @@ class UserSeed extends Seeder {
             // let it auto-increment: "id" => 1,
             "name" => "Admin",
             "email"=>"admin@codeacademy.de",
+            "rank" => 1, // >0 -> admin
             "password"=> Hash::make("password") // without hashing login wont work
         ]);
     }

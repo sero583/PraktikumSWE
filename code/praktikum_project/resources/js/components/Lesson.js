@@ -4,8 +4,6 @@ import LessonAdminButtons from './LessonAdminButtons';
 import { useEffect, useState, useRef } from 'react';
 import "../../css/components/Modal.css";
 
-
-
 export default function Lesson(){
     const course_id = useParams().course_id;
     const id = useParams().lesson_id;
@@ -13,9 +11,14 @@ export default function Lesson(){
     //fetching data from server
     const [isLoading, setLoading] = useState(true);
     const [lesson, setLesson] = useState();
+
     let uri = '/api/course/' + course_id + '/lesson/' + id;
+    let cachedToken = window.localStorage.getItem("token");
+
     useEffect(() => {
-        axios.get(uri).then((response) => {
+        axios.get(uri, {
+            headers: { "Authorization": "Bearer " + cachedToken}
+        }).then((response) => {
             setLesson(response.data);
             setLoading(false);
         });
@@ -36,15 +39,18 @@ export default function Lesson(){
 
 
     const nextLesson = () => {
-        if(lesson.next_lesson){
+        /*if(lesson.next_lesson){
             navigate("/course/" + lesson.course_id + "/lesson/" + lesson.next_lesson);
             window.location.reload();
         }
         else{
-            //congratulation popUp after finishing the last lesson of a course
-            toggleModal();
-            
-        }
+            // Link to Pop-Up window
+            navigate("/course/" + lesson.course_id);
+        }*/
+        let nextPos = lesson.position++;
+
+        navigate("/course/" + lesson.course_id + "/lesson/" + lesson.nextPos);
+        window.location.reload(); // TODO: why?
     }
 
     function backToCoursePage() {
@@ -57,13 +63,14 @@ export default function Lesson(){
     const [status, setStatus] = useState();
     const out = useRef();
     function handleRun(){
+        let cachedToken = window.localStorage.getItem("token");
         document.getElementById("runButton").classList.add('running');
+
         axios.post('/api/run/', {
             lesson_id: id,
             code: document.getElementById("input").value,
             language: lesson.language
-        })
-        .then((response) => {
+        }, { headers: { "Authorization": "Bearer " + cachedToken }}).then((response) => {
             setStatus(response.data.status);
             out.current.value = response.data.text;
         });
@@ -87,7 +94,7 @@ export default function Lesson(){
                 <textarea id="input" rows="50"></textarea>
                 <button id="runButton" onClick={handleRun}>Run &gt;&gt;&gt;</button>
                 <h2>Output of the Code:</h2>
-                <textarea ref={out} id="output" rows="5" placeholder="The output of your Code will appear here" readOnly></textarea>
+                <textarea ref={out} id="output" rows="5" placeholder="The output of your Code will appear here" readOnly/>
                 <div id='navButtons'>
                     <button onClick={backToCourse}>Back to course</button>
                     <button onClick={nextLesson}>Next lesson</button>

@@ -12,14 +12,24 @@ export default function Course(){
     const [course, setCourse] = useState();
     const [isLessonsLoading, setLessonsLoading] = useState(true);
     const [lessons, setLessons] = useState();
+
+
     useEffect(() => {
-        axios.get('/api/course/' + id).then((response) => {
+        let cachedToken = window.localStorage.getItem("token");
+        
+        axios.get("/api/course/" + id, {
+            headers: { "Authorization": "Bearer " + cachedToken }
+          }).then((response) => {
             setCourse(response.data);
             setCourseLoading(false);
         });
     }, []);
     useEffect(() => {
-        axios.get('/api/course/' + id + '/lesson').then((response) => {
+        let cachedToken = window.localStorage.getItem("token");
+
+        axios.get("/api/course/" + id + '/lesson', {
+            headers: { "Authorization": "Bearer " + cachedToken }
+          }).then((response) => {
             setLessons(response.data);
             setLessonsLoading(false);
         });

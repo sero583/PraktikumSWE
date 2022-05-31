@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\RecentCourse;
 use App\Models\Course;
 
-class CourseController extends Controller
-{
-    public function index(){
-        $courses = DB::table('courses')->orderBy('title', 'asc')->get();
-        return $courses;
+class CourseController extends Controller {
+    public function index() {
+        return Course::orderBy("position", "asc")->get();
     }
 
-    public function recent(){
-        $user_id = 1; //TODO replace with actual id
-        $courses = DB::table('recent_courses')->where('id', $user_id)->join('courses', 'recent_courses.course_id', 'courses.id')->get();
-        return $courses;
+    public function recent() {
+        return RecentCourse::where("user_id", Auth::user()->id)->join("courses", "recent_courses.course_id", "courses.id")->get();
     }
 
     public function show($id){
-        $course = DB::table('courses')->find($id);
-        return $course;
+        return Course::find($id);
     }
 
     public function store(Request $request){

@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("position");
             $table->foreignId('course_id');
             $table->string('title');
             $table->string('description');
             $table->string('predefined_code');
             $table->string('expected_output');
             $table->integer('xp');
-            $table->foreignId('next_lesson')->nullable();
             $table->string('language');
             $table->softDeletes('deleted_at');
         });

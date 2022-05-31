@@ -12,6 +12,7 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
+        "snipe/banbuilder": "^2.3",
         "spatie/docker": "^1.7"
     },
     "require-dev": {

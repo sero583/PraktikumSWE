@@ -12,12 +12,13 @@ class Course extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    
     public $timestamps = false;
 
-    public function lessons(){
+    public function lessons() {
         return $this->hasMany(Lesson::class);
     }
-    public function recent_courses(){
+    public function recent_courses() {
         return $this->hasMany(RecentCourse::class);
     }
 }

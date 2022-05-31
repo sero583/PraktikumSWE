@@ -36,7 +36,6 @@ export default function App() {
             setTokenValidated(false);
             setToken(null);
           }
-          console.log(response);
         } else alert("Couldn't verify token.");
       }).catch(function(error) {
           // invalid token -> delete and return false

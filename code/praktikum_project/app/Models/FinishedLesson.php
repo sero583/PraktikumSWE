@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Lesson;
 
-class FinishedLesson extends Model
-{
+class FinishedLesson extends Model {
     use HasFactory;
     public $timestamps = false;
 
-    public function user(){
+    public function user() {
         return $this->belongsTo(User::class);
     }
     public function lesson(){

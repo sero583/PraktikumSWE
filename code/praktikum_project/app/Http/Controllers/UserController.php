@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
 use Auth;
+use App\Models\User;
 use Validator;
+use Snipe\BanBuilder\CensorWords;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller {
+    const MAXIMAL_USERNAME_LENGTH = 30;
+
+    private $censor;
     protected $user;
 
     public function __construct() {
         $this->middleware("auth:api", ["except" => ["login", "register","forgotpassword", "validatetoken", "test"]]);
+        $this->censor = new CensorWords();
+        $this->censor->setDictionary(["en-base", "en-us", "en-uk", "de", "es", "fr"]); // load english, german, spanish and french language
         $this->user = new User;
     }
 
     public function register(Request $request) {
         $validator = Validator::make($request->all(),[
-            "name" => "required|string",
+            "name" => ["required", "string", "max:255", "unique:users", "max:" . self::MAXIMAL_USERNAME_LENGTH, "regex:/^\S*$/u"],  // old regex: /^([a-z])+?(-|_)([a-z])+$/i
             "email" => "required|string|unique:users",
             "password" => "required|min:6|confirmed"
         ]);
@@ -28,6 +34,17 @@ class UserController extends Controller {
             return response()->json([
                 "success" => false,
                 "message" => $validator->messages()->toArray()
+            ], 400);
+        }
+
+        // check with dependency for bad words in username now:
+        if(($array=$this->censor->censorString($request->name))!==null&&isset($array["matched"])===true&&count($array["matched"])>0) {
+            // atleast one bad word found -> block register
+            error_log("Arr:" . print_r($array, true));
+
+            return response()->json([
+                "success" => false,
+                "message" => "Grow up kid."
             ], 400);
         }
 
@@ -96,7 +113,7 @@ class UserController extends Controller {
         if(array_key_exists("email", $credentials)===true) { 
             $user = User::where("email", $credentials["email"])->first();
             
-            // for privacy, server won't reveal if user has been found or not
+            // for privacy, server won"t reveal if user has been found or not
             if($user) {
                 $user->sendPasswordResetMail();
             }
@@ -113,15 +130,14 @@ class UserController extends Controller {
     }
 
     public function viewprofile() {
-        $data = Auth::guard("api")->user();
         return response()->json([
             "success" => true,
             "message" => "User Profile",
-            "data" => $data
+            "data" => Auth::guard("api")->user()
         ], 200);
     }
 
-    // Prevent middleware from checking by exluding it from it. This is made, so the client gets a unique response, cause the middleware response doesn't contains success for e. g.
+    // Prevent middleware from checking by exluding it from it. This is made, so the client gets a unique response, cause the middleware response doesn"t contains success for e. g.
     public function validatetoken(Request $request) {
         $res = Auth::guard("api")->check();
 
@@ -133,27 +149,10 @@ class UserController extends Controller {
 
     public function logout() {
         $user = Auth::guard("api")->user()->token();
-        // if($user) {
-            $user->revoke();
-            return response()->json([
-                "success" => true,
-                "message" => "Successfully logged out"
-            ], 200);
-        /*} might be not needed cause middleware already checks
+        $user->revoke();
         return response()->json([
-            "success" => false,
-            "message" => "You are not logged in"
-        ], 422)*/
-    }
-
-    /**
-     * This hook is used for testing stuff
-     */
-    public function test() {
-        Log::info(print_r(get_class(auth()->user()), true));
-
-        return response()->json([
-            "success" => true
+            "success" => true,
+            "message" => "Successfully logged out"
         ], 200);
     }
 }

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("position");
             $table->string('title');
             $table->string('description');
             $table->string('thumbnail_path');

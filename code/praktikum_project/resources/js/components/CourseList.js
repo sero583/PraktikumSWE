@@ -5,19 +5,22 @@ import { useEffect, useState } from 'react';
 export default function CourseList({coursetype}){
     const [isLoading, setLoading] = useState(true);
     const [courses, setCourses] = useState();
-    if(coursetype === "recent"){
-        let uri = 'api/course/recent';
+    let cachedToken = window.localStorage.getItem("token");
+
+    if(coursetype==="recent"){
         useEffect(() => {
-            axios.get(uri).then((response) => {
+            axios.get("api/course/recent", {
+                headers: { "Authorization": "Bearer " + cachedToken }
+            }).then((response) => {
                 setCourses(response.data);
                 setLoading(false);
             });
         }, []);
-    }
-    else{
-        let uri = 'api/course';
+    } else {
         useEffect(() => {
-            axios.get(uri).then((response) => {
+            axios.get("api/course", {
+                headers: { "Authorization": "Bearer " + cachedToken }
+            }).then((response) => {
                 setCourses(response.data);
                 setLoading(false);
             });
