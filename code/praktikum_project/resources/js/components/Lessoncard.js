@@ -7,7 +7,7 @@ export default function Lessoncard({lesson}){
         <div className="lessoncard">
             <input className={isEditing ? "" : "hidden"} type="checkbox"></input>
             <div>
-                <Link to={"/course/" + lesson.course_id + "/lesson/" + lesson.id}>
+                <Link to={"/course/" + lesson.course_id + "/lesson/" + lesson.position}>
                     <h1>{lesson.title}</h1>
                     <p>{lesson.xp} XP</p>
                 </Link>

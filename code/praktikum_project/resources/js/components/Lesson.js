@@ -6,7 +6,7 @@ import "../../css/components/Modal.css";
 
 export default function Lesson(){
     const course_id = useParams().course_id;
-    const id = useParams().lesson_id;
+    const position = useParams().lesson_position;
 
     const [lesson, setLesson] = useState(null);
 
@@ -16,7 +16,7 @@ export default function Lesson(){
         navigate("/course/" + lesson.course_id);
     }
 
-    let uri = '/api/course/' + course_id + '/lesson/' + id;
+    let uri = '/api/course/' + course_id + '/lesson/' + position;
 
     useEffect(() => {
         let cachedToken = window.localStorage.getItem("token");
@@ -55,7 +55,7 @@ export default function Lesson(){
         document.getElementById("runButton").classList.add('running');
 
         axios.post('/api/run/', {
-            lesson_id: id,
+            lesson_id: lesson.id,
             code: document.getElementById("input").value,
             language: lesson.language
         }, { headers: { "Authorization": "Bearer " + cachedToken }}).then((response) => {

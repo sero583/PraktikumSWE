@@ -59,7 +59,7 @@ export default function App() {
           <Route path="home" element={shouldRedirect() ? (<Navigate replace to="/" />) : (<Home />)} />
           <Route path="course/:course_id" element={shouldRedirect() ? (<Navigate replace to="/" />) : (<Course />)} />
           <Route path="course/:course_id/lesson" element={shouldRedirect() ? (<Navigate replace to="/" />) : (<CreateLesson />)}/>
-          <Route path="course/:course_id/lesson/:lesson_id" element={shouldRedirect() ? (<Navigate replace to="/" />) : (<Lesson />)}/>
+          <Route path="course/:course_id/lesson/:lesson_position" element={shouldRedirect() ? (<Navigate replace to="/" />) : (<Lesson />)}/>
           <Route path="user" element={shouldRedirect() ? (<Navigate replace to="/" />) : (<UserPage />)}/>
           <Route path="login" element={!shouldRedirect() ? (<Navigate replace to="/" />) : <Login setToken={setToken}/>} />
           <Route path="register" element={!shouldRedirect() ? (<Navigate replace to="/" />) : <Register />} />
