@@ -1,6 +1,7 @@
 .xpdiv {
     min-width: 600px;
     text-align: center;
+    display: none; /* Depreacted */
 }
 
 @supports (-moz-appearance:none) {
