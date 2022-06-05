@@ -47,7 +47,7 @@ export default function Course(){
         return(
             <div className='course'>
                 <div className='innerCourse'>
-                    <CourseAdminButtons />
+                    {/*<CourseAdminButtons /> a removed feature*/}
                     <h1 id="courseHeadline">{course.title}</h1>
                     <p id="courseText">{course.description}</p>
                     <div>
@@ -61,7 +61,7 @@ export default function Course(){
     return (
         <div className="course">
             <div className='innerCourse'>
-                <CourseAdminButtons />
+                {/*<CourseAdminButtons /> a removed feature*/}
                 <h1 id="courseHeadline">{course.title}</h1>
                 <p id="courseText">{course.description}</p>
                 {lessons.map(lesson => {

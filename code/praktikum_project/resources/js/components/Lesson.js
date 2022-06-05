@@ -10,6 +10,17 @@ export default function Lesson(){
 
     const [lesson, setLesson] = useState(null);
 
+    //for preventing tab-key from changing focus and place tab-character in textarea instead
+    function keyHandler(e) {
+        if(e.keyCode == 9) { //when tab key is pressed
+            document.getElementById("input").value += "\t";
+            if(e.preventDefault) {
+                e.preventDefault();
+            }
+            return false;
+        }
+    }
+
     //for navigation buttons
     const navigate = useNavigate();
     const backToCourse = () => {
@@ -76,10 +87,10 @@ export default function Lesson(){
     return (
         <div className='lesson'>
             <div className='innerLesson'>
-                <LessonAdminButtons lesson={lesson}/>
+                {/*<LessonAdminButtons lesson={lesson}/> a removed feature*/}
                 <h1 id="lessonHeadline">{lesson.title}</h1>
                 <p id="lessonText">{lesson.description}</p>
-                <textarea id="input" rows="50"></textarea>
+                <textarea id="input" rows="50" onKeyDown={keyHandler}></textarea>
                 <button id="runButton" onClick={handleRun}>Run &gt;&gt;&gt;</button>
                 <h2>Output of the Code:</h2>
                 <textarea ref={out} id="output" rows="5" placeholder="The output of your Code will appear here" readOnly/>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\FinishedLesson;
 use Spatie\Docker\DockerContainer as DockerContainer;
 
 class CodeController extends Controller
@@ -17,6 +19,7 @@ class CodeController extends Controller
     public function run(Request $request){
         $code = $request->code;
         $lesson_id = $request->lesson_id;
+        $user_id = Auth::user()->id;
 
         $lesson = DB::table('lessons')->find($lesson_id);
         //put the code into the template
@@ -36,8 +39,17 @@ class CodeController extends Controller
         else{
             $returnValue = '{"text":"no supported language","status":1}';
         }
-
-        return $returnValue;
+        $text = $returnValue[0];
+        $status = $returnValue[1];
+        if($status == 0){
+            if(FinishedLesson::where("lesson_id",  $lesson_id)->where("user_id", $user_id)->exists()===false) {
+                $finished_lesson = new FinishedLesson;
+                $finished_lesson->lesson_id = $lesson_id;
+                $finished_lesson->user_id = $user_id;
+                $finished_lesson->save();
+            }
+        }
+        return "{\"text\": \"$text\",\"status\": \"$status\"}";
     }
 
     private function java_run($code, $expected_output){
@@ -81,7 +93,7 @@ class CodeController extends Controller
 
         //replace newline charcters
         $text = str_replace( ["\r\n", "\n", "\r"], "\\n", $text);
-        return '{"text":"'.$text.'","status":'.$status.'}';
+        return [$text, $status];
     }
 
     private function python_run($code, $expected_output){
@@ -115,7 +127,7 @@ class CodeController extends Controller
         }
         //replace newline charcters
         $text = str_replace( ["\r\n", "\n", "\r"], "\\n", $text);
-        return '{"text":"'.$text.'","status":'.$status.'}';
+        return [$text, $status];
     }
 
     private function javascript_run($code, $expected_output){
@@ -149,7 +161,7 @@ class CodeController extends Controller
         }
         //replace newline charcters
         $text = str_replace( ["\r\n", "\n", "\r"], "\\n", $text);
-        return '{"text":"'.$text.'","status":'.$status.'}';
+        return [$text, $status];
     }
 }
 ?>

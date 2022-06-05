@@ -24,3 +24,6 @@ a{
 .hidden{
     display: none;
 }
+textarea{
+    tab-size: 4;
+}

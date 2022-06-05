@@ -18,6 +18,13 @@ class CourseController extends Controller {
     }
 
     public function show($id){
+        $user_id = Auth::user()->id;
+        if(RecentCourse::where("course_id",  $id)->where("user_id", $user_id)->exists()===false) {
+            $recent_course = new RecentCourse;
+            $recent_course->course_id = $id;
+            $recent_course->user_id = $user_id;
+            $recent_course->save();
+        }
         return Course::find($id);
     }
 

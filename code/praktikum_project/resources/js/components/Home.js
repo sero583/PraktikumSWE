@@ -9,7 +9,7 @@ export default function Home(){
                 <h1>Recent courses</h1>
                 <CourseList coursetype={"recent"}/>
                 <h1>All courses</h1>
-                <CourseListAdminButtons />
+                {/*<CourseListAdminButtons /> a removed feature*/}
                 <CourseList coursetype={"all"}/>
             </div>
         </div>
