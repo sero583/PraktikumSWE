@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Lesson;
@@ -24,7 +25,7 @@ class LessonController extends Controller {
     }
 
     public function finished($lesson_id){
-        if(FinishedLesson::where("lesson_id", $lesson_id)->exists() === true){
+        if(FinishedLesson::where([["lesson_id", $lesson_id], ["user_id", Auth::user()->id]])->exists() === true){
             return'{"finished": true}';
         }
         else{
