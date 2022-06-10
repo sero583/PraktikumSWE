@@ -38,6 +38,7 @@ Route::group(["middleware" => "auth:api"], function() {
 
     // course routes
     Route::get("course/recent", [CourseController::class, "recent"]);
+    Route::get("lesson/{lesson_id}/finished", [LessonController::class, "finished"]);
     Route::apiResource("course", CourseController::class);
     Route::apiResource("course.lesson", LessonController::class);
 });

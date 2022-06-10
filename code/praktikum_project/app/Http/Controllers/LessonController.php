@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\FinishedLesson;
 
 class LessonController extends Controller {
     public function index($course_id) {
@@ -20,6 +21,15 @@ class LessonController extends Controller {
             "success" => false,
             "message" => "Lesson does not exists."
         ], 404);
+    }
+
+    public function finished($lesson_id){
+        if(FinishedLesson::where("lesson_id", $lesson_id)->exists() === true){
+            return'{"finished": true}';
+        }
+        else{
+            return'{"finished": false}';
+        }
     }
 
     public function store(Request $request) {

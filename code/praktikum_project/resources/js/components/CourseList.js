@@ -35,6 +35,12 @@ export default function CourseList({coursetype}){
         )
     }
 
+    if(courses.length == 0){
+        return (
+            <p>Nothing here yet. Visit your first course for it to appear here.</p>
+        );
+    }
+
     return (
         <div className="courses">
             {courses.map(course => {
