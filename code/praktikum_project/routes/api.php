@@ -37,7 +37,8 @@ Route::group(["middleware" => "auth:api"], function() {
     Route::post("run", [CodeController::class, "run"]);
 
     // course routes
-    Route::get("/course/recent", [CourseController::class, "recent"]);
+    Route::get("course/recent", [CourseController::class, "recent"]);
+    Route::get("lesson/{lesson_id}/finished", [LessonController::class, "finished"]);
     Route::apiResource("course", CourseController::class);
     // lesson routes
     Route::apiResource("course.lesson", LessonController::class);

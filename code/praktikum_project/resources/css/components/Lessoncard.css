@@ -3,8 +3,6 @@
     border-radius: 5px;
     padding: 10px;
     margin: 5px;
-    display: flex;
-    flex-direction: row;
 }
 .lessoncard:hover{
     box-shadow: 0px 0px 10px 5px rgb(161, 161, 161);
@@ -18,4 +16,15 @@
 }
 .lessoncard input{
     margin-right: 10px;
+}
+.lessoncard div{
+    width: 100%;
+}
+.lessoncard a{
+    display: flex;
+    flex-direction: row;
+}
+#finished{
+    color: green;
+    font-size: 2em;
 }
