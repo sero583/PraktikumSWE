@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function UserPage() {
-    const [userData, setUserData] = useState(null);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
         let cachedToken = window.localStorage.getItem("token");
@@ -15,7 +15,7 @@ export default function UserPage() {
             console.log(response);
 
             if(response&&response.status===200) {
-              setUserData(response.data.data);
+              setData(response.data.data);
             } else alert("Couldn't load user data.");
           }).catch(function(error) {
               // invalid token -> delete and return false
@@ -24,7 +24,8 @@ export default function UserPage() {
           });
       }, []);
 
-    if(userData==null) {
+    if(data===null) {
+        // just show a empty page during loading
         return (
             <div/>
         )
@@ -35,11 +36,14 @@ export default function UserPage() {
                 <div className="outerDiv">
                     <div className="accountInfo">
                         <h2>Account information</h2>
-                        <label htmlFor="username">Username</label><br></br>
-                        <input type="text" id="username" value={userData.name} placeholder="Loading..." readOnly="readonly"></input><br></br>
+                        <label htmlFor="username">Username</label><br/>
+                        <input type="text" id="username" value={data.user.name} placeholder="Loading..." readOnly="readonly"/><br/>
                         
-                        <label htmlFor="email">Email</label><br></br>
-                        <input type="text" id="email" value={userData.email} placeholder="Loading..." readOnly="readonly"></input><br></br>
+                        <label htmlFor="email">Email</label><br/>
+                        <input type="text" id="email" value={data.user.email} placeholder="Loading..." readOnly="readonly"/><br/>
+
+                        <label htmlFor="text">Collected XP</label>
+                        <input type="text" id="xp" value={data.xp} readOnly="readonly"/>
                     </div>
 
                     <div className="courseProgress">

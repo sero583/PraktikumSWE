@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Models\Course;
+use App\Models\FinishedLesson;
+use App\Models\Lesson;
 use App\Models\User;
 use Validator;
 use Snipe\BanBuilder\CensorWords;
@@ -130,10 +133,83 @@ class UserController extends Controller {
     }
 
     public function viewprofile() {
+        $user = Auth::guard("api")->user();
+        $userId = $user->id;
+
+        $xp = 0;
+
+        $achievements = [];
+        $achievementsAbove = [];
+        $achievementsBelow = [];
+
+        $finishedCourseCache = [];
+        $finished_courses = [];
+
+        $started_courses_ids = [];
+        $started_courses = [];
+
+        // iterate over all finished courses of user
+
+        // get data from DB
+        $finished_lesson_ids = FinishedLesson::select("lesson_id")->where("user_id", $userId)->get()->toArray();
+
+        foreach($finished_lesson_ids as $value) {
+            // Data from the finished lesson
+            $finishedLessonId = $value["lesson_id"];
+            $finishedLesson = Lesson::where("id", $finishedLessonId)->first();
+            $lessonTitle = $finishedLesson->title;
+            // Data from the course the finished lesson belongs to
+            $courseId = $finishedLesson->course_id;
+            $course = Course::select("title")->where("id", $courseId)->first();
+            
+            // sum up XP
+            $xp += $finishedLesson->xp;
+            // get course ID and determine later courses name
+            if(in_array($courseId, $started_courses_ids)===false) $started_courses_ids[] = $courseId;
+            // add achievements
+            $achievementsBelow[] = "Finished lesson \"$lessonTitle\" from course \"{$course->title}\"";
+
+            // track in finishedCourseCache, later determine if course has been finished or not
+            if(in_array($courseId, $finishedCourseCache)===false) {
+                $finishedCourseCache[$courseId] = [$finishedLessonId];
+            } else $finishedCourseCache[$courseId][] = $finishedLessonId;
+        }
+
+        // determine if course has been finished
+        foreach($finishedCourseCache as $courseId => $array) {
+            $neededCountToComplete = Lesson::where("course_id", $courseId)->get()->count();
+
+            // finished course -> add to finished courses
+            if(count($array)===$neededCountToComplete) {
+                $course = Course::where("id", $courseId)->first();
+                $finished_courses[] = ["id" => $course->id, "title" => $course->title, "description" => $course->description];
+            }
+            // immediate break, no looping necessary. For-each has only been executed, so key and value can be easily accessed.
+            break;
+        }
+
+        // gather started courses names
+        foreach($started_courses_ids as $id) {
+            $course = Course::select("id", "title", "description")->where("id", $id)->first();
+            $started_courses[] = ["id" => $course->id, "title" => $course->title, "description" => $course->description];
+            $achievementsAbove[] = "Started course \"{$course->title}\"";
+        }
+
+        // merge achievments, this is done so that they have a specific order when displayed.
+        $achievements = array_merge($achievementsAbove, $achievementsBelow);
+
         return response()->json([
             "success" => true,
             "message" => "User Profile",
-            "data" => Auth::guard("api")->user()
+            "data" => [
+                "achievemenets" => $achievements,
+                "progress" => [
+                    "finished_courses" => $finished_courses, 
+                    "started_courses" => $started_courses
+                ],
+                "user" => $user,
+                "xp" => $xp
+            ]
         ], 200);
     }
 

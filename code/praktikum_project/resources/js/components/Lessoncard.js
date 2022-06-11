@@ -4,15 +4,18 @@ import { useEffect, useState } from 'react';
 
 export default function Lessoncard({lesson}){
     const [finished, setFinished] = useState(false);
+    
     useEffect(() => {
         let cachedToken = window.localStorage.getItem("token");
 
         axios.get("/api/lesson/" + lesson.id + '/finished', {
             headers: { "Authorization": "Bearer " + cachedToken }
-          }).then((response) => {
-            setFinished(response.data.finished)
+        }).then((response) => {
+            setFinished(response.data.finished);
+        }).catch((error) => {
+            console.log(error);
         });
-    }, []);
+    }, [])
     
     return (
         <div className="lessoncard">

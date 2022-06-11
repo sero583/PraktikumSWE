@@ -62,13 +62,19 @@ class LessonController extends Controller {
         ], 200);
     }
 
-    public function finished($lesson_id){
-        if(FinishedLesson::where([["lesson_id", $lesson_id], ["user_id", Auth::user()->id]])->exists() === true){
-            return'{"finished": true}';
+    // reeturns if requested lesson ID is finished or not.
+    public function finished($lesson_id) {
+        if(is_numeric($lesson_id)===false||is_double($lesson_id)===true) {
+            return response()->json([
+                "success" => false,
+                "message" => "Value must be non-decimal numeric value."
+            ], 400);
         }
-        else{
-            return'{"finished": false}';
-        }
+
+        return response()->json([
+            "success" => true,
+            "finished" => FinishedLesson::where([["lesson_id", $lesson_id], ["user_id", Auth::user()->id]])->exists()
+        ], 200);
     }
 
     public function store(Request $request) {

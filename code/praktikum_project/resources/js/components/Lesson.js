@@ -26,17 +26,6 @@ export default function Lesson() {
     .map((line, i) => `<span class='editorLineNumber'>${i + 1}</span>${line}`)
     .join("\n");
 
-    //for preventing tab-key from changing focus and place tab-character in textarea instead
-    function keyHandler(e) {
-        if(e.keyCode == 9) { //when tab key is pressed
-            document.getElementById("input").value += "\t";
-            if(e.preventDefault) {
-                e.preventDefault();
-            }
-            return false;
-        }
-    }
-
     //for navigation buttons
     const navigate = useNavigate();
     const backToCourse = () => {
@@ -104,7 +93,7 @@ export default function Lesson() {
         });
     }
 
-    function backToCoursePage() {
+    function backToCoursePageWithTogglingModal() {
         //closes popUp window and navigates back to all courses
         toggleModal();
         backToCourse();
@@ -176,7 +165,7 @@ export default function Lesson() {
                     <div className="modal-content">
                         <h2>Congratulations!</h2>
                         <h3>You have successfully finished the course.</h3>
-                        <button className="close-modal" onClick={backToCoursePage}>Return to all courses</button>
+                        <button className="close-modal" onClick={backToCoursePageWithTogglingModal}>Return to all courses</button>
                 </div>
             </div>
             )}
