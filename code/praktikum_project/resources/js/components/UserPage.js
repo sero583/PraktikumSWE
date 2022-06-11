@@ -15,7 +15,8 @@ export default function UserPage() {
             console.log(response);
 
             if(response&&response.status===200) {
-              setData(response.data.data);
+                let responseData = response.data.data;
+                setData(responseData);
             } else alert("Couldn't load user data.");
           }).catch(function(error) {
               // invalid token -> delete and return false
@@ -50,7 +51,8 @@ export default function UserPage() {
                         <h2>Course Progress</h2>
 
                         <label htmlFor="completedCourses">Completed courses</label>
-                        <div className="wrapperCompleted">
+                        <div id="completedCourses" className="wrapperCompleted">
+                            {/* Dummy data
                             <div className="completedItem">Course-1</div>
                             <div className="completedItem">Course-2</div>
                             <div className="completedItem">Course-3</div>
@@ -60,14 +62,18 @@ export default function UserPage() {
                             <div className="completedItem">Course-7</div>
                             <div className="completedItem">Course-8</div>
                             <div className="completedItem">Course-9</div>
-                            <div className="completedItem">Course-10</div>
+                            <div className="completedItem">Course-10</div>*/}
+
+                            {data.progress.finished_courses.length!==0 ? data.progress.finished_courses.map(finished_course => {
+                                return <div className="completedItem">{finished_course.title}</div>
+                            }) : "Seems pretty empty here. Go ahead and complete some courses!"}
                         </div>
-                        <br></br>
-                        <br></br>
-                        <br></br>
+                        <br/>
+                        <br/>
+                        <br/>
                         <label htmlFor="startedCourses">Started courses</label>
-                        <div className="wrapperStarted">
-                            <div className="startedItem">Course-1</div>
+                        <div id="startedCourses" className="wrapperStarted">
+                            {/*<div className="startedItem">Course-1</div>
                             <div className="startedItem">Course-2</div>
                             <div className="startedItem">Course-3</div>
                             <div className="startedItem">Course-4</div>
@@ -76,32 +82,40 @@ export default function UserPage() {
                             <div className="startedItem">Course-7</div>
                             <div className="startedItem">Course-8</div>
                             <div className="startedItem">Course-9</div>
-                            <div className="startedItem">Course-10</div>
+                            <div className="startedItem">Course-10</div>*/}
+
+                            {data.progress.started_courses.length!==0 ? data.progress.started_courses.map(started_course => {
+                                return <div className="startedItem">{started_course.title}</div>
+                            }) : "Seems pretty empty here. Go ahead and start some courses!"}
                         </div>
                     </div>
 
                     <div className="achievements">
                         <h2>Achievements</h2>
-                        <br></br>
-                        <div className="wrapperAchievement">
-                            <div className="achievementItem">Finish 1 Lesson
-                            <input type="checkbox" id="achievementCheckBox"></input>
-                            </div>
-                            <div className="achievementItem">Finish 3 Lessons
-                            <input type="checkbox" id="achievementCheckBox2"></input>
-                            </div>
-                            <div className="achievementItem">Finish 5 Lessons
-                            <input type="checkbox" id="achievementCheckBox3"></input>
-                            </div>
-                            <div className="achievementItem">Finish 1 course
-                            <input type="checkbox" id="achievementCheckBox4"></input>
-                            </div>
-                            <div className="achievementItem">Finish 3 courses
-                            <input type="checkbox" id="achievementCheckBox5"></input>
-                            </div>
-                            <div className="achievementItem">Finish 5 courses
-                            <input type="checkbox" id="achievementCheckBox6"></input>
-                            </div>
+                        <br/>
+                        <div id="achievements" className="wrapperAchievement">
+                            {/*<div className="achievementItem">Finish 1 Lesson
+                                <input type="checkbox" id="achievementCheckBox"></input>
+                                </div>
+                                <div className="achievementItem">Finish 3 Lessons
+                                <input type="checkbox" id="achievementCheckBox2"></input>
+                                </div>
+                                <div className="achievementItem">Finish 5 Lessons
+                                <input type="checkbox" id="achievementCheckBox3"></input>
+                                </div>
+                                <div className="achievementItem">Finish 1 course
+                                <input type="checkbox" id="achievementCheckBox4"></input>
+                                </div>
+                                <div className="achievementItem">Finish 3 courses
+                                <input type="checkbox" id="achievementCheckBox5"></input>
+                                </div>
+                                <div className="achievementItem">Finish 5 courses
+                                <input type="checkbox" id="achievementCheckBox6"></input>
+                            </div>*/}
+
+                            {data.achievemenets.length!==0 ? data.achievemenets.map(achievement => {
+                                return <div className="achievementItem"><p>{achievement}</p></div>
+                            }) : "Seems pretty empty here. Go ahead and collect some achievements!"}
                         </div>
                     </div>
                 </div>
