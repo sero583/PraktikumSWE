@@ -139,6 +139,8 @@ class UserController extends Controller {
         $xp = 0;
 
         $achievements = [];
+        
+        $achievementFinishedCourse = [];
         $achievementsAbove = [];
         $achievementsBelow = [];
 
@@ -183,6 +185,8 @@ class UserController extends Controller {
             if(count($array)===$neededCountToComplete) {
                 $course = Course::where("id", $courseId)->first();
                 $finished_courses[] = ["id" => $course->id, "title" => $course->title, "description" => $course->description];
+
+                $achievementFinishedCourse[] = "Completed course \"{$course->title}\"";
             }
             // immediate break, no looping necessary. For-each has only been executed, so key and value can be easily accessed.
             break;
@@ -196,7 +200,7 @@ class UserController extends Controller {
         }
 
         // merge achievments, this is done so that they have a specific order when displayed.
-        $achievements = array_merge($achievementsAbove, $achievementsBelow);
+        $achievements = array_merge($achievementFinishedCourse, $achievementsAbove, $achievementsBelow);
 
         return response()->json([
             "success" => true,
