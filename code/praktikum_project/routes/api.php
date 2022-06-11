@@ -42,5 +42,5 @@ Route::group(["middleware" => "auth:api"], function() {
     Route::apiResource("course", CourseController::class);
     // lesson routes
     Route::apiResource("course.lesson", LessonController::class);
-    Route::post("7lesson/get-next-lesson", [LessonController::class, "nextLesson"]);
+    Route::post("/lesson/get-next-lesson", [LessonController::class, "nextLesson"]);
 });
