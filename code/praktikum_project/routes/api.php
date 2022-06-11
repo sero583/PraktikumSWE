@@ -33,11 +33,13 @@ Route::group(["prefix" => "users", "middleware" => "CORS"], function($router) {
 });
 
 Route::group(["middleware" => "auth:api"], function() {
-    //code execution routes
+    // code execution routes
     Route::post("run", [CodeController::class, "run"]);
 
     // course routes
-    Route::get("course/recent", [CourseController::class, "recent"]);
+    Route::get("/course/recent", [CourseController::class, "recent"]);
     Route::apiResource("course", CourseController::class);
+    // lesson routes
     Route::apiResource("course.lesson", LessonController::class);
+    Route::post("/lesson/get-next-lesson", [LessonController::class, "nextLesson"]);
 });

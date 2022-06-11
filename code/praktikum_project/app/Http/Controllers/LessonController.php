@@ -22,6 +22,44 @@ class LessonController extends Controller {
         ], 404);
     }
 
+    public function nextLesson(Request $request) {
+        if(isset($request->course_id)===false||isset($request->lesson_position)===false) {
+            return response()->json([
+                "success" => false,
+                "message" => "Field course_id or lesson_position is missing."
+            ], 400);
+        }
+
+        if(is_numeric($request->course_id)===false||is_numeric($request->lesson_position)===false) {
+            return response()->json([
+                "success" => false,
+                "message" => "Values must be numeric."
+            ], 400);
+        }
+
+        $nextPos = Lesson::where([["course_id", "=", $request->course_id], ["position", ">", $request->lesson_position], ["deleted_at", "=", null]])->first();
+
+        if($nextPos!==null) {
+            // TODO depend if same id
+            $requestedPos = $request->lesson_position;
+
+            if($request->lesson_position!==$nextPos->lesson_position) {
+                return response()->json([
+                    "success" => true,
+                    "hasNext" => true,
+                    "lesson" => $nextPos
+                ], 200);
+            } else return response()->json([
+                "success" => true,
+                "hasNext" => false
+            ], 200);
+        }
+        return response()->json([
+            "success" => true,
+            "hasNext" => false
+        ], 200);
+    }
+
     public function store(Request $request) {
         if(Course::where("id", "=", $request->course_id)->exists()===false) {
             return response()->json([
@@ -71,6 +109,7 @@ class LessonController extends Controller {
         $lesson->title = $request->title;
         $lesson->description = $request->description;
         $lesson->predefined_code = $request->predefined_code;
+        $lesson->tester_code = $request->tester_code;
         $lesson->expected_output = $request->expected_output;
         $lesson->xp = $request->xp;
         $lesson->language = $request->language;

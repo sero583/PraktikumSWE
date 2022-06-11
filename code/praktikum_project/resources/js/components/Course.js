@@ -24,6 +24,7 @@ export default function Course(){
             setCourseLoading(false);
         });
     }, []);
+    
     useEffect(() => {
         let cachedToken = window.localStorage.getItem("token");
 

@@ -1,14 +1,30 @@
 import '../../css/components/Lesson.css';
-import { useParams, useNavigate } from 'react-router-dom';
-import LessonAdminButtons from './LessonAdminButtons';
+import { useNavigate, useParams } from 'react-router-dom';
+// import LessonAdminButtons from './LessonAdminButtons';
 import { useEffect, useState, useRef } from 'react';
 import "../../css/components/Modal.css";
+import axios from 'axios';
+/*import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';*/
+import React from 'react';
+import Editor from 'react-simple-code-editor';
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/themes/prism.css';
 
-export default function Lesson(){
+export default function Lesson() {
     const course_id = useParams().course_id;
-    const position = useParams().lesson_position;
+    const id = useParams().lesson_id;
+    const position = useParams().lesson_position; // was before lesson_id
 
     const [lesson, setLesson] = useState(null);
+    const [visibleCode, setVisibleCode] = useState(""); // TODO: Implement tabbing from simple code editor
+
+    const hightlightWithLineNumbers = (input, language) => highlight(input, language)
+    .split("\n")
+    .map((line, i) => `<span class='editorLineNumber'>${i + 1}</span>${line}`)
+    .join("\n");
 
     //for preventing tab-key from changing focus and place tab-character in textarea instead
     function keyHandler(e) {
@@ -35,7 +51,13 @@ export default function Lesson(){
             headers: { "Authorization": "Bearer " + cachedToken}
         }).then((response) => {
             setLesson(response.data);
+            if(response!=null&&response.data!=null&&"predefined_code" in response.data) {
+                // set initially shown code
+                setVisibleCode(response.data.predefined_code);
+            }
         }).catch((error) => {
+            // lead back to course page when loading of lesson fails
+            console.log(error);
             window.location.href = '../';
         });
     }, []);
@@ -49,27 +71,59 @@ export default function Lesson(){
 
 
     const nextLesson = () => {
-        window.location.href = "/course/" + lesson.course_id + "/lesson/" + ++lesson.position;
+        // window.location.href = "/course/" + lesson.course_id + "/lesson/" + ++lesson.position;
+        let cachedToken = window.localStorage.getItem("token");
+
+        axios.post("/api/lesson/get-next-lesson", {
+            course_id: course_id,
+            lesson_position: lesson.position
+        }, { headers: { "Authorization": "Bearer " + cachedToken }})
+        .then((response) => {
+            // manipulate URL and data
+            let data = response.data;
+
+            if(data.hasNext===true) {
+                let lesson = data.lesson;
+                setLesson(lesson);
+
+                if(response!=null&&response.data!=null&&"predefined_code" in response.data) {
+                    // set initially shown code
+                    setVisibleCode(response.data.predefined_code);
+                }
+                // TODO Manipulate URL without redirect to new one
+                navigate("/course/" + lesson.course_id + "/lesson/" + lesson.position,  { replace: true });
+            } else {
+                // go back to course main page
+
+                // TODO show course?
+                backToCourse();
+            }
+        }).catch((err) => {
+            console.log(error);
+            alert("Error occurred during switching lessons");
+        });
     }
 
     function backToCoursePage() {
         //closes popUp window and navigates back to all courses
         toggleModal();
-        navigate("/home");
+        backToCourse();
     }
 
     //when run-button clicked
     const [status, setStatus] = useState();
     const out = useRef();
-    function handleRun(){
+
+    function handleRun() {
         let cachedToken = window.localStorage.getItem("token");
         document.getElementById("runButton").classList.add('running');
 
         axios.post('/api/run/', {
             lesson_id: lesson.id,
-            code: document.getElementById("input").value,
+            code: visibleCode,
             language: lesson.language
-        }, { headers: { "Authorization": "Bearer " + cachedToken }}).then((response) => {
+        }, { headers: { "Authorization": "Bearer " + cachedToken }})
+        .then((response) => {
             setStatus(response.data.status);
             out.current.value = response.data.text;
         });
@@ -90,7 +144,23 @@ export default function Lesson(){
                 {/*<LessonAdminButtons lesson={lesson}/> a removed feature*/}
                 <h1 id="lessonHeadline">{lesson.title}</h1>
                 <p id="lessonText">{lesson.description}</p>
-                <textarea id="input" rows="50" onKeyDown={keyHandler}></textarea>
+
+                <Editor
+                    value={visibleCode}
+                    onValueChange={changedCode => setVisibleCode(changedCode)}
+                    highlight={code => hightlightWithLineNumbers(code, languages.js)}
+                    padding={10}
+                    insertSpaces={false}
+                    tabSize={1}
+                    textareaId="codeArea"
+                    className="editor"
+                    style={{
+                        fontFamily: '"Fira code", "Fira Mono", monospace',
+                        fontSize: 14,
+                        outline: 0
+                    }}
+                />
+
                 <button id="runButton" onClick={handleRun}>Run &gt;&gt;&gt;</button>
                 <h2>Output of the Code:</h2>
                 <textarea ref={out} id="output" rows="5" placeholder="The output of your Code will appear here" readOnly/>
