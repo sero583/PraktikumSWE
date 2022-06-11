@@ -116,10 +116,10 @@
 
 .wrapperAchievement .achievementItem{
     min-width: 130px;
-    height: 100px;
-    line-height: fit-content;
-    text-align: left;
-    align-items: center;
+    min-height: 100px;
+    height: fit-content;
+    text-align: center;
+    padding-top:50px;
     background-color: #ddd;
     margin-bottom: 2px;
 }
