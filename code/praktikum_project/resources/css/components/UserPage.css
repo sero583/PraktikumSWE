@@ -117,7 +117,8 @@
 .wrapperAchievement .achievementItem{
     min-width: 130px;
     height: 100px;
-    line-height: 100px;
+    line-height: fit-content;
+    text-align: left;
     align-items: center;
     background-color: #ddd;
     margin-bottom: 2px;
