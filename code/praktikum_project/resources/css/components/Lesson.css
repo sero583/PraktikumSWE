@@ -59,3 +59,7 @@
   width: 40px;
   font-weight: 100;
 }
+
+#loadingBar {
+  align-self: center;
+}

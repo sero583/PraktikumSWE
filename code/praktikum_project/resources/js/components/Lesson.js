@@ -13,6 +13,8 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';
 
+import LinearProgress from '@mui/material/LinearProgress';
+
 export default function Lesson() {
     const course_id = useParams().course_id;
     const id = useParams().lesson_id;
@@ -20,6 +22,70 @@ export default function Lesson() {
 
     const [lesson, setLesson] = useState(null);
     const [visibleCode, setVisibleCode] = useState("");
+    const [executionLoading, setExecutionLoading] = useState(false);
+
+    const runButton = useRef();
+    // default hide time 
+    const DEFAULT_HIDE_TIME = 3000;
+
+    // loading colors
+    const LOADING_BAR_LOADING_COLOR = "#FFFF00";
+    const LOADING_BAR_LOADING_BACKGROUND_COLOR = "#FFBA01";
+    // success colors
+    const LOADING_BAR_SUCCESS_COLOR = "#00FFAB"; // swap?
+    const LOADING_BAR_SUCCESS_BACKGROUND_COLOR = "#14C38E";
+    // failiure colors
+    const LOADING_BAR_FAILURE_COLOR = "#FFCCCB"; // swap? FF2626
+    const LOADING_BAR_FAILURE_BACKGROUND_COLOR = "#FF0000"; //BD1616
+
+    const [loadingBarColor, setLoadingBarColor] = useState(LOADING_BAR_LOADING_COLOR);
+    const [loadingBarBackgroundColor, setLoadingBarBackgroundColor] = useState(LOADING_BAR_LOADING_BACKGROUND_COLOR);
+
+    const showProgressBar = () => {
+        setExecutionLoading(true);
+    }
+    
+    const hideProgressBarUI = () => {
+        setExecutionLoading(false);
+    }
+
+    const showProgressBarLoading = () => {
+        setLoadingBarColor(LOADING_BAR_LOADING_COLOR);
+        setLoadingBarBackgroundColor(LOADING_BAR_LOADING_BACKGROUND_COLOR);
+
+        showProgressBar();
+    };
+
+    const showProgressBarSuccess = () => {
+        setLoadingBarColor(LOADING_BAR_SUCCESS_COLOR);
+        setLoadingBarBackgroundColor(LOADING_BAR_SUCCESS_BACKGROUND_COLOR);
+
+        showProgressBar();
+    };
+
+    const showProgressBarFailure = () => {
+        setLoadingBarColor(LOADING_BAR_FAILURE_COLOR);
+        setLoadingBarBackgroundColor(LOADING_BAR_FAILURE_BACKGROUND_COLOR);
+
+        showProgressBar();
+    }
+
+    function hideProgressBarAndUnblockButton(time) {
+        if(!isNaN(time)) {
+            setTimeout(function(){
+                hideProgressBarUI();
+                unblockRunButton();
+            }, time); //run this after 3 seconds
+        } else console.error("Time passed hideProgressBar is not a number. (Time = " + time + ").");
+    }
+
+    const blockRunButton = () => {
+        runButton.current.disabled = true;
+    };
+
+    const unblockRunButton = () => {
+        runButton.current.disabled = false;
+    };
 
     const hightlightWithLineNumbers = (input, language) => highlight(input, language)
     .split("\n")
@@ -118,18 +184,45 @@ export default function Lesson() {
     const out = useRef();
 
     function handleRun() {
+        if(runButton.current.disabled===true) {
+            console.debug("Run button is disabled");
+            return;
+        }
+
         let cachedToken = window.localStorage.getItem("token");
-        document.getElementById("runButton").classList.add('running');
+
+        // show loading UI bar
+        showProgressBarLoading();
+        blockRunButton();
 
         axios.post('/api/run/', {
             lesson_id: lesson.id,
             code: visibleCode
         }, { headers: { "Authorization": "Bearer " + cachedToken }})
         .then((response) => {
-            setStatus(response.data.status);
+            let status = response.data.status;
+
+            setStatus(status);
             out.current.value = response.data.text;
+
+            // its only about compiling went good, correct output will be rewarded with a popup afterwards
+            if(status===0||status===4) {
+                // show success UI bar
+                showProgressBarSuccess();
+                // hide bar after default time
+                hideProgressBarAndUnblockButton(DEFAULT_HIDE_TIME);
+            } else {
+                // show failure UI bar
+                showProgressBarFailure();
+                //  hide bar after default time
+                hideProgressBarAndUnblockButton(DEFAULT_HIDE_TIME);
+            }
+        }).catch((exeception) => {
+            // show failure UI bar
+            showProgressBarFailure();
+            //  hide bar after default time
+            hideProgressBarAndUnblockButton(DEFAULT_HIDE_TIME);
         });
-        document.getElementById("runButton").classList.remove('running');
     }
 
     if(lesson===null) {
@@ -163,8 +256,16 @@ export default function Lesson() {
                     }}
                 />
 
-                <button id="runButton" onClick={handleRun}>Run &gt;&gt;&gt;</button>
+                <button ref={runButton} id="runButton" onClick={handleRun}>Run &gt;&gt;&gt;</button>
                 <h2>Output of the Code:</h2>
+
+                    {executionLoading && (
+                        <LinearProgress id="loadingBar" color="inherit" sx={{ width: "87.5%", backgroundColor: loadingBarBackgroundColor, color: loadingBarColor }}  />
+                        //  "#FF0000", color: "#75f" 
+                    )}
+                
+                <br/>
+
                 <textarea ref={out} id="output" rows="5" placeholder="The output of your Code will appear here" readOnly/>
                 <div id='navButtons'>
                     <button onClick={backToCourse}>Back to course</button>
