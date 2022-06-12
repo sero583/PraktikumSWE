@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import '../../css/components/Account.css';
 
 export default function Register(){
+    const registerButton = useRef();
+
     const navigate = useNavigate();
     const [isRegisterLoading, setRegisterLoading] = useState();
     const [errorMessage, setErrorMessage] = useState();
 
     function handleRegister() {
+        if(registerButton.current.disabled===true) return;
+
         // get fields
         const username_input = document.getElementById("username");
         const email_input = document.getElementById("email");
@@ -42,7 +46,10 @@ export default function Register(){
 	        "name": username_input.value
         };
 
+        registerButton.current.disabled = true;
+
         axios.post("/api/users/register", body).then((response) => {
+            registerButton.current.disabled = false;
             if(response) {
                 //console.log("Response received!");
                 //console.log(response);
@@ -63,6 +70,7 @@ export default function Register(){
                 //console.log("Something went wrong 2");
             }
         }).catch(function(error) {
+            registerButton.current.disabled = false;
             let messages = error.response.data.message;
             
             if(messages) {
@@ -113,7 +121,7 @@ export default function Register(){
                 { errorMessage && <br/>}
                 { errorMessage && <div className="serverError"><p className="dynamicNewLine">{errorMessage}</p></div> }
 
-                <button onClick={handleRegister}>Register</button>
+                <button ref={registerButton} type="submit" onClick={handleRegister}>Register</button>
             </div>
             <p>Already have an account? <Link to="/login">Sign in</Link></p>
         </div>

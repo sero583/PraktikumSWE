@@ -1,14 +1,14 @@
 import {Link, useNavigate} from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import '../../css/components/Account.css';
 
 export default function Login() {
-    //ressource for login
-    //https://www.digitalocean.com/community/tutorials/how-to-add-login-authentication-to-react-applications
-    
+    const loginButton = useRef();
     const navigate = useNavigate();
 
     function handleLogIn() {
+        if(loginButton.current.disabled===true) return;
+
         // get fields
         const email_input = document.getElementById("email");
         const password_input = document.getElementById("password");
@@ -30,6 +30,8 @@ export default function Login() {
 	        "password": password_input.value
         };
 
+        loginButton.current.disabled = true;
+
         axios.post("/api/users/login", body).then((response) => {
             console.log(response);
 
@@ -41,9 +43,12 @@ export default function Login() {
                     document.location.href = "/";
                 } else alert("Invalid credentinals!");
             } else alert("Invalid response received!");
+
+            loginButton.current.disabled = false;
         }).catch(function(error) {
             // TODO: make this cleaner
             alert("Invalid credentinals");
+            loginButton.current.disabled = false;
         });
     }
 
@@ -71,7 +76,7 @@ export default function Login() {
                 <input onClick={registerKeydownListener} id="email" type="text" /*onBlur={handleUserBlur}*/></input>
                 <label htmlFor="password">Password:</label>
                 <input onClick={registerKeydownListener} id="password" type="password" /*onBlur={handlePassBlur}*/></input>
-                <button type="submit" onClick={handleLogIn}>Sign in</button>
+                <button ref={loginButton} type="submit" onClick={handleLogIn}>Sign in</button>
             </div>
 
             <p><Link to="/forgotpassword">Forgot your password?</Link></p>
