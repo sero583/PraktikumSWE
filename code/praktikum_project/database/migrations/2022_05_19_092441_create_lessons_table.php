@@ -18,8 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger("position");
             $table->foreignId('course_id');
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->string('predefined_code');
+            $table->string('predefined_code_visible');
             $table->string('expected_output');
             $table->integer('xp');
             $table->string('language');

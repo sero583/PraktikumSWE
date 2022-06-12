@@ -15,10 +15,6 @@ class RecentCourseSeed extends Seeder
      */
     public function run()
     {
-        RecentCourse::truncate();
-        RecentCourse::create([
-            'course_id'=>1,
-            'user_id'=>1
-        ]);
+        //this isn't necessary anymore
     }
 }

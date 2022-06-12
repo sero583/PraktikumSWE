@@ -30,52 +30,49 @@ class CodeController extends Controller {
     const DEFAULT_KILL_TIME = 30; // in seconds
 
     public function run(Request $request) {
-        $codeFromRequest = $request->code;
-        $codeFromRequest = str_replace( "'", "'\''", $codeFromRequest);
-        $codeFromRequest = str_replace( "\"", "\\\"", $codeFromRequest);
-        $lesson_id = $request->lesson_id;
         $user_id = Auth::user()->id;
 
-        if($codeFromRequest===null||is_string($codeFromRequest)===false) {
-            return response()->json([
-                "text" => "No code given in request.",
-                "status" => 1
-            ], 400);
-        }
-
+        $lesson_id = $request->lesson_id;
         if($lesson_id===null||is_numeric($lesson_id)===false) {
             return response()->json([
                 "text" => "No lessson ID given.",
                 "status" => self::ERROR
             ], 400);
         }
-
+        
+        $code = $request->code;
+        $code = str_replace( "'", "'\''", $code);
+        $code = str_replace( "\"", "\\\"", $code);
+        if($code===null||is_string($code)===false) {
+            return response()->json([
+                "text" => "No code given in request.",
+                "status" => self::ERROR
+            ], 400);
+        }
+        
         $lesson = Lesson::find($lesson_id);
-        // check code CAN be null
-        $checkCode = $lesson->testerCode;        
         $expected_output = $lesson->expected_output;
-
-        $returnValue = null;
+        
+        $code_complete = str_replace('<usercode>', $code, $lesson->predefined_code);
 
         switch($lesson->language) {
             case self::JAVA: 
-                $returnValue = $this->java_run($codeFromRequest, $expected_output, $checkCode);
+                $returnValue = $this->java_run($code_complete, $expected_output);
             break;
             case self::PYTHON:
-                $returnValue = $this->python_run($codeFromRequest, $expected_output, $checkCode);
+                $returnValue = $this->python_run($code_complete, $expected_output);
             break;
             case self::JAVASCRIPT:
-                $returnValue = $this->javascript_run($codeFromRequest, $expected_output, $checkCode);
+                $returnValue = $this->javascript_run($code_complete, $expected_output);
             break;
             default: return response()->json([
                 "text" => "Language {$lesson->language} is not supported.",
-                "status" => 0
+                "status" => self::ERROR
             ], 400);
         }
 
         $text = $returnValue["text"];
         $status = $returnValue["status"];
-        $hasCheck = $returnValue["hasCheck"];
 
         $success = false;
         $courseCompleted = false;
@@ -94,37 +91,23 @@ class CodeController extends Controller {
             "success" => $success, // controlls success popup for lesson successfully completed
             "text" => $text, // output text
             "status" => $status, // returns status code of execution
-            "hasCheck" => $hasCheck, // returns if the lesson had a check (Test.java/js/py file)
             "courseCompleted" => $courseCompleted // responds if the course has been completed (shows success popup for course complete)
         ], 200);
     }
 
-    private function java_run(string $code, ?string $expected_output = null, ?string $checkCode = null) : array {
+    private function java_run(string $code, string $expected_output) : array {
         $container = DockerContainer::create("java_run")->start();
-
-        error_log("Java running!");
 
         //create a file with the code in it
         $createFileProcess = $container->execute("echo '$code' > /usr/src/myapp/Main.java");
-        $file = "Main";
-        if($checkCode!==null) {
-            $createTestFileProcess = $container->execute("echo '$checkCode' > /usr/src/myapp/Test.java");
-            $file = "Test";
-
-            error_log("With tester!");
-        }
-
-
+        
         if($createFileProcess->isSuccessful()){
             //compile the program
             $compileProcess = $container->execute("javac /usr/src/myapp/Main.java");
-            if($checkCode!==null) {
-                $compileProcess = $container->execute("javac /usr/src/myapp/Test.java");
-            }
 
             if($compileProcess->isSuccessful()){
                 //run the program
-                $runProcess = $container->execute("cd /usr/src/myapp && java $file");
+                $runProcess = $container->execute("cd /usr/src/myapp && java Main");
                 if($runProcess->isSuccessful()){
                     $text = $runProcess->getOutput();
                     
@@ -160,39 +143,27 @@ class CodeController extends Controller {
         }
 
         //replace newline charcters
-        $text = str_replace( ["\r\n", "\n", "\r"], "\\n", $text);
-        return ["text" => $text, "status" => $status, "hasCheck" => $checkCode !== null];
+        //$text = str_replace( ["\r\n", "\n", "\r"], "\\n", $text);
+        return ["text" => $text, "status" => $status];
     }
 
-    private function python_run(string $code, ?string $expected_output = null, ?string $checkCode = null) : array {
+    private function python_run(string $code, string $expected_output) : array {
         $container = DockerContainer::create("python_run")->start();
 
         //create a file with the code in it
         $createFileProcess = $container->execute("echo '$code' > /usr/src/myapp/Main.py");
-        $file = "Main";
-        if($checkCode!==null) {
-            $createTestFileProcess = $container->execute("echo '$checkCode' > /usr/src/myapp/Test.py");
-            $file = "Test";
-        }
-
 
         if($createFileProcess->isSuccessful()){
             //run the program
-            $runProcess = $container->execute("cd /usr/src/myapp && python3 $file.py");
+            $runProcess = $container->execute("cd /usr/src/myapp && python3 Main.py");
             if($runProcess->isSuccessful()){
                 $text = $runProcess->getOutput();
-                
-                 // when there is an expected output, check it
-                if($expected_output!==null) {  
-                    if($text===$expected_output){
-                        $status = self::RUN_SUCCESSFUL;
-                    }
-                    else{
-                        //incorrrect output
-                        $status = self::OUTPUT_INCORRECT;
-                    }
-                } else { // otherwise check for exit code. here it is already 0 -> so successful run
+                if($text===$expected_output){
                     $status = self::RUN_SUCCESSFUL;
+                }
+                else{
+                    //incorrect output
+                    $status = self::OUTPUT_INCORRECT;
                 }
             }
             else{
@@ -207,38 +178,27 @@ class CodeController extends Controller {
             $text = $createFileProcess->getErrorOutput();
         }
         //replace newline charcters
-        $text = str_replace( ["\r\n", "\n", "\r"], "\\n", $text);
-        return ["text" => $text, "status" => $status, "hasCheck" => $checkCode !== null];
+        //$text = str_replace( ["\r\n", "\n", "\r"], "\\n", $text);
+        return ["text" => $text, "status" => $status];
     }
 
-    private function javascript_run(string $code, ?string $expected_output = null, ?string $checkCode = null) : array {
+    private function javascript_run(string $code, string $expected_output) : array {
         $container = DockerContainer::create("javascript_run")->start();
-        $file = "Main";
+        
         //create a file with the code in it
         $createFileProcess = $container->execute("echo '$code' > /usr/src/myapp/Main.js");        
-        if($checkCode!==null) {
-            $createTestFileProcess = $container->execute("echo '$checkCode' > /usr/src/myapp/Test.js");
-            $file = "Test";
-        }
-
 
         if($createFileProcess->isSuccessful()){
             //run the program
-            $runProcess = $container->execute("cd /usr/src/myapp && node $file.js");
+            $runProcess = $container->execute("cd /usr/src/myapp && node Main.js");
             if($runProcess->isSuccessful()){
                 $text = $runProcess->getOutput();
-                
-                 // when there is an expected output, check it
-                if($expected_output!==null) {  
-                    if($text===$expected_output){
-                        $status = self::RUN_SUCCESSFUL;
-                    }
-                    else{
-                        //incorrrect output
-                        $status = self::OUTPUT_INCORRECT;
-                    }
-                } else { // otherwise check for exit code. here it is already 0 -> so successful run
+                if($text===$expected_output){
                     $status = self::RUN_SUCCESSFUL;
+                }
+                else{
+                    //incorrrect output
+                    $status = self::OUTPUT_INCORRECT;
                 }
             }
             else{
@@ -253,8 +213,8 @@ class CodeController extends Controller {
             $text = $createFileProcess->getErrorOutput();
         }
         //replace newline charcters
-        $text = str_replace( ["\r\n", "\n", "\r"], "\\n", $text);
-        return ["text" => $text, "status" => $status, "hasCheck" => $checkCode !== null];
+        //$text = str_replace( ["\r\n", "\n", "\r"], "\\n", $text);
+        return ["text" => $text, "status" => $status];
     }
 }
 ?>

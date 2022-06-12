@@ -40,9 +40,9 @@ export default function Lesson() {
             headers: { "Authorization": "Bearer " + cachedToken}
         }).then((response) => {
             setLesson(response.data);
-            if(response!=null&&response.data!=null&&"predefined_code" in response.data) {
+            if(response!=null&&response.data!=null&&"predefined_code_visible" in response.data) {
                 // set initially shown code
-                setVisibleCode(response.data.predefined_code);
+                setVisibleCode(response.data.predefined_code_visible);
             }
         }).catch((error) => {
             // lead back to course page when loading of lesson fails
@@ -123,10 +123,7 @@ export default function Lesson() {
 
         axios.post('/api/run/', {
             lesson_id: lesson.id,
-            code: visibleCode/*,
-            Removed client-side language controll due to potential abusers.
-            This could lead to someone printing out stuff in python while it was meant to be get done in java. The server knows by the lesson id which language is required.
-            language: lesson.language*/
+            code: visibleCode
         }, { headers: { "Authorization": "Bearer " + cachedToken }})
         .then((response) => {
             setStatus(response.data.status);

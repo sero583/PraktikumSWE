@@ -15,10 +15,6 @@ class FinishedLessonSeed extends Seeder
      */
     public function run()
     {
-        FinishedLesson::truncate();
-        FinishedLesson::create([
-            'user_id'=>1,
-            'lesson_id'=>3
-        ]);
+        //this isn't necessary anymore
     }
 }
