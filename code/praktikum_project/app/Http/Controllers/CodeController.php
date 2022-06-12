@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Models\Course;
+use App\Models\FinishedLesson;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Lesson;
 use Spatie\Docker\DockerContainer;
 
 class CodeController extends Controller {
@@ -53,7 +55,7 @@ class CodeController extends Controller {
 
         $returnValue = null;
 
-        switch($request->language) {
+        switch($lesson->language) {
             case self::JAVA: 
                 $returnValue = $this->java_run($codeFromRequest, $expected_output, $checkCode);
             break;
@@ -64,7 +66,7 @@ class CodeController extends Controller {
                 $returnValue = $this->javascript_run($codeFromRequest, $expected_output, $checkCode);
             break;
             default: return response()->json([
-                "text" => "Language {$request->language} is not supported.",
+                "text" => "Language {$lesson->language} is not supported.",
                 "status" => 0
             ], 400);
         }
@@ -74,6 +76,8 @@ class CodeController extends Controller {
         $hasCheck = $returnValue["hasCheck"];
 
         $success = false;
+        $courseCompleted = false;
+
         if($status===0) {
             if(FinishedLesson::where("lesson_id",  $lesson_id)->where("user_id", $user_id)->exists()===false) {
                 $finished_lesson = new FinishedLesson;
@@ -85,15 +89,18 @@ class CodeController extends Controller {
         }
 
         return response()->json([
-            "success" => $success,
-            "text" => $text,
-            "status" => $status,
-            "hasCheck" => $hasCheck
+            "success" => $success, // controlls success popup for lesson successfully completed
+            "text" => $text, // output text
+            "status" => $status, // returns status code of execution
+            "hasCheck" => $hasCheck, // returns if the lesson had a check (Test.java/js/py file)
+            "courseCompleted" => $courseCompleted // responds if the course has been completed (shows success popup for course complete)
         ], 200);
     }
 
     private function java_run(string $code, ?string $expected_output = null, ?string $checkCode = null) : array {
         $container = DockerContainer::create("java_run")->start();
+
+        error_log("Java running!");
 
         //create a file with the code in it
         $createFileProcess = $container->execute("echo \"$code\" > /usr/src/myapp/Main.java");
@@ -101,12 +108,18 @@ class CodeController extends Controller {
         if($checkCode!==null) {
             $createTestFileProcess = $container->execute("echo \"$checkCode\" > /usr/src/myapp/Test.java");
             $file = "Test";
+
+            error_log("With tester!");
         }
 
 
         if($createFileProcess->isSuccessful()){
             //compile the program
-            $compileProcess = $container->execute("javac /usr/src/myapp/$file.java");
+            $compileProcess = $container->execute("javac /usr/src/myapp/Main.java");
+            if($checkCode!==null) {
+                $compileProcess = $container->execute("javac /usr/src/myapp/Test.java");
+            }
+
             if($compileProcess->isSuccessful()){
                 //run the program
                 $runProcess = $container->execute("cd /usr/src/myapp && java $file");
@@ -149,7 +162,7 @@ class CodeController extends Controller {
         return ["text" => $text, "status" => $status, "hasCheck" => $checkCode !== null];
     }
 
-    private function python_run(string $code, ?string $expected_output = null, ?string $checkCode = null) : string {
+    private function python_run(string $code, ?string $expected_output = null, ?string $checkCode = null) : array {
         $container = DockerContainer::create("python_run")->start();
 
         //create a file with the code in it
@@ -196,7 +209,7 @@ class CodeController extends Controller {
         return ["text" => $text, "status" => $status, "hasCheck" => $checkCode !== null];
     }
 
-    private function javascript_run(string $code, ?string $expected_output = null, ?string $checkCode = null) : string {
+    private function javascript_run(string $code, ?string $expected_output = null, ?string $checkCode = null) : array {
         $container = DockerContainer::create("javascript_run")->start();
 
         //create a file with the code in it

@@ -19,7 +19,7 @@ export default function Lesson() {
     const position = useParams().lesson_position; // was before lesson_id
 
     const [lesson, setLesson] = useState(null);
-    const [visibleCode, setVisibleCode] = useState(""); // TODO: Implement tabbing from simple code editor
+    const [visibleCode, setVisibleCode] = useState("");
 
     const hightlightWithLineNumbers = (input, language) => highlight(input, language)
     .split("\n")
@@ -52,11 +52,25 @@ export default function Lesson() {
     }, []);
 
     //state starts at false, so that the popUp window doesnt appear from the beginning
-    const [modal, setModal] = useState(false);
+    const [finishedCourseModalVisibility, setFinishedCourseModalVisibility] = useState(false);
     //using use-state to show/hide the popUp window
-    const toggleModal = () => {
-        setModal(!modal);
+    const toggleFinishedCourseModalVisibility = () => {
+        setFinishedCourseModalVisibility(!finishedCourseModalVisibility);
     };
+
+    const [finishedLessonModalVisibility, setFinishedLessonModalVisibility] = useState(false);
+    const toggleFinishedLessonModalVisibility = () => {
+        setFinishedLessonModalVisibility(!finishedLessonModalVisibility);
+    };
+
+    function hideModals() {
+        if(finishedCourseModalVisibility===true) {
+            toggleFinishedCourseModalVisibility();
+        }
+        if(finishedLessonModalVisibility===true) {
+            toggleFinishedLessonModalVisibility();
+        }
+    }
 
 
     const nextLesson = () => {
@@ -95,7 +109,7 @@ export default function Lesson() {
 
     function backToCoursePageWithTogglingModal() {
         //closes popUp window and navigates back to all courses
-        toggleModal();
+        hideModals();
         backToCourse();
     }
 
@@ -109,8 +123,10 @@ export default function Lesson() {
 
         axios.post('/api/run/', {
             lesson_id: lesson.id,
-            code: visibleCode,
-            language: lesson.language
+            code: visibleCode/*,
+            Removed client-side language controll due to potential abusers.
+            This could lead to someone printing out stuff in python while it was meant to be get done in java. The server knows by the lesson id which language is required.
+            language: lesson.language*/
         }, { headers: { "Authorization": "Bearer " + cachedToken }})
         .then((response) => {
             setStatus(response.data.status);
@@ -159,15 +175,26 @@ export default function Lesson() {
                 </div>
             </div>
 
-            {modal &&
-            (<div className="modal">
-                <div className="overlay"/>
-                    <div className="modal-content">
-                        <h2>Congratulations!</h2>
-                        <h3>You have successfully finished the course.</h3>
-                        <button className="close-modal" onClick={backToCoursePageWithTogglingModal}>Return to all courses</button>
+            {finishedLessonModalVisibility &&
+                (<div className="modal">
+                    <div className="overlay"/>
+                        <div className="modal-content">
+                            <h2>Congratulations!</h2>
+                            <h3>You have completed this lesson.</h3>
+                            <button className="close-modal" onClick={backToCoursePageWithTogglingModal}>Return to all courses</button>
+                    </div>
                 </div>
-            </div>
+            )}
+
+            {finishedCourseModalVisibility &&
+                (<div className="modal">
+                    <div className="overlay"/>
+                        <div className="modal-content">
+                            <h2>Congratulations!</h2>
+                            <h3>You have successfully finished the course.</h3>
+                            <button className="close-modal" onClick={backToCoursePageWithTogglingModal}>Return to all courses</button>
+                    </div>
+                </div>
             )}
         </div>
     );
