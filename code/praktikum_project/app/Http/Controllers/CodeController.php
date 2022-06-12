@@ -31,6 +31,8 @@ class CodeController extends Controller {
 
     public function run(Request $request) {
         $codeFromRequest = $request->code;
+        $codeFromRequest = str_replace( "'", "'\''", $codeFromRequest);
+        $codeFromRequest = str_replace( "\"", "\\\"", $codeFromRequest);
         $lesson_id = $request->lesson_id;
         $user_id = Auth::user()->id;
 
@@ -41,7 +43,7 @@ class CodeController extends Controller {
             ], 400);
         }
 
-        if($lesson_id===null||is_string($lesson_id)===false) {
+        if($lesson_id===null||is_numeric($lesson_id)===false) {
             return response()->json([
                 "text" => "No lessson ID given.",
                 "status" => self::ERROR
@@ -103,10 +105,10 @@ class CodeController extends Controller {
         error_log("Java running!");
 
         //create a file with the code in it
-        $createFileProcess = $container->execute("echo \"$code\" > /usr/src/myapp/Main.java");
+        $createFileProcess = $container->execute("echo '$code' > /usr/src/myapp/Main.java");
         $file = "Main";
         if($checkCode!==null) {
-            $createTestFileProcess = $container->execute("echo \"$checkCode\" > /usr/src/myapp/Test.java");
+            $createTestFileProcess = $container->execute("echo '$checkCode' > /usr/src/myapp/Test.java");
             $file = "Test";
 
             error_log("With tester!");
@@ -166,10 +168,10 @@ class CodeController extends Controller {
         $container = DockerContainer::create("python_run")->start();
 
         //create a file with the code in it
-        $createFileProcess = $container->execute("echo \"$code\" > /usr/src/myapp/Main.py");
+        $createFileProcess = $container->execute("echo '$code' > /usr/src/myapp/Main.py");
         $file = "Main";
         if($checkCode!==null) {
-            $createTestFileProcess = $container->execute("echo \"$checkCode\" > /usr/src/myapp/Test.py");
+            $createTestFileProcess = $container->execute("echo '$checkCode' > /usr/src/myapp/Test.py");
             $file = "Test";
         }
 
@@ -211,11 +213,11 @@ class CodeController extends Controller {
 
     private function javascript_run(string $code, ?string $expected_output = null, ?string $checkCode = null) : array {
         $container = DockerContainer::create("javascript_run")->start();
-
+        $file = "Main";
         //create a file with the code in it
-        $createFileProcess = $container->execute("echo \"$code\" > /usr/src/myapp/Main.js");        
+        $createFileProcess = $container->execute("echo '$code' > /usr/src/myapp/Main.js");        
         if($checkCode!==null) {
-            $createTestFileProcess = $container->execute("echo \"$checkCode\" > /usr/src/myapp/Test.js");
+            $createTestFileProcess = $container->execute("echo '$checkCode' > /usr/src/myapp/Test.js");
             $file = "Test";
         }
 
