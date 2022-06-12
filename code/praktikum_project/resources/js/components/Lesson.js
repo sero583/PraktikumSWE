@@ -155,11 +155,11 @@ export default function Lesson() {
                 let lesson = data.lesson;
                 setLesson(lesson);
 
-                if(response!=null&&response.data!=null&&"predefined_code" in response.data) {
-                    // set initially shown code
-                    setVisibleCode(response.data.predefined_code);
+                if(lesson!==null&&"predefined_code_visible" in lesson) {
+                    // update shown code
+                    setVisibleCode(lesson.predefined_code_visible);
                 }
-                // TODO Manipulate URL without redirect to new one
+                // Manipulate URL without redirect to new one
                 navigate("/course/" + lesson.course_id + "/lesson/" + lesson.position,  { replace: true });
             } else {
                 // go back to course main page
