@@ -12,10 +12,10 @@ class FinishedLesson extends Model {
     public $timestamps = false;
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "id", "user_id");
     }
 
     public function lesson() {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(Lesson::class, "id", "lesson_id");
     }
 }

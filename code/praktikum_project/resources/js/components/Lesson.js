@@ -24,6 +24,9 @@ export default function Lesson() {
     const [visibleCode, setVisibleCode] = useState("");
     const [executionLoading, setExecutionLoading] = useState(false);
 
+    const [nextLessonLoading, setNextLessonLoading] = useState(false);
+
+
     const runButton = useRef();
     // default hide time 
     const DEFAULT_HIDE_TIME = 3000;
@@ -140,6 +143,13 @@ export default function Lesson() {
 
 
     const nextLesson = () => {
+        if(nextLessonLoading===true) return;
+
+        setNextLessonLoading(true);
+
+        // clear output
+        out.current.value = "";
+
         // window.location.href = "/course/" + lesson.course_id + "/lesson/" + ++lesson.position;
         let cachedToken = window.localStorage.getItem("token");
 
@@ -148,6 +158,7 @@ export default function Lesson() {
             lesson_position: lesson.position
         }, { headers: { "Authorization": "Bearer " + cachedToken }})
         .then((response) => {
+            setNextLessonLoading(false);
             // manipulate URL and data
             let data = response.data;
 
@@ -167,7 +178,10 @@ export default function Lesson() {
                 // TODO show course?
                 backToCourse();
             }
+            hideModals();
         }).catch((err) => {
+            setNextLessonLoading(false);
+            hideModals();
             console.log(error);
             alert("Error occurred during switching lessons");
         });
@@ -201,6 +215,8 @@ export default function Lesson() {
         }, { headers: { "Authorization": "Bearer " + cachedToken }})
         .then((response) => {
             let status = response.data.status;
+            let courseCompleted = response.data.courseCompleted;
+            let success = response.data.success;
 
             setStatus(status);
             out.current.value = response.data.text;
@@ -217,6 +233,17 @@ export default function Lesson() {
                 //  hide bar after default time
                 hideProgressBarAndUnblockButton(DEFAULT_HIDE_TIME);
             }
+
+            // check in response for success and courseCompleted
+            // only one gets shown: When lesson and course has been simulatenously completed, course completed will
+            if(courseCompleted===true) {
+                // course completed -> show popup
+                setFinishedCourseModalVisibility(true);
+            } else if(success===true) {
+                // successfully finished lesson -> show popup
+                setFinishedLessonModalVisibility(true);
+            }
+
         }).catch((exeception) => {
             // show failure UI bar
             showProgressBarFailure();
@@ -264,7 +291,7 @@ export default function Lesson() {
                         //  "#FF0000", color: "#75f" 
                     )}
                 
-                <br/>
+                <div style={{margin: "10px 0 2px 0" }}></div>
 
                 <textarea ref={out} id="output" rows="5" placeholder="The output of your Code will appear here" readOnly/>
                 <div id='navButtons'>
@@ -279,7 +306,8 @@ export default function Lesson() {
                         <div className="modal-content">
                             <h2>Congratulations!</h2>
                             <h3>You have completed this lesson.</h3>
-                            <button className="close-modal" onClick={backToCoursePageWithTogglingModal}>Return to all courses</button>
+                            <button className="bottom-right-button" onClick={nextLesson}>Next lesson</button>
+                            <button className="top-right-button" onClick={hideModals}>X</button>
                     </div>
                 </div>
             )}
@@ -290,7 +318,8 @@ export default function Lesson() {
                         <div className="modal-content">
                             <h2>Congratulations!</h2>
                             <h3>You have successfully finished the course.</h3>
-                            <button className="close-modal" onClick={backToCoursePageWithTogglingModal}>Return to all courses</button>
+                            <button className="bottom-right-button" onClick={backToCoursePageWithTogglingModal}>Return to all courses</button>
+                            <button className="top-right-button" onClick={hideModals}>X</button>
                     </div>
                 </div>
             )}

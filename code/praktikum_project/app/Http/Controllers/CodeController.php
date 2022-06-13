@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Models\Course;
-use App\Models\FinishedLesson;
 use App\Models\Lesson;
+use App\Models\FinishedLesson;
+use App\Models\Lessons;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Docker\DockerContainer;
@@ -79,6 +80,23 @@ class CodeController extends Controller {
 
         if($status===0) {
             if(FinishedLesson::where("lesson_id",  $lesson_id)->where("user_id", $user_id)->exists()===false) {
+                // lesson completed
+                // now check if course has been completed by counting
+
+                // get all the finished courses
+                $finishedLessons = FinishedLesson::where("user_id", $user_id)->with("lesson")->get();//FinishedLesson::where("user_id", $user_id)->get()->();
+                $currentCount = $finishedLessons->count() + 1; // current one is not saved yet, this why +1
+                
+                // get the amount of lessons, which are in the course
+                $requiredCount = Lesson::where("course_id", $lesson->course_id)->get()->count();
+
+                // error_log("Finished count: $currentCount\nRequired count: $requiredCount");
+
+                // when there are more or the same amount, course has been completed
+                // greater because, a user might have finished a soft deleted lesson 
+                $courseCompleted = $currentCount >= $requiredCount;
+
+                // now save and set the required data
                 $finished_lesson = new FinishedLesson;
                 $finished_lesson->lesson_id = $lesson_id;
                 $finished_lesson->user_id = $user_id;

@@ -182,7 +182,7 @@ class UserController extends Controller {
             $neededCountToComplete = Lesson::where("course_id", $courseId)->get()->count();
 
             // finished course -> add to finished courses
-            if(count($array)===$neededCountToComplete) {
+            if(count($array)>=$neededCountToComplete) {
                 $course = Course::where("id", $courseId)->first();
                 $finished_courses[] = ["id" => $course->id, "title" => $course->title, "description" => $course->description];
 
