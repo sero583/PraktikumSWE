@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
-import '../../css/components/CourseCard.css';
+import '../../css/components/CourseCardSmall.css';
 
-export default function CourseCard({course}){
+export default function CourseCardSmall({course}){
     const [courseXp, setCourseXp] = useState();
     const [userXp, setUserXp] = useState();
 
@@ -18,13 +18,11 @@ export default function CourseCard({course}){
     }, []);
     
     return (
-        <div className="card">
+        <div className="smallCard">
             <Link to={"/course/" + course.id}>
                 <div>
-                    <img src={course.thumbnail_path} alt="course_picture"></img>
-                    <h1>{course.title}</h1>
-                    <progress id="xp_progress" value={userXp} max={courseXp}></progress>
-                    <label htmlFor='xp_progress'>{userXp}/{courseXp}XP</label>
+                    <p>{course.title}</p>
+                    <p>{userXp}/{courseXp}XP</p>
                 </div>
             </Link>
         </div>

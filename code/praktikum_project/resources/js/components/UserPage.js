@@ -2,6 +2,7 @@ import '../../css/components/UserPage.css';
 import ReactDOM from 'react-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import CourseCardSmall from './CourseCardSmall';
 
 export default function UserPage() {
     const [data, setData] = useState(null);
@@ -65,7 +66,7 @@ export default function UserPage() {
                             <div className="completedItem">Course-10</div>*/}
 
                             {data.progress.finished_courses.length!==0 ? data.progress.finished_courses.map(finished_course => {
-                                return <div className="completedItem">{finished_course.title}</div>
+                                return /*<div className="completedItem">{finished_course.title}</div>*/<CourseCardSmall key={finished_course.id} course={finished_course} />
                             }) : "Seems pretty empty here. Go ahead and complete some courses!"}
                         </div>
                         <br/>
@@ -85,7 +86,7 @@ export default function UserPage() {
                             <div className="startedItem">Course-10</div>*/}
 
                             {data.progress.started_courses.length!==0 ? data.progress.started_courses.map(started_course => {
-                                return <div className="startedItem">{started_course.title}</div>
+                                return /*<div className="startedItem">{started_course.title}</div>*/<CourseCardSmall key={started_course.id} course={started_course} />
                             }) : "Seems pretty empty here. Go ahead and start some courses!"}
                         </div>
                     </div>

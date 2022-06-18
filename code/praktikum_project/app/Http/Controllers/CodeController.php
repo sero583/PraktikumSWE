@@ -128,18 +128,13 @@ class CodeController extends Controller {
                 $runProcess = $container->execute("cd /usr/src/myapp && java Main");
                 if($runProcess->isSuccessful()){
                     $text = $runProcess->getOutput();
-                    
-                    // when there is an expected output, check it
-                    if($expected_output!==null) {  
-                        if($text===$expected_output){
-                            $status = self::RUN_SUCCESSFUL;
-                        }
-                        else{
-                            //incorrrect output
-                            $status = self::OUTPUT_INCORRECT;
-                        }
-                    } else { // otherwise check for exit code. here it is already 0 -> so successful run
+                    if($text===$expected_output){
                         $status = self::RUN_SUCCESSFUL;
+                    }
+                    else{
+                        //incorrrect output
+                        $status = self::OUTPUT_INCORRECT;
+                        $text = "Incorrect output:\n".$text;
                     }
                 }
                 else{
@@ -182,6 +177,7 @@ class CodeController extends Controller {
                 else{
                     //incorrect output
                     $status = self::OUTPUT_INCORRECT;
+                    $text = "Incorrect output:\n".$text;
                 }
             }
             else{
@@ -217,6 +213,7 @@ class CodeController extends Controller {
                 else{
                     //incorrrect output
                     $status = self::OUTPUT_INCORRECT;
+                    $text = "Incorrect output:\n".$text;
                 }
             }
             else{

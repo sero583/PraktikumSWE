@@ -10,6 +10,30 @@
 .card img{
     max-width: 100%;
 }
+.card label{
+    margin: 0;
+    margin-left: 2%;
+}
+.card h1{
+    margin-left: 2%;
+    margin-bottom: 10px;
+}
+.card progress{
+    background-color: white;
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+    height: 10px;
+}
+/*Set color of progress in Firefox*/
+.card progress::-moz-progress-bar {
+    background: #3ed47a;
+}
+
+/*Set color of progress in Chrome or Safari*/
+.card progress::-webkit-progress-value {
+    background: #3ed47a;
+}
 @media screen and (max-width: 600px){
     .card{
         width: calc(100% - 30px);

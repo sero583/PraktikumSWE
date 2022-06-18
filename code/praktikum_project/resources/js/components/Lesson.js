@@ -40,6 +40,9 @@ export default function Lesson() {
     // failiure colors
     const LOADING_BAR_FAILURE_COLOR = "#FFCCCB"; // swap? FF2626
     const LOADING_BAR_FAILURE_BACKGROUND_COLOR = "#FF0000"; //BD1616
+    //incorrect output colors
+    const LOADING_BAR_INCORRECT_COLOR = "#7093FF";
+    const LOADING_BAR_INCORRECT_BACKGROUND_COLOR = "#3366FF";
 
     const [loadingBarColor, setLoadingBarColor] = useState(LOADING_BAR_LOADING_COLOR);
     const [loadingBarBackgroundColor, setLoadingBarBackgroundColor] = useState(LOADING_BAR_LOADING_BACKGROUND_COLOR);
@@ -62,6 +65,13 @@ export default function Lesson() {
     const showProgressBarSuccess = () => {
         setLoadingBarColor(LOADING_BAR_SUCCESS_COLOR);
         setLoadingBarBackgroundColor(LOADING_BAR_SUCCESS_BACKGROUND_COLOR);
+
+        showProgressBar();
+    };
+
+    const showProgressBarIncorrectOutput = () => {
+        setLoadingBarColor(LOADING_BAR_INCORRECT_COLOR);
+        setLoadingBarBackgroundColor(LOADING_BAR_INCORRECT_BACKGROUND_COLOR);
 
         showProgressBar();
     };
@@ -222,11 +232,15 @@ export default function Lesson() {
             out.current.value = response.data.text;
 
             // its only about compiling went good, correct output will be rewarded with a popup afterwards
-            if(status===0||status===4) {
+            if(status===0) {
                 // show success UI bar
                 showProgressBarSuccess();
                 // hide bar after default time
                 hideProgressBarAndUnblockButton(DEFAULT_HIDE_TIME);
+            } else if (status===4) {
+                showProgressBarIncorrectOutput();
+                hideProgressBarAndUnblockButton(DEFAULT_HIDE_TIME);
+
             } else {
                 // show failure UI bar
                 showProgressBarFailure();
