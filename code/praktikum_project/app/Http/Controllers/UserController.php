@@ -171,12 +171,15 @@ class UserController extends Controller {
             // add achievements
             $achievementsBelow[] = "Finished lesson \"$lessonTitle\" from course \"{$course->title}\"";
 
+            /*
             // track in finishedCourseCache, later determine if course has been finished or not
             if(in_array($courseId, $finishedCourseCache)===false) {
                 $finishedCourseCache[$courseId] = [$finishedLessonId];
             } else $finishedCourseCache[$courseId][] = $finishedLessonId;
+            */
         }
 
+        /*
         // determine if course has been finished
         foreach($finishedCourseCache as $courseId => $array) {
             $neededCountToComplete = Lesson::where("course_id", $courseId)->get()->count();
@@ -190,6 +193,31 @@ class UserController extends Controller {
             }
             // immediate break, no looping necessary. For-each has only been executed, so key and value can be easily accessed.
             break;
+        }
+        */
+
+        $courses = Course::all();
+        foreach($courses as $course){
+            //add xp of one course
+            $lessons_xp = Lesson::select("xp")->where("course_id", $course->id)->get();
+            $course_xp = 0;
+            foreach($lessons_xp as $lesson){
+                $course_xp += $lesson->xp;
+            }
+    
+            //add xp of the user in one course
+            $user = Auth::user();
+            $users_xp = FinishedLesson::where("user_id", $user->id)->join("lessons", "finished_lessons.lesson_id", "lessons.id")->where("course_id", $course->id)->select("xp")->get();
+            $user_xp = 0;
+            foreach($users_xp as $user){
+                $user_xp += $user->xp;
+            }
+
+            //course is finished if more than 80% of xp reached
+            if($user_xp/$course_xp > 0.8){
+                $finished_courses[] = ["id" => $course->id, "title" => $course->title, "description" => $course->description];
+                $achievementFinishedCourse[] = "Completed course \"{$course->title}\"";
+            }
         }
 
         // gather started courses names
