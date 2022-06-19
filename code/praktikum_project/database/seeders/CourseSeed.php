@@ -31,7 +31,7 @@ class CourseSeed extends Seeder
         Course::create([
             'position' => 3,
             'title'=>'Javascript Course',
-            'description'=>'A Javascript Course for Beginners',
+            'description'=>'This is a Javascript course for beginners. Javascript is the most important programming language for the internet as virtually every website uses it.',
             'thumbnail_path'=>'javascript.jpg'
         ]);
     }

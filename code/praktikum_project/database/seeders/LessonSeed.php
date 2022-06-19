@@ -18,6 +18,9 @@ class LessonSeed extends Seeder
     
     {
         Lesson::truncate();
+
+
+        //Java Lessons
         Lesson::create([
             "course_id"=>1,
             "position"=>1,
@@ -40,7 +43,6 @@ class LessonSeed extends Seeder
             "xp"=>20,
             "language"=>"java"
         ]);
-
         Lesson::create([
             "course_id" => 1,
             "position" => 3,
@@ -52,7 +54,6 @@ class LessonSeed extends Seeder
             "xp"=>20,
             "language"=>"java"
         ]);
-
         Lesson::create([
             "course_id" => 1,
             "position" => 4,
@@ -63,9 +64,7 @@ class LessonSeed extends Seeder
             "expected_output"=>"Sum of a and b: 120\nDifference of a and b: -20",
             "xp"=>20,
             "language"=>"java"
-
         ]);
-
         Lesson::create([
             "course_id" => 1,
             "position" => 5,
@@ -76,9 +75,7 @@ class LessonSeed extends Seeder
             "expected_output"=>"a equals b : false\na is greater than b : true",
             "xp"=>20,
             "language"=>"java"
-
         ]);
-
         Lesson::create([
             "course_id" => 1,
             "position" => 6,
@@ -89,9 +86,7 @@ class LessonSeed extends Seeder
             "expected_output"=>"a equals b : false\n",
             "xp"=>20,
             "language"=>"java"
-
         ]);
-
         Lesson::create([
             "course_id" => 1,
             "position" => 7,
@@ -102,9 +97,7 @@ class LessonSeed extends Seeder
             "expected_output"=>"10 times 15 is : 150",
             "xp"=>20,
             "language"=>"java"
-
         ]);
-
         Lesson::create([
             "course_id" => 1,
             "position" => 8,
@@ -115,9 +108,7 @@ class LessonSeed extends Seeder
             "expected_output"=>"Number is higher than 10",
             "xp"=>20,
             "language"=>"java"
-
         ]);
-
         Lesson::create([
             "course_id" => 1,
             "position" => 9,
@@ -128,9 +119,7 @@ class LessonSeed extends Seeder
             "expected_output"=>"Car color : blue\nCar horsepower : 300",
             "xp"=>20,
             "language"=>"java"
-
         ]);
-
         Lesson::create([
             "course_id" => 1,
             "position" => 10,
@@ -141,9 +130,12 @@ class LessonSeed extends Seeder
             "expected_output"=>"Name : Harry\nAge : 23\nBorn in : Germany",
             "xp"=>20,
             "language"=>"java"
-
         ]);
 
+
+
+
+        //Python Lessons
         Lesson::create([
             "course_id"=>2,
             "position"=>1,
@@ -155,6 +147,11 @@ class LessonSeed extends Seeder
             "xp"=>15,
             "language"=>"python"
         ]);
+
+
+
+
+        //Javascript lessons
         Lesson::create([
             "course_id"=>3,
             "position"=>1,
@@ -163,7 +160,106 @@ class LessonSeed extends Seeder
             "predefined_code"=>"<usercode>",
             "predefined_code_visible"=>"console.log()",
             "expected_output"=>"Hello World\n",
+            "xp"=>10,
+            "language"=>"javascript"
+        ]);
+        Lesson::create([
+            "course_id"=>3,
+            "position"=>2,
+            "title"=>"Variables part 1: let and const",
+            "description"=>"Now your task is to create a variable. As Javascript does not have types, there are not that many options. You can choose between let and const. With const you create variables that cannot be changed, so only use it in those cases. Create a non-constant variable named number with the value 5",
+            "predefined_code"=>"<usercode>\nconsole.log(number);\nnumber = 6;",
+            "predefined_code_visible"=>"",
+            "expected_output"=>"5\n",
+            "xp"=>10,
+            "language"=>"javascript"
+        ]);
+        Lesson::create([
+            "course_id"=>3,
+            "position"=>3,
+            "title"=>"Variables part 2: Arrays",
+            "description"=>"That was simple enough. Now we're going to learn about a more complex data structures called Arrays. In Javascript you can put all different kinds of variables in one array. Add the String \"Hello\" and the decimal number 0.2 to this one.",
+            "predefined_code"=>"<usercode>\nconsole.log(array[0]);\nconsole.log(array[1]);\nconsole.log(array[2]);\n",
+            "predefined_code_visible"=>"let array = [1, , ];",
+            "expected_output"=>"1\nHello\n0.2\n",
             "xp"=>15,
+            "language"=>"javascript"
+        ]);
+        Lesson::create([
+            "course_id"=>3,
+            "position"=>4,
+            "title"=>"Arithmetic Operations",
+            "description"=>"In Javascript you can of course do the standard arithmetic functions like +, -, * or \\. You also have access to ++ for incrementing and -- for decrementing, but you might also know these from other languages. c is supposed to be the multiplication of a and b. Then increment c by one and finally add 5 to c and store the value in d",
+            "predefined_code"=>"<usercode>\nconsole.log(\\\"c is: \\\" + c);\nconsole.log(\\\"d is: \\\" + d);",
+            "predefined_code_visible"=>"let a = 5;\nlet b = 2;\n\nlet c =\n\nlet d =",
+            "expected_output"=>"c is: 11\nd is: 16\n",
+            "xp"=>15,
+            "language"=>"javascript"
+        ]);
+        Lesson::create([
+            "course_id"=>3,
+            "position"=>5,
+            "title"=>"Digression: The importance of semicolons",
+            "description"=>"In Javascript you can put semicolons on the end of expressions if you want to, but unlike other languages you are free not to. That may however cause issues with how the code is interpreted as you can see in the example below. Write the name of the variable that you think will get incremented into the incremented variable",
+            "predefined_code"=>"<usercode>\nconsole.log(\\\"Value of x: \\\" + x);\nconsole.log(\\\"Value of y: \\\" + y);\nconsole.log(\\\"You guessed: \\\" + incremented)",
+            "predefined_code_visible"=>"let x = 2;\nlet y = 3;\nx\n++\ny\nlet incremented = \"\"",
+            "expected_output"=>"Value of x: 2\nValue of y: 4\nYou guessed: y\n",
+            "xp"=>20,
+            "language"=>"javascript"
+        ]);
+        Lesson::create([
+            "course_id"=>3,
+            "position"=>6,
+            "title"=>"Comparing in Javascript",
+            "description"=>"Sometimes you need to know if two things are equal. There are two different methods in Javscript. the first is with \"==\", this checks only the value, so the number 2 and the String 2 would be seen as equal. The other method is \"===\", this also checks for the type of the variable. Implement both functions comparing the variables first_number and second_number in an if-statement and returning the boolean value.",
+            "predefined_code"=>"let first_number = 2;\nlet second_number = \\\"2\\\";\n<usercode>\nconsole.log(\\\"Checking only value: \\\" + double_equals());\nconsole.log(\\\"Checking value and type: \\\" + triple_equals());",
+            "predefined_code_visible"=>"function double_equals(){\n\t\n}\nfunction triple_equals(){\n\t\n}",
+            "expected_output"=>"Checking only value: true\nChecking value and type: false\n",
+            "xp"=>20,
+            "language"=>"javascript"
+        ]);
+        Lesson::create([
+            "course_id"=>3,
+            "position"=>7,
+            "title"=>"Functions",
+            "description"=>"To define functions in Javascript, you use the function() keyword. With the return statement a function finishes and returns a value. You now have to implement the function add() that returns the sum of a and b. You also have to implement a new funtion subtract that subtracts b from a.",
+            "predefined_code"=>"<usercode>\nlet a = 5;\nlet b = 7;\nconsole.log(\\\"Adding a to b: \\\" + add(a, b));\nconsole.log(\\\"Subtracting b from a: \\\" + subtract(a, b));",
+            "predefined_code_visible"=>"function add(a, b){\n\treturn\n}",
+            "expected_output"=>"Adding a to b: 12\nSubtracting b from a: -2\n",
+            "xp"=>30,
+            "language"=>"javascript"
+        ]);
+        Lesson::create([
+            "course_id"=>3,
+            "position"=>8,
+            "title"=>"JSON - an important data format",
+            "description"=>"If you pursue a career in computer science, you will inevitably come across the JSON data format. You can use the data types string, numbers and arrays in it. Add lastName Doe and pizza to likes.",
+            "predefined_code"=>"let person = <usercode>;\nconsole.log(\\\"Name: \\\" + person.firstName + \\\" \\\" + person.lastName);\nconsole.log(\\\"Likes: \\\" + person.likes[0] + \\\", \\\" + person.likes[1] + \\\", \\\" + person.likes[2]);",
+            "predefined_code_visible"=>"{\n\tfirstName: \"John\",\n\tage: 20,\n\tlikes: [\"summer\", \"dogs\"]\n}",
+            "expected_output"=>"Name: John Doe\nLikes: summer, dogs, pizza\n",
+            "xp"=>40,
+            "language"=>"javascript"
+        ]);
+        Lesson::create([
+            "course_id"=>3,
+            "position"=>9,
+            "title"=>"Objects",
+            "description"=>"JSON Objects are pretty simple and versatile, but in Javascript you have some more options. For example you can implement functions in Objects. In the example below, your task is to implement the function fullName. You have to use this to access variables.",
+            "predefined_code"=>"<usercode>\nconsole.log(\\\"Full name: \\\" + person.fullName());",
+            "predefined_code_visible"=>"let person = {\n\tfirstName: \"John\",\n\tlastName: \"Doe\",\n\tage: 20,\n\tlikes: [\"summer\", \"dogs\"],\n\tfullName: function(){\n\t\t\n\t}\n}",
+            "expected_output"=>"Full name: John Doe\n",
+            "xp"=>40,
+            "language"=>"javascript"
+        ]);
+        Lesson::create([
+            "course_id"=>3,
+            "position"=>10,
+            "title"=>"Classes",
+            "description"=>"Like many other languages Javascript also has classes. A class is a template from which objects can be created. Your task is to simply implement the constructor of the class Person.",
+            "predefined_code"=>"<usercode>console.log(person.toString());",
+            "predefined_code_visible"=>"class Person{\n\tconstructor( , , ){\n\t\t\n\t}\n\ttoString(){\n\t\treturn this.firstName + \" \" + this.lastName + \" is \" + this.age + \" years old\"\n\t}\n}\nlet person = new Person(\"John\", \"Doe\", 20);",
+            "expected_output"=>"John Doe is 20 years old\n",
+            "xp"=>40,
             "language"=>"javascript"
         ]);
 
