@@ -20,10 +20,12 @@
     background-color: rgb(231, 231, 231);
     border: 1px solid gray;
 }
+
 #output{
     background-color: rgb(231, 231, 231);
     border: 1px solid gray;
 }
+
 .lesson button{
     width: fit-content;
     margin-top: 10px;
@@ -62,4 +64,24 @@
 
 #loadingBar {
   align-self: center;
+}
+
+.lesson a {
+  color: blue;
+}
+
+.defaultTable {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.defaultTd, .defaultTh {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.defaultTr:nth-child(even) {
+  background-color: #dddddd;
 }

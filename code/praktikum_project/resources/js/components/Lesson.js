@@ -4,23 +4,39 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import "../../css/components/Modal.css";
 import axios from 'axios';
-/*import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';*/
 import React from 'react';
+// for code editor
 import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';
-
+// for loading bar
 import LinearProgress from '@mui/material/LinearProgress';
+// for syntax higlightning in code
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+import PythonHighlighter from './syntax-highlighter/PythonHighlighter';
+
+// other HTML parser
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+
+import JsxParser from 'react-jsx-parser'
 
 export default function Lesson() {
     const course_id = useParams().course_id;
     const id = useParams().lesson_id;
     const position = useParams().lesson_position; // was before lesson_id
+    const nl2br = require('react-nl2br');
+    const parse = require('html-react-parser');
 
     const [lesson, setLesson] = useState(null);
+
+    /*const setLesson = (lesson) => {
+        lesson.description = nl2br
+    };*/
+
     const [visibleCode, setVisibleCode] = useState("");
     const [executionLoading, setExecutionLoading] = useState(false);
 
@@ -46,6 +62,14 @@ export default function Lesson() {
 
     const [loadingBarColor, setLoadingBarColor] = useState(LOADING_BAR_LOADING_COLOR);
     const [loadingBarBackgroundColor, setLoadingBarBackgroundColor] = useState(LOADING_BAR_LOADING_BACKGROUND_COLOR);
+
+    const parseOptions = {
+        htmlparser2: {
+            xmlMode: true,
+            lowerCaseTags: false
+        }
+    };
+
 
     const showProgressBar = () => {
         setExecutionLoading(true);
@@ -189,10 +213,13 @@ export default function Lesson() {
                 backToCourse();
             }
             hideModals();
+
+            // scroll up again
+            window.scrollTo(0, 0);
         }).catch((err) => {
             setNextLessonLoading(false);
             hideModals();
-            console.log(error);
+            console.log(err);
             alert("Error occurred during switching lessons");
         });
     }
@@ -279,7 +306,22 @@ export default function Lesson() {
             <div className='innerLesson'>
                 {/*<LessonAdminButtons lesson={lesson}/> a removed feature*/}
                 <h1 id="lessonHeadline">{lesson.title}</h1>
-                <p id="lessonText">{lesson.description}</p>
+                <div id="lessonTextContainer">
+                    {/*parse("<p id=\"lessonText\">" + lesson.description.replaceAll("\n", "<br/>") + "</p>", parseOptions)*/}
+                        {parse("<p id=\"lessonText\">" + lesson.description.replaceAll("\n", "<br/>") + "</p>", parseOptions)}
+
+                        {/*<JsxParser
+                            bindings={{language: "python"}}
+                            components={{ SyntaxHighlighter }}
+                            jsx={lesson.description.replaceAll("\n", "<br/>")}
+                          />*/}
+
+                        {/*<p id="lessonText">
+                    {nl2br(lesson.description)}
+                    </p>*/}
+                </div>
+
+                <br/>
 
                 <Editor
                     value={visibleCode}

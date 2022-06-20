@@ -19,9 +19,9 @@ return new class extends Migration
             $table->foreignId('course_id');
             $table->string('title');
             $table->longText('description');
-            $table->string('predefined_code');
-            $table->string('predefined_code_visible');
-            $table->string('expected_output');
+            $table->longText('predefined_code');
+            $table->longText('predefined_code_visible');
+            $table->longText('expected_output');
             $table->integer('xp');
             $table->string('language');
             $table->softDeletes('deleted_at');

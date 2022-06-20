@@ -6,8 +6,11 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Course;
 
-class CourseSeed extends Seeder
-{
+class CourseSeed extends Seeder {
+    const JAVA_COURSE = 1;
+    const PYTHON_COURSE = 2;
+    const JAVASCRIPT_COURSE = 3;
+
     /**
      * Run the database seeds.
      *
@@ -16,6 +19,8 @@ class CourseSeed extends Seeder
     public function run()
     {
         Course::truncate();
+
+        // IMPORTANT: DO NOT CHANGE ORDER; ID's COULD CHANGE BECAUSE OF THIS!!!
         Course::create([
             'position' => 1,
             'title'=>'Java Course',
