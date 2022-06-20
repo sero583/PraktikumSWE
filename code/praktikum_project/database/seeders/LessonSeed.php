@@ -289,7 +289,7 @@ Now, when you take a program which was compiled for a AMD processor and use it o
 Here comes Python's special side to shine: You don't need any compiler and Python can run anywhere, as long as the Python Interpreter is implemented for that system. It's much easier to provide compatability this way. The only flaw is, that interpreting and understanding takes a lot more execution time. Executing merely given instructions is a lot easier.",
             "predefined_code" => "<usercode>",
             "predefined_code_visible" => "print(\"I understood.\")",
-            "expected_output" => "I understood.",
+            "expected_output" => "I understood.\n",
             "xp" => 30,
             "language" => "python"
         ]);
@@ -335,10 +335,7 @@ print(string)
 print(hello_world)
 print(number)
 print(decimal)",
-            "expected_output" => "Cool\n
-Hello World!\n
-10\n
-1.5",
+            "expected_output" => "Cool\nHello World!\n10\n1.5\n",
             "xp" => 20,
             "language" => "python"
         ]);
@@ -352,7 +349,7 @@ Hello World!\n
 In the editor the you have already given the foundation for the program. Your task is to print out \"Hello World\" by simply putting a string inside the method \"print\".",
             "predefined_code" => "<usercode>",
             "predefined_code_visible" => "print()",
-            "expected_output" => "Hello World",
+            "expected_output" => "Hello World\n",
             "xp" => 10,
             "language" => "python"
         ]);
@@ -445,7 +442,7 @@ print(none)",
 0.5
 ['apple', 'cherry', 'banana']
 False
-None",
+None\n",
             "xp" => 30,
             "language" => "python"
         ]);
@@ -488,7 +485,7 @@ print(division_result)",
             "expected_output" => "20
 0
 100
-1.0",
+1.0\n",
             "xp" => 20,
             "language" => "python"
         ]);
@@ -519,12 +516,11 @@ Your task in this lesson will be to check if a users bank balance is enough to p
             "predefined_code_visible" => "balance = 40 # Euro/USD/whatever you like it to be
 incoming_bill = 30
 
-if() { # here the condition, where the user has enough money to pay
+if(): # here the condition, where the user has enough money to pay
     print(\"User can pay the bill.\")
-} else {
-    print(\"User can't pay the bill.\")   
-}",
-            "expected_output" => "User can pay the bill.",
+else:
+    print(\"User can't pay the bill.\")",
+            "expected_output" => "User can pay the bill.\n",
             "xp" => 40,
             "language" => "python"
         ]);
@@ -584,7 +580,7 @@ So now enough talking, let's get to your task. Your task is to write a loop and 
 ",
             "expected_output" => "item1
 item2
-item3",
+item3\n",
             "xp" => 30,
             "language" => "python"
         ]);
@@ -639,10 +635,10 @@ That's it for the basics of classes.
 
 Your task in this lesson is to create the class \"Car\", which has the string-properties \"manufacturer\", \"model\" and int property \"yearOfBuild\". Also create a constructor, which takes sequentially manufacturer, model and yearOfBuild property.",
             "predefined_code" => "<usercode>
-car = Car(\"Ford\", \"Mustang\", 1980)
-print(\"The car is a \" + car.manufacturer + \" \" + car.model + \" built in \" + car.yearOfBuild + \".\")",
+car = Car(\\\"Ford\\\", \\\"Mustang\\\", 1980)
+print(\\\"The car is a \\\" + car.manufacturer + \\\" \\\" + car.model + \\\" built in \\\" + str(car.yearOfBuild) + \\\".\\\")",
             "predefined_code_visible" => "",
-            "expected_output" => "The car is a Ford Mustang built in 1980.",
+            "expected_output" => "The car is a Ford Mustang built in 1980.\n",
             "xp" => 50,
             "language" => "python"
         ]);
