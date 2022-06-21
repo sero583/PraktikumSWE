@@ -33,8 +33,6 @@ export default function Login() {
         loginButton.current.disabled = true;
 
         axios.post("/api/users/login", body).then((response) => {
-            console.log(response);
-
             if(response) {
                 if(response.data.success===true) {
                     // save token in browser now and use it for requests, which will be made later

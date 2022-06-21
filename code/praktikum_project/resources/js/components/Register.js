@@ -71,14 +71,21 @@ export default function Register(){
             }
         }).catch(function(error) {
             registerButton.current.disabled = false;
+            
             let messages = error.response.data.message;
             
             if(messages) {
                 let serverMessages = "";
                 let lineberakChar = "\n";
-
-                for(var key in messages) {
-                    serverMessages += (key + ": " + messages[key] + lineberakChar); 
+                
+                if(typeof messages === 'string' || messages instanceof String) {
+                    serverMessages = messages;
+                } else for(var key in messages) {
+                    if(Array.isArray(messages)) {
+                        for(var subKey in subMsg) {
+                            serverMessages += (key + ": " + messages[key] + lineberakChar); 
+                        }
+                    } else serverMessages += (key + ": " + messages[key] + lineberakChar);
                 }
                 // cut off last linebreak with substring
                 setErrorMessage(serverMessages.substring(0, serverMessages.length-lineberakChar.length)); 

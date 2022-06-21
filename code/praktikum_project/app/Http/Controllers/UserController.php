@@ -60,7 +60,7 @@ class UserController extends Controller {
         if(filter_var($data["email"], FILTER_VALIDATE_EMAIL)===false) {
             return response()->json([
                 "success" => false,
-                "message" => "Invalid E-Mail address format."
+                "message" => ["email" => "Invalid E-Mail address format."]
             ], 400);
         }
 
