@@ -12,14 +12,38 @@ use App\Models\FinishedLesson;
 
 class CourseController extends Controller {
     public function index() {
-        return Course::orderBy("position", "asc")->get();
+        $courses = Course::orderBy("position", "asc")->get();
+        $recent_courses = RecentCourse::where("user_id", Auth::user()->id)->join("courses", "recent_courses.course_id", "courses.id")->get();
+        
+        
+        // now put it into courses array
+        foreach($courses as $key => $course) {
+            // determine course XP
+            $lessons_xp = Lesson::select("xp")->where("course_id", $course->id)->get();
+            $course_xp = 0;
+            foreach($lessons_xp as $lesson) {
+                $course_xp += $lesson->xp;
+            }
+
+            // determine user XP
+            $user = Auth::user();
+            $users_xp = FinishedLesson::where("user_id", $user->id)->join("lessons", "finished_lessons.lesson_id", "lessons.id")->where("course_id", $course->id)->select("xp")->get();
+            $user_xp = 0;
+            foreach($users_xp as $user) {
+                $user_xp += $user->xp;
+            }
+            // push data into array
+            $courses[$key]["course_xp"] = $course_xp;
+            $courses[$key]["user_xp"] = $user_xp;
+        }
+
+        return response()->json([
+            "courses" => $courses,
+            "recent_courses" => $recent_courses
+        ]);
     }
 
-    public function recent() {
-        return RecentCourse::where("user_id", Auth::user()->id)->join("courses", "recent_courses.course_id", "courses.id")->get();
-    }
-
-    public function show($id){
+    public function show($id) {
         $user_id = Auth::user()->id;
         if(RecentCourse::where("course_id",  $id)->where("user_id", $user_id)->exists()===false) {
             $recent_course = new RecentCourse;
@@ -30,7 +54,7 @@ class CourseController extends Controller {
         return Course::find($id);
     }
 
-    public function xp($id){
+    /*public function xp($id){
         $lessons_xp = Lesson::select("xp")->where("course_id", $id)->get();
         $course_xp = 0;
         foreach($lessons_xp as $lesson){
@@ -47,7 +71,7 @@ class CourseController extends Controller {
             "course_xp" => $course_xp,
             "user_xp" => $user_xp
         ], 200);
-    }
+    }*/
 
     public function store(Request $request){
         //untested

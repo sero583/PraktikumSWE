@@ -10,7 +10,12 @@ use App\Models\FinishedLesson;
 
 class LessonController extends Controller {
     public function index($course_id) {
-        return Lesson::where("course_id", $course_id)->orderBy("position")->get();
+        $lessons = Lesson::where("course_id", $course_id)->orderBy("position")->get();
+
+        foreach($lessons as $key => $lesson) {
+            $lessons[$key]["finished"] = FinishedLesson::where([["lesson_id", $lesson->id], ["user_id", Auth::user()->id]])->exists();
+        }
+        return response()->json($lessons);
     }
 
     public function show($course_id, $lesson_position) {
@@ -61,22 +66,7 @@ class LessonController extends Controller {
             "hasNext" => false
         ], 200);
     }
-
-    // reeturns if requested lesson ID is finished or not.
-    public function finished($lesson_id) {
-        if(is_numeric($lesson_id)===false||is_double($lesson_id)===true) {
-            return response()->json([
-                "success" => false,
-                "message" => "Value must be non-decimal numeric value."
-            ], 400);
-        }
-
-        return response()->json([
-            "success" => true,
-            "finished" => FinishedLesson::where([["lesson_id", $lesson_id], ["user_id", Auth::user()->id]])->exists()
-        ], 200);
-    }
-
+    
     public function store(Request $request) {
         if(Course::where("id", "=", $request->course_id)->exists()===false) {
             return response()->json([
