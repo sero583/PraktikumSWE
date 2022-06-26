@@ -63,7 +63,7 @@ export default function App() {
           <Route path="user" element={shouldRedirect() ? (<Navigate replace to="/" />) : (<UserPage />)}/>
           <Route path="login" element={!shouldRedirect() ? (<Navigate replace to="/" />) : <Login setToken={setToken}/>} />
           <Route path="register" element={!shouldRedirect() ? (<Navigate replace to="/" />) : <Register />} />
-          <Route path="forgotpassword" element={!shouldRedirect() ? (<Navigate replace to="/" />) : <ForgotPassword />} />
+          {/*<Route path="forgotpassword" element={!shouldRedirect() ? (<Navigate replace to="/" />) : <ForgotPassword />} />*/}
           <Route path="forgotpasswordsubmit" element={!shouldRedirect() ? (<Navigate replace to="/" />) : <ForgotPasswordSubmit />} />
           <Route path="*" element={<NoPage />} />
         </Route>

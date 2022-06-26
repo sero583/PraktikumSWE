@@ -77,7 +77,7 @@ export default function Login() {
                 <button ref={loginButton} type="submit" onClick={handleLogIn}>Sign in</button>
             </div>
 
-            <p><Link to="/forgotpassword">Forgot your password?</Link></p>
+            {/*<p><Link to="/forgotpassword">Forgot your password?</Link></p>*/}
             <p>Not signed up yet? <Link to="/register">Create an account</Link></p>
         </div>
     );
