@@ -1,0 +1,11 @@
+.courselistadmin{
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.courselistadmin button{
+    margin: 5px;
+}
+#addCourses{
+    background-color: lightblue;
+}

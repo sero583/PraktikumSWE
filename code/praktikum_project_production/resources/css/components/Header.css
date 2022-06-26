@@ -1,0 +1,18 @@
+.header{
+    background-color: #37c871;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.login{
+    height: 100%;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+}
+.login p{
+    margin: 0px;
+    font-size: larger;
+    font-weight: bold;
+}

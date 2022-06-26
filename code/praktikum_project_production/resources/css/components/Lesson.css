@@ -1,0 +1,87 @@
+.lesson{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.innerLesson{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1000px;
+}
+.lesson textarea{
+    resize: none;
+    border-radius: 5px;
+    padding: 5px;
+    outline: none;
+}
+#input{
+    background-color: rgb(231, 231, 231);
+    border: 1px solid gray;
+}
+
+#output{
+    background-color: rgb(231, 231, 231);
+    border: 1px solid gray;
+}
+
+.lesson button{
+    width: fit-content;
+    margin-top: 10px;
+}
+.lesson .running{
+    background-color: gray;
+}
+#navButtons{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.editor {
+  counter-reset: line;
+  border: 1px solid #ced4da;
+}
+
+.editor #codeArea {
+  outline: none;
+  padding-left: 60px !important;
+}
+
+.editor pre {
+  padding-left: 60px !important;
+}
+
+.editor .editorLineNumber {
+  position: absolute;
+  left: 0px;
+  color: #cccccc;
+  text-align: right;
+  width: 40px;
+  font-weight: 100;
+}
+
+#loadingBar {
+  align-self: center;
+}
+
+.lesson a {
+  color: blue;
+}
+
+.defaultTable {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.defaultTd, .defaultTh {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.defaultTr:nth-child(even) {
+  background-color: #dddddd;
+}

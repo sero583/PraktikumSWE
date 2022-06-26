@@ -1,0 +1,17 @@
+.xpdiv {
+    min-width: 600px;
+    text-align: center;
+    display: none; /* Depreacted */
+}
+
+@supports (-moz-appearance:none) {
+    .xpdiv > progress {
+        width: 70%;
+        height: 50%;
+    }
+}
+
+.xpdiv > label {
+    font-size: larger;
+    font-weight: bold;
+}
