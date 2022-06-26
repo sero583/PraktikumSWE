@@ -13,8 +13,6 @@ export default function UserPage() {
         axios.get("/api/users/view-profile", {
             headers: { "Authorization": "Bearer " + cachedToken }
           }).then(function(response) {
-            console.log(response);
-
             if(response&&response.status===200) {
                 let responseData = response.data.data;
                 setData(responseData);
@@ -32,6 +30,8 @@ export default function UserPage() {
             <div/>
         )
     } else {
+        console.log(data);
+
         return (
             <div className="userpage">
                 <h1>User page</h1>

@@ -37,6 +37,21 @@ class CourseController extends Controller {
             $courses[$key]["user_xp"] = $user_xp;
         }
 
+        // copy to fullfil expected data scheme from client
+        foreach($recent_courses as $key => $recent_course) {
+            // search for course in multi-dimensional array with a basic for loop, since array_search is not suitable for this task
+            $course = null;
+            foreach($courses as $course) {
+                if($course->id===$recent_course->course_id) {
+                    // found it, stop the loop now
+                    break;
+                }
+            }
+            // not null safe, because it MUST exist. Otherwise it should crash, expected behaviour.
+            $recent_courses[$key]["course_xp"] = $course["course_xp"];
+            $recent_courses[$key]["user_xp"] = $course["user_xp"];
+        }
+
         return response()->json([
             "courses" => $courses,
             "recent_courses" => $recent_courses

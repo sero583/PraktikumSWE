@@ -31,12 +31,8 @@
         "@mui/styles": "^5.8.3",
         "html-react-parser": "^2.0.0",
         "prismjs": "^1.28.0",
-        "react-html-parser": "^2.0.2",
-        "react-jsx-parser": "^1.29.0",
-        "react-nl2br": "^1.0.4",
         "react-router": "^6.3.0",
         "react-router-dom": "^6.3.0",
-        "react-simple-code-editor": "^0.11.2",
-        "react-syntax-highlighter": "^15.5.0"
+        "react-simple-code-editor": "^0.11.2"
     }
 }

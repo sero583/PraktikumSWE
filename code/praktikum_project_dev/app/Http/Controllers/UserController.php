@@ -197,6 +197,11 @@ class UserController extends Controller {
         */
 
         $courses = Course::all();
+
+        // holder variable, so started_courses can also profit from executions made by finshed_courses
+        $users_course_xp = [];
+        $courses_max_xp = [];
+
         foreach($courses as $course){
             //add xp of one course
             $lessons_xp = Lesson::select("xp")->where("course_id", $course->id)->get();
@@ -204,18 +209,25 @@ class UserController extends Controller {
             foreach($lessons_xp as $lesson){
                 $course_xp += $lesson->xp;
             }
+
+            // save data into cache, for started_courses loop below
+            $courses_max_xp[$course->id] = $course_xp;
     
             //add xp of the user in one course
             $user = Auth::user();
             $users_xp = FinishedLesson::where("user_id", $user->id)->join("lessons", "finished_lessons.lesson_id", "lessons.id")->where("course_id", $course->id)->select("xp")->get();
             $user_xp = 0;
-            foreach($users_xp as $user){
-                $user_xp += $user->xp;
+            foreach($users_xp as $user_xp_iterated){
+                $user_xp += $user_xp_iterated->xp;
             }
+
+            // save data into cache, for started_courses loop below
+            $users_course_xp[$course->id] = $user_xp;
+
 
             //course is finished if more than 80% of xp reached
             if($user_xp/$course_xp > 0.8){
-                $finished_courses[] = ["id" => $course->id, "title" => $course->title, "description" => $course->description];
+                $finished_courses[] = ["id" => $course->id, "title" => $course->title, "description" => $course->description, "user_xp" => $user_xp, "course_xp" => $course_xp];
                 $achievementFinishedCourse[] = "Completed course \"{$course->title}\"";
             }
         }
@@ -223,7 +235,7 @@ class UserController extends Controller {
         // gather started courses names
         foreach($started_courses_ids as $id) {
             $course = Course::select("id", "title", "description")->where("id", $id)->first();
-            $started_courses[] = ["id" => $course->id, "title" => $course->title, "description" => $course->description];
+            $started_courses[] = ["id" => $course->id, "title" => $course->title, "description" => $course->description, "user_xp" => $users_course_xp[$id], "course_xp" => $courses_max_xp[$id]];
             $achievementsAbove[] = "Started course \"{$course->title}\"";
         }
 

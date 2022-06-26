@@ -13,22 +13,12 @@ import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';
 // for loading bar
 import LinearProgress from '@mui/material/LinearProgress';
-// for syntax higlightning in code
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-
-import PythonHighlighter from './syntax-highlighter/PythonHighlighter';
-
-// other HTML parser
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-
-import JsxParser from 'react-jsx-parser'
 
 export default function Lesson() {
     const course_id = useParams().course_id;
     const id = useParams().lesson_id;
     const position = useParams().lesson_position; // was before lesson_id
-    const nl2br = require('react-nl2br');
+    // const nl2br = require('react-nl2br');
     const parse = require('html-react-parser');
 
     const [lesson, setLesson] = useState(null);
@@ -283,8 +273,7 @@ export default function Lesson() {
             } else if(success===true) {
                 // successfully finished lesson -> show popup
                 setFinishedLessonModalVisibility(true);
-            }
-
+            }           
         }).catch((exeception) => {
             // show failure UI bar
             showProgressBarFailure();
